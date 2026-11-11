@@ -3,7 +3,7 @@
 Every change to `ANALYSIS_PLAN.md` after its first commit is recorded here, in
 order, with the time, the reason, and whether outcome data had been seen.
 
-## Amendment 1 — 2026-11-11, about 05:55 UTC — before any outcome data
+## Amendment 1 — 2026-11-11, 05:33 UTC — before any outcome data
 
 Made while the source snapshots were still downloading. No per-task outcome
 file had been opened and the schema-discovery script had not been run.
