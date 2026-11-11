@@ -1,0 +1,6 @@
+# Third-party snapshots are fetched by scripts/fetch_sources.py, never committed
+data/raw/
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
