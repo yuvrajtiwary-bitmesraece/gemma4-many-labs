@@ -1,0 +1,193 @@
+{
+ "source": "zenodo:23834104",
+ "doi": "10.5281/zenodo.23834104",
+ "licence": "Apache-2.0",
+ "n_attempts": 4056,
+ "n_systems": 9,
+ "n_runs": 39,
+ "n_tasks": 104,
+ "resolve_rate": 0.21129,
+ "sampling_temperature": 1.0,
+ "flip_rate": {
+  "n_pairs": 69,
+  "pooled": 0.13322,
+  "mean_abs_score_difference": 0.02508,
+  "max_abs_score_difference": 0.08654,
+  "by_model": {
+   "12B": 0.15552,
+   "26B-A4B": 0.15385,
+   "E4B": 0.0903
+  },
+  "by_system": {
+   "12B-max": 0.16346,
+   "12B-mid": 0.12821,
+   "12B-min": 0.15577,
+   "26B-A4B-max": 0.15192,
+   "26B-A4B-mid": 0.14103,
+   "26B-A4B-min": 0.15962,
+   "E4B-max": 0.10192,
+   "E4B-mid": 0.10256,
+   "E4B-min": 0.075
+  }
+ },
+ "replicate_noise": {
+  "n_cells": 936,
+  "n_attempts": 4056,
+  "noise_variance": 0.06607,
+  "total_variance": 0.16665,
+  "noise_share": 0.39649
+ },
+ "pooled_estimates_for_comparison": {
+  "flip_rate": 0.11153,
+  "noise_share": 0.25247,
+  "g_study_median_shares": {
+   "task": 0.68026,
+   "system": 0.01048,
+   "system_x_task": 0.0552,
+   "replicate": 0.25018
+  }
+ },
+ "g_study": {
+  "n_systems": 6,
+  "n_tasks": 104,
+  "n_replicates": 5,
+  "shares": {
+   "task": 0.47845,
+   "system": 0.02796,
+   "system_x_task": 0.09653,
+   "replicate": 0.39706
+  },
+  "g_129_tasks_1_run": 0.87963,
+  "g_129_tasks_3_runs": 0.94033,
+  "se_difference_129_tasks_1_run": 0.03602
+ },
+ "difficulty_carries_over": {
+  "n_tasks_compared": 91,
+  "spearman_all_systems": 0.84314,
+  "pearson_all_systems": 0.86578,
+  "by_model": {
+   "12B": 0.80059,
+   "26B-A4B": 0.8275,
+   "E4B": 0.59667
+  }
+ },
+ "external_rate_by_pooled_class": {
+  "ceiling": {
+   "tasks": 3,
+   "mean_external_solve_rate": 0.9284
+  },
+  "discriminating": {
+   "tasks": 52,
+   "mean_external_solve_rate": 0.32479
+  },
+  "floor": {
+   "tasks": 36,
+   "mean_external_solve_rate": 0.01934
+  }
+ },
+ "pooled_floor_tasks_in_external_set": {
+  "tasks": 36,
+  "never_resolved_externally": 27,
+  "resolved_under_10_percent_externally": 35
+ },
+ "external_rate_by_audit_status": {
+  "passes_without_patch": {
+   "tasks": 3,
+   "mean_external_solve_rate": 0.74321
+  },
+  "reference_patch_fails_in_both": {
+   "tasks": 2,
+   "mean_external_solve_rate": 0.38148
+  },
+  "reference_patch_fails_on_kaggle_only": {
+   "tasks": 31,
+   "mean_external_solve_rate": 0.12019
+  },
+  "valid": {
+   "tasks": 68,
+   "mean_external_solve_rate": 0.22288
+  }
+ },
+ "reference_patch_check": {
+  "tasks": 129,
+  "reference_patch_resolves": 106,
+  "empty_patch_resolves": 2,
+  "scorable": 104,
+  "same_verdict_as_pooled_docker_audit": 124,
+  "same_verdict_as_pooled_kaggle_audit": 96,
+  "fails_in_kaggle_audit_but_resolves_here": 33
+ },
+ "header": [
+  "System (size and scaffold level)",
+  "Model",
+  "Seeds",
+  "Resolved of 104, per seed",
+  "Flip rate between seeds"
+ ],
+ "rows": [
+  [
+   "12B-max",
+   "12B",
+   5,
+   "25, 19, 26, 27, 23",
+   "16.3%"
+  ],
+  [
+   "12B-mid",
+   "12B",
+   3,
+   "19, 25, 23",
+   "12.8%"
+  ],
+  [
+   "12B-min",
+   "12B",
+   5,
+   "26, 25, 27, 25, 28",
+   "15.6%"
+  ],
+  [
+   "26B-A4B-max",
+   "26B-A4B",
+   5,
+   "26, 28, 28, 27, 30",
+   "15.2%"
+  ],
+  [
+   "26B-A4B-mid",
+   "26B-A4B",
+   3,
+   "29, 29, 27",
+   "14.1%"
+  ],
+  [
+   "26B-A4B-min",
+   "26B-A4B",
+   5,
+   "24, 26, 29, 32, 33",
+   "16.0%"
+  ],
+  [
+   "E4B-max",
+   "E4B",
+   5,
+   "13, 15, 17, 18, 17",
+   "10.2%"
+  ],
+  [
+   "E4B-mid",
+   "E4B",
+   3,
+   "11, 14, 14",
+   "10.3%"
+  ],
+  [
+   "E4B-min",
+   "E4B",
+   5,
+   "10, 10, 11, 9, 12",
+   "7.5%"
+  ]
+ ],
+ "summary": "Zenodo record 23834104 (doi:10.5281/zenodo.23834104, Apache-2.0) holds the run records of a pre-registered study by a participant whose repository was not among the candidates: 4,056 attempts, 9 systems (Gemma 4 E4B, 12B and 26B-A4B at two or three scaffold levels), 39 runs with 3 or 5 seeds per system, on 104 development-set tasks, scored by the competition harness in a repaired Docker environment, sampling temperature 1.0. It was not used for any pooled estimate.\n\n- **Task difficulty carries over.** Across the 91 tasks that are in both sets and were attempted by at least 5 pooled labs, the per-task solve rate in this dataset correlates with the pooled consensus solve rate at Spearman 0.84 (by model: 12B 0.80, 26B-A4B 0.83, E4B 0.60). Mean solve rate here by the pooled class of the task: ceiling 92.8% (3 tasks); discriminating 32.5% (52 tasks); floor 1.9% (36 tasks). Of the 36 pooled floor tasks in this set, 27 were never resolved here in any run and 35 were resolved at most 10% of the time.\n- **Repeats disagree here too.** 69 pairs of runs that differ only in the seed: pooled flip rate 13.3% (by model: 12B 15.6%, 26B-A4B 15.4%, E4B 9.0%), against 11.2% in the pooled table, where most systems sample at temperature 0.2. Mean absolute difference in resolved tasks between two seeds: 2.5 points (largest 8.7). Run-to-run noise is 39.6% of outcome variance here, 25.2% in the pooled table.\n- **Variance components** on the balanced block of 6 systems x 104 tasks x 5 seeds: task 47.8%, system 2.8%, system x task 9.7%, run-to-run 39.7%.\n- **Reference-patch check.** In this author's repaired environment the reference patch resolves 106 of 129 tasks and the empty patch 2; the verdict equals that of the pooled Docker audit on 124 tasks, and 33 of the tasks that fail in the standard Kaggle sandbox resolve here. Agents' mean solve rate here by the task's status in the pooled reference audit: passes without patch 74.3% (3 tasks); reference patch fails in both 38.1% (2 tasks); reference patch fails on kaggle only 12.0% (31 tasks); valid 22.3% (68 tasks)."
+}

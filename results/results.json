@@ -890,23 +890,20 @@
   }
  },
  "E1_leaderboard": {
-  "n_pairs": 25,
+  "n_pairs": 30,
   "n_labs": 7,
-  "pairs_with_leaderboard_below_dev_rate": 24,
+  "n_systems": 27,
+  "pairs_with_leaderboard_below_dev_rate": 29,
   "ratio_leaderboard_to_dev": {
-   "median": 0.31515,
-   "q25": 0.23111,
-   "q75": 0.50813,
-   "min": 0.14899,
+   "median": 0.28237,
+   "q25": 0.21778,
+   "q75": 0.47434,
+   "min": 0.0,
    "max": 1.8
   },
-  "dev_rate_median": 0.354,
+  "dev_rate_median": 0.3562,
   "leaderboard_median": 0.1,
   "within_lab_rank_agreement": {
-   "lspecian | eval113": {
-    "n_systems": 4,
-    "spearman": -0.63246
-   },
    "nishanthrjn | dev-16v": {
     "n_systems": 5,
     "spearman": 0.35909
@@ -914,16 +911,20 @@
    "veljjanoski | local dev40": {
     "n_systems": 5,
     "spearman": 0.64889
+   },
+   "veljjanoski | scorer stack valid61": {
+    "n_systems": 5,
+    "spearman": 0.7
    }
   },
   "identical_resubmissions": {
-   "n": 9,
+   "n": 11,
    "n_labs": 5,
    "abs_difference": {
-    "median": 0.03,
-    "mean": 0.03111,
+    "median": 0.02,
+    "mean": 0.02727,
     "max": 0.09,
-    "n_identical": 1
+    "n_identical": 2
    },
    "scores": [
     [
@@ -932,6 +933,10 @@
     ],
     [
      0.13,
+     0.12
+    ],
+    [
+     0.1,
      0.12
     ],
     [
@@ -956,6 +961,10 @@
     ],
     [
      0.18,
+     0.13
+    ],
+    [
+     0.13,
      0.13
     ],
     [

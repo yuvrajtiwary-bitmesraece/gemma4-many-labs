@@ -28,6 +28,7 @@ def e1_leaderboard(path: Path):
     pairs = t[t["kind"] == "pair"].copy()
     pairs["ratio"] = pairs["leaderboard"] / pairs["dev_rate"]
     out = {"n_pairs": int(len(pairs)), "n_labs": int(pairs["lab"].nunique()),
+           "n_systems": int(pairs.groupby(["lab", "system"]).ngroups),
            "pairs_with_leaderboard_below_dev_rate": int((pairs["leaderboard"] < pairs["dev_rate"]).sum()),
            "ratio_leaderboard_to_dev": {"median": float(pairs["ratio"].median()), "q25": float(pairs["ratio"].quantile(0.25)),
                                         "q75": float(pairs["ratio"].quantile(0.75)), "min": float(pairs["ratio"].min()),

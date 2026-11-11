@@ -216,8 +216,10 @@ def main(argv) -> int:
         ra = e1["ratio_leaderboard_to_dev"]
         L.append(f"\n**E1. Development set versus leaderboard.** Compiled by hand from what labs state in their own "
                  f"documents (`data/sources/leaderboard_pairs.csv`, with file and wording per row); a description, not a "
-                 f"measurement. {e1['n_pairs']} systems from {e1['n_labs']} labs have both a development-set rate and a "
-                 f"public-leaderboard score. The leaderboard score is lower in {e1['pairs_with_leaderboard_below_dev_rate']} "
+                 f"measurement. Labs state {e1['n_pairs']} pairs of a development-set rate and a public-leaderboard score "
+                 f"for one system ({e1.get('n_systems', '?')} systems, {e1['n_labs']} labs; a system measured on two "
+                 f"development subsets gives two pairs). The leaderboard score is lower in "
+                 f"{e1['pairs_with_leaderboard_below_dev_rate']} "
                  f"of them; the ratio of leaderboard score to development-set rate has median {f(ra['median'])} "
                  f"(interquartile range {f(ra['q25'])} to {f(ra['q75'])}, range {f(ra['min'])} to {f(ra['max'])}). "
                  f"Median development-set rate {p(e1['dev_rate_median'])}, median leaderboard score {p(e1['leaderboard_median'])}.")

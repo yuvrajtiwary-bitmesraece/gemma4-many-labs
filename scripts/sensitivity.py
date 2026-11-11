@@ -173,6 +173,19 @@ def main() -> int:
                                 for name, (n, flip) in designs.items()},
         "exact_mcnemar_one_run": {name: ml.minimum_detectable_difference(n, flip) for name, (n, flip) in designs.items()}}
 
+    # S10. Sampling temperature. Most labs sample at 0.2; one lab (L02) documents two settings:
+    # its own configurations use 0.7 (submissions/*/configs/sampling.yaml), the third-party
+    # configurations it ran use 0.2 (scorer_stack/build_ab.py).
+    t07 = ("veljjanoski/v10@", "veljjanoski/v11@", "veljjanoski/v15@", "veljjanoski/e4b_v10@")
+    t02 = ("veljjanoski/v19@", "veljjanoski/e4b_bf@", "veljjanoski/e4b_bf_seq@")
+    p2 = pm[pm["lab"] == "veljjanoski"].copy()
+    p2["temp"] = np.where(p2["system"].str.startswith(t07), "0.7", np.where(p2["system"].str.startswith(t02), "0.2", "unknown"))
+    groups = {}
+    for (temp, mod), g in p2[p2["temp"] != "unknown"].groupby(["temp", "model"]):
+        groups[f"{temp} ({mod})"] = {"n_pairs": int(len(g)), "n_systems": int(g["system"].nunique()), "pooled": pooled(g)}
+    out["S10_temperature"] = {"lab": "L02", "groups": groups,
+                              "pairs_with_unknown_temperature": int((p2["temp"] == "unknown").sum())}
+
     def clean(x):
         if isinstance(x, dict):
             return {str(k): clean(v) for k, v in x.items()}

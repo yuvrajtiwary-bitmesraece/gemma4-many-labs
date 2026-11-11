@@ -137,9 +137,9 @@ Within-lab contrasts on shared tasks:
 **E4. Instability by difficulty.** On 99 tasks with repeated runs in at least 2 labs, replicate disagreement tracks the binomial expectation 2d(1-d) (Spearman 0.67); observed disagreement is 0.51 times that expectation. The 57 discriminating tasks carry 88.4% of all disagreement (mean 18.2% per task, against 3.4% for floor tasks).
 
 
-**E1. Development set versus leaderboard.** Compiled by hand from what labs state in their own documents (`data/sources/leaderboard_pairs.csv`, with file and wording per row); a description, not a measurement. 25 systems from 7 labs have both a development-set rate and a public-leaderboard score. The leaderboard score is lower in 24 of them; the ratio of leaderboard score to development-set rate has median 0.32 (interquartile range 0.23 to 0.51, range 0.15 to 1.80). Median development-set rate 35.4%, median leaderboard score 10.0%.
-Rank agreement within a lab between development-set rate and leaderboard score (Spearman): lspecian on eval113, 4 systems, -0.63; nishanthrjn on dev-16v, 5 systems, 0.36; veljjanoski on local dev40, 5 systems, 0.65.
-Labs also report 9 cases (5 labs) in which an identical submission was scored twice: 0.13/0.10, 0.13/0.12, 0.17/0.17, 0.15/0.12, 0.13/0.15, 0.06/0.05, 0.15/0.24, 0.18/0.13, 0.17/0.13. Mean absolute difference 3.1 points, median 3.0 points, largest 9.0 points. For comparison, two runs of one system on 58 tasks with the development-set flip rate would differ by 3.5 points on average (standard deviation of the difference 4.4 points).
+**E1. Development set versus leaderboard.** Compiled by hand from what labs state in their own documents (`data/sources/leaderboard_pairs.csv`, with file and wording per row); a description, not a measurement. Labs state 30 pairs of a development-set rate and a public-leaderboard score for one system (27 systems, 7 labs; a system measured on two development subsets gives two pairs). The leaderboard score is lower in 29 of them; the ratio of leaderboard score to development-set rate has median 0.28 (interquartile range 0.22 to 0.47, range 0.00 to 1.80). Median development-set rate 35.6%, median leaderboard score 10.0%.
+Rank agreement within a lab between development-set rate and leaderboard score (Spearman): nishanthrjn on dev-16v, 5 systems, 0.36; veljjanoski on local dev40, 5 systems, 0.65; veljjanoski on scorer stack valid61, 5 systems, 0.70.
+Labs also report 11 cases (5 labs) in which an identical submission was scored twice: 0.13/0.10, 0.13/0.12, 0.10/0.12, 0.17/0.17, 0.15/0.12, 0.13/0.15, 0.06/0.05, 0.15/0.24, 0.18/0.13, 0.13/0.13, 0.17/0.13. Mean absolute difference 2.7 points, median 2.0 points, largest 9.0 points. For comparison, two runs of one system on 58 tasks with the development-set flip rate would differ by 3.5 points on average (standard deviation of the difference 4.4 points).
 
 ## X1. Task validity (exploratory, added after the data were seen)
 
@@ -211,6 +211,7 @@ Each line changes one decision or definition and recomputes the affected quantit
 - **Without the 4 runs of L11 rebuilt from published flip lists:** 121 pairs in 8 labs, pooled flip rate 11.1%.
 - **Only pairs of runs on exactly the same task set:** 115 pairs in 6 labs, pooled flip rate 11.1%, mean absolute score difference 4.7 points.
 - **By model size:** 31B 12.3% (102 pairs, 8 labs); E2B 0.0% (7 pairs, 1 lab); E4B 6.6% (14 pairs, 1 lab). Systems that almost never succeed cannot flip.
+- **By sampling temperature within one lab:** temperature 0.2 (31B): 13.1% (1 pairs, 1 systems); temperature 0.2 (E4B): 5.9% (7 pairs, 2 systems); temperature 0.7 (31B): 13.3% (15 pairs, 5 systems); temperature 0.7 (E4B): 6.6% (6 pairs, 2 systems).
 - **Without the 8 early runs of L04 that resolve 0 or 1 of 60 tasks** (480 attempts): split-half reliability 0.80, floor / discriminating / ceiling 40 / 58 / 3, R² task 45.3%, pooled flip rate 11.2%.
 - **Floor thresholds.** Share of tasks at the floor: 40% of 101 tasks (at least 5 labs, solve rate at most 10%); 32% of 101 tasks (at least 5 labs, solve rate at most 5%); 59% of 101 tasks (at least 5 labs, solve rate at most 20%); 42% of 125 tasks (at least 3 labs, solve rate at most 10%); 36% of 66 tasks (at least 8 labs, solve rate at most 10%).
 - **Validity from the agreement of the four full audits** instead of one reference audit: 51 tasks fail with the reference patch in all four and 69 pass in all four. 24.6% of pooled attempts were made on the former (by lab 0.0% to 42.3%, median 17.0%); 5 of the 9 labs that attempted them resolved none, and 25 of the 51 were never resolved by any agent. Of the 40 floor tasks, 23 pass the reference patch in all four audits and 13 fail it in all four.
@@ -223,6 +224,27 @@ Each line changes one decision or definition and recomputes the affected quantit
 | Valid 68 tasks | 11.8% | 18.8 points | 8.9 points | 6.5 points | 4.3 points | 20 | 8 | 3 |
 | 60 tasks | 11.2% | 20.3 points | 9.5 points | 6.9 points | 4.5 points | 21 | 9 | 3 |
 | 30 tasks | 11.2% | 34.6 points | 15.1 points | 10.7 points | 6.9 points | 42 | 17 | 6 |
+
+## External validation (a dataset outside the source frame; not pooled)
+
+Zenodo record 23834104 (doi:10.5281/zenodo.23834104, Apache-2.0) holds the run records of a pre-registered study by a participant whose repository was not among the candidates: 4,056 attempts, 9 systems (Gemma 4 E4B, 12B and 26B-A4B at two or three scaffold levels), 39 runs with 3 or 5 seeds per system, on 104 development-set tasks, scored by the competition harness in a repaired Docker environment, sampling temperature 1.0. It was not used for any pooled estimate.
+
+- **Task difficulty carries over.** Across the 91 tasks that are in both sets and were attempted by at least 5 pooled labs, the per-task solve rate in this dataset correlates with the pooled consensus solve rate at Spearman 0.84 (by model: 12B 0.80, 26B-A4B 0.83, E4B 0.60). Mean solve rate here by the pooled class of the task: ceiling 92.8% (3 tasks); discriminating 32.5% (52 tasks); floor 1.9% (36 tasks). Of the 36 pooled floor tasks in this set, 27 were never resolved here in any run and 35 were resolved at most 10% of the time.
+- **Repeats disagree here too.** 69 pairs of runs that differ only in the seed: pooled flip rate 13.3% (by model: 12B 15.6%, 26B-A4B 15.4%, E4B 9.0%), against 11.2% in the pooled table, where most systems sample at temperature 0.2. Mean absolute difference in resolved tasks between two seeds: 2.5 points (largest 8.7). Run-to-run noise is 39.6% of outcome variance here, 25.2% in the pooled table.
+- **Variance components** on the balanced block of 6 systems x 104 tasks x 5 seeds: task 47.8%, system 2.8%, system x task 9.7%, run-to-run 39.7%.
+- **Reference-patch check.** In this author's repaired environment the reference patch resolves 106 of 129 tasks and the empty patch 2; the verdict equals that of the pooled Docker audit on 124 tasks, and 33 of the tasks that fail in the standard Kaggle sandbox resolve here. Agents' mean solve rate here by the task's status in the pooled reference audit: passes without patch 74.3% (3 tasks); reference patch fails in both 38.1% (2 tasks); reference patch fails on kaggle only 12.0% (31 tasks); valid 22.3% (68 tasks).
+
+| System (size and scaffold level) | Model | Seeds | Resolved of 104, per seed | Flip rate between seeds |
+|---|---|---|---|---|
+| 12B-max | 12B | 5 | 25, 19, 26, 27, 23 | 16.3% |
+| 12B-mid | 12B | 3 | 19, 25, 23 | 12.8% |
+| 12B-min | 12B | 5 | 26, 25, 27, 25, 28 | 15.6% |
+| 26B-A4B-max | 26B-A4B | 5 | 26, 28, 28, 27, 30 | 15.2% |
+| 26B-A4B-mid | 26B-A4B | 3 | 29, 29, 27 | 14.1% |
+| 26B-A4B-min | 26B-A4B | 5 | 24, 26, 29, 32, 33 | 16.0% |
+| E4B-max | E4B | 5 | 13, 15, 17, 18, 17 | 10.2% |
+| E4B-mid | E4B | 3 | 11, 14, 14 | 10.3% |
+| E4B-min | E4B | 5 | 10, 10, 11, 9, 12 | 7.5% |
 
 ## Tables and figures
 

@@ -246,5 +246,31 @@
    "60_tasks": 0.2075,
    "30_tasks": 0.3475
   }
+ },
+ "S10_temperature": {
+  "lab": "L02",
+  "groups": {
+   "0.2 (31B)": {
+    "n_pairs": 1,
+    "n_systems": 1,
+    "pooled": 0.13115
+   },
+   "0.2 (E4B)": {
+    "n_pairs": 7,
+    "n_systems": 2,
+    "pooled": 0.05855
+   },
+   "0.7 (31B)": {
+    "n_pairs": 15,
+    "n_systems": 5,
+    "pooled": 0.13325
+   },
+   "0.7 (E4B)": {
+    "n_pairs": 6,
+    "n_systems": 2,
+    "pooled": 0.06557
+   }
+  },
+  "pairs_with_unknown_temperature": 1
  }
 }
