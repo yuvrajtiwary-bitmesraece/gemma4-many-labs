@@ -39,6 +39,7 @@ Entry for the [Paper Track](https://www.kaggle.com/competitions/gemma-4-develope
 | `scripts/search_extended.py`, `scripts/extended_pool.py`, `data/sources/search_results_extended.json`, `data/derived/attempts_extended.csv`, `screening_extended.csv` | A broader search made after the results and the sources it added. They are kept out of every registered number and reported in their own section as a partial replication. |
 | `results/tables/tasks.csv`, `task_lists.json` | Per task: consensus solve rate, class, status in the sandbox audits, Rasch difficulty; and ready-made lists (valid tasks, tasks whose reference patch fails in every audit, the informative core). |
 | `DATASHEET.md` | What the pooled table is, how it was collected and what a user must know. |
+| `tools/check_numbers.py` | Lists the numbers in a text that do not occur in `results/RESULTS.md`: a check for anyone writing about these results. |
 | `results/` | `results.json`, `RESULTS.md` and the tables behind every figure. |
 | `paper/figures/` | Seven figures. |
 
