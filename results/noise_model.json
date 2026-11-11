@@ -1,0 +1,105 @@
+{
+ "scale_c_all_labs": 0.77827,
+ "in_sample": {
+  "n_pairs": 123,
+  "n_labs": 9,
+  "observed_flips": 587,
+  "predicted_flips": 587.0,
+  "ratio_observed_to_predicted_flips": 1.0,
+  "pearson_predicted_vs_observed_flips": 0.93501,
+  "sd_of_standardised_score_difference": 0.95842,
+  "coverage_of_95_band": 0.95935,
+  "coverage_of_95_band_mean_over_labs": 0.97593,
+  "coverage_by_lab": {
+   "L05": 1.0,
+   "L08": 1.0,
+   "L04": 1.0,
+   "L01": 0.95,
+   "L11": 1.0,
+   "L09": 1.0,
+   "L06": 0.83333,
+   "L02": 1.0,
+   "L12": 1.0
+  },
+  "mean_abs_score_difference_observed": 0.04683,
+  "mean_abs_score_difference_predicted": 0.05096
+ },
+ "unscaled_rasch_in_sample": {
+  "n_pairs": 123,
+  "n_labs": 9,
+  "observed_flips": 587,
+  "predicted_flips": 754.23447,
+  "ratio_observed_to_predicted_flips": 0.77827,
+  "pearson_predicted_vs_observed_flips": 0.93501,
+  "sd_of_standardised_score_difference": 0.84551,
+  "coverage_of_95_band": 0.95935,
+  "coverage_of_95_band_mean_over_labs": 0.97593,
+  "mean_abs_score_difference_observed": 0.04683,
+  "mean_abs_score_difference_predicted": 0.05777
+ },
+ "leave_one_lab_out": {
+  "n_pairs": 123,
+  "n_labs": 9,
+  "observed_flips": 587,
+  "predicted_flips": 603.14126,
+  "ratio_observed_to_predicted_flips": 0.97324,
+  "pearson_predicted_vs_observed_flips": 0.93139,
+  "sd_of_standardised_score_difference": 0.93989,
+  "coverage_of_95_band": 0.95935,
+  "coverage_of_95_band_mean_over_labs": 0.97593,
+  "coverage_by_lab": {
+   "L05": 1.0,
+   "L08": 1.0,
+   "L04": 1.0,
+   "L01": 0.95,
+   "L11": 1.0,
+   "L09": 1.0,
+   "L06": 0.83333,
+   "L02": 1.0,
+   "L12": 1.0
+  },
+  "mean_abs_score_difference_observed": 0.04683,
+  "mean_abs_score_difference_predicted": 0.05186
+ },
+ "scale_c_leave_one_lab_out": {
+  "L05": 0.80206,
+  "L08": 0.77431,
+  "L04": 0.79784,
+  "L01": 0.74304,
+  "L11": 0.77647,
+  "L09": 0.78242,
+  "L06": 0.77783,
+  "L02": 0.77322,
+  "L12": 0.778
+ },
+ "external_dataset": {
+  "n_pairs": 69,
+  "n_labs": 1,
+  "observed_flips": 956,
+  "predicted_flips": 847.26314,
+  "ratio_observed_to_predicted_flips": 1.12834,
+  "pearson_predicted_vs_observed_flips": 0.74905,
+  "sd_of_standardised_score_difference": 0.80475,
+  "coverage_of_95_band": 0.95652,
+  "coverage_of_95_band_mean_over_labs": 0.95652,
+  "mean_abs_score_difference_observed": 0.02508,
+  "mean_abs_score_difference_predicted": 0.02682,
+  "by_model": {
+   "12B": {
+    "n_pairs": 23,
+    "ratio_observed_to_predicted_flips": 1.2175,
+    "coverage_of_95_band": 0.95652
+   },
+   "26B-A4B": {
+    "n_pairs": 23,
+    "ratio_observed_to_predicted_flips": 1.20164,
+    "coverage_of_95_band": 0.91304
+   },
+   "E4B": {
+    "n_pairs": 23,
+    "ratio_observed_to_predicted_flips": 0.91731,
+    "coverage_of_95_band": 1.0
+   }
+  }
+ }
+}

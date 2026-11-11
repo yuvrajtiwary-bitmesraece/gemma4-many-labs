@@ -225,6 +225,30 @@ Each line changes one decision or definition and recomputes the affected quantit
 | 60 tasks | 11.2% | 20.3 points | 9.5 points | 6.9 points | 4.5 points | 21 | 9 | 3 |
 | 30 tasks | 11.2% | 34.6 points | 15.1 points | 10.7 points | 6.9 points | 42 | 17 | 6 |
 
+**What the noise means for a leaderboard of about 58 tasks** (the size labs infer for the public split). Probability that the better of two agents scores lower when each is scored once:
+
+| Setting | Flip rate | True gain 2 points | 3 points | 5 points | 10 points |
+|---|---|---|---|---|---|
+| 58 tasks, development-set flip rate | 11.2% | 33.7% | 27.2% | 17.2% | 4.9% |
+| 58 tasks, flip rate implied by the identical resubmissions (E1) | 6.8% | 30.4% | 23.2% | 13.4% | 3.1% |
+| 129 development tasks | 11.2% | 26.6% | 18.3% | 7.9% | 0.7% |
+
+Expected gain in the *best* score from submitting one unchanged agent N times:
+
+| Noise level | SD of one score | N = 2 | N = 3 | N = 5 | N = 10 | N = 20 |
+|---|---|---|---|---|---|---|
+| development-set flip rate | 3.1 points | 1.7 points | 2.6 points | 3.6 points | 4.8 points | 5.8 points |
+| flip rate implied by the identical resubmissions (E1) | 2.4 points | 1.4 points | 2.0 points | 2.8 points | 3.7 points | 4.5 points |
+
+## A noise band for a new lab (added after the results; not in the plan)
+
+Can the pooled data tell a team how far two runs of one agent will differ on its own task subset, before it has run a repeat? Model (`scripts/noise_model.py`): task difficulties from the pooled Rasch fit; the agent's ability set from its score on its tasks; two runs disagree on a task with probability 2p(1-p), scaled by one constant because real agents are more consistent than a one-parameter model implies.
+
+- Scale: observed flips are **0.78** of the unscaled prediction (587 observed in 123 pairs); leave-one-lab-out it ranges from 0.74 to 0.80.
+- **Leave one lab out** (difficulties and scale from the other labs, checked on the held-out lab's repeats): predicted 603 flips against 587 observed; correlation of predicted and observed flips across pairs 0.93; the 95% band for the score difference of two repeats covers **95.9%** of the 123 held-out pairs (mean over labs 97.6%); mean absolute score difference 4.7 points observed, 5.2 points predicted.
+- **External dataset** (band from the pool only; other model sizes, temperature 1.0): the 95% band covers 95.7% of its 69 pairs; observed flips are 1.13 times the prediction; mean absolute score difference 2.5 points observed, 2.7 points predicted.
+- `tools/compare_runs.py` applies the band to two sets of result files and says whether their difference is inside it, with the exact McNemar test (one run each) or an exact permutation test (several runs each) beside it, and the number of runs a given gain needs on those tasks. `scripts/test_compare_runs.py` checks it against the pooled repeats.
+
 ## External validation (a dataset outside the source frame; not pooled)
 
 Zenodo record 23834104 (doi:10.5281/zenodo.23834104, Apache-2.0) holds the run records of a pre-registered study by a participant whose repository was not among the candidates: 4,056 attempts, 9 systems (Gemma 4 E4B, 12B and 26B-A4B at two or three scaffold levels), 39 runs with 3 or 5 seeds per system, on 104 development-set tasks, scored by the competition harness in a repaired Docker environment, sampling temperature 1.0. It was not used for any pooled estimate.

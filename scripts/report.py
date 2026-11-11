@@ -384,6 +384,54 @@ def main(argv) -> int:
         L.append(table(rows, ["Tasks", "Flip rate", "k = 1", "k = 3", "k = 5", "k = 10", "Runs for 3 points",
                               "Runs for 5 points", "Runs for 10 points"]))
         L.append("")
+        if "S11_wrong_order" in s:
+            w, bn = s["S11_wrong_order"], s["S12_best_of_n"]
+            L.append("**What the noise means for a leaderboard of about 58 tasks** (the size labs infer for the public "
+                     "split). Probability that the better of two agents scores lower when each is scored once:\n")
+            names = {"development_set_flip_rate": "development-set flip rate",
+                     "implied_by_identical_resubmissions": "flip rate implied by the identical resubmissions (E1)"}
+            rows = [[f"58 tasks, {names.get(k, k)}", p(v["flip_rate"]), p(v["gain_2pt"]), p(v["gain_3pt"]), p(v["gain_5pt"]),
+                     p(v["gain_10pt"])] for k, v in w["leaderboard_58_tasks"].items()]
+            d129 = w["development_set_129_tasks"]
+            rows.append(["129 development tasks", p(s["S9_repeats"]["flip_rate_used"]["all_129_tasks"]), p(d129["gain_2pt"]),
+                         p(d129["gain_3pt"]), p(d129["gain_5pt"]), p(d129["gain_10pt"])])
+            L.append(table(rows, ["Setting", "Flip rate", "True gain 2 points", "3 points", "5 points", "10 points"]))
+            L.append("\nExpected gain in the *best* score from submitting one unchanged agent N times:\n")
+            rows = [[names.get(k, k), pts(v["sd_of_one_score"]), pts(v["n2"]), pts(v["n3"]), pts(v["n5"]), pts(v["n10"]),
+                     pts(v["n20"])] for k, v in bn.items() if isinstance(v, dict)]
+            L.append(table(rows, ["Noise level", "SD of one score", "N = 2", "N = 3", "N = 5", "N = 10", "N = 20"]))
+            L.append("")
+    nm_path = results / "noise_model.json"
+    if nm_path.exists():
+        nm = json.loads(nm_path.read_text(encoding="utf-8"))
+        lo, ins = nm["leave_one_lab_out"], nm["in_sample"]
+        L.append("## A noise band for a new lab (added after the results; not in the plan)\n")
+        L.append("Can the pooled data tell a team how far two runs of one agent will differ on its own task subset, "
+                 "before it has run a repeat? Model (`scripts/noise_model.py`): task difficulties from the pooled Rasch "
+                 "fit; the agent's ability set from its score on its tasks; two runs disagree on a task with probability "
+                 "2p(1-p), scaled by one constant because real agents are more consistent than a one-parameter model "
+                 "implies.\n")
+        L.append(f"- Scale: observed flips are **{f(nm['scale_c_all_labs'])}** of the unscaled prediction "
+                 f"({ins['observed_flips']} observed in {ins['n_pairs']} pairs); leave-one-lab-out it ranges from "
+                 f"{f(min(nm['scale_c_leave_one_lab_out'].values()))} to {f(max(nm['scale_c_leave_one_lab_out'].values()))}.")
+        L.append(f"- **Leave one lab out** (difficulties and scale from the other labs, checked on the held-out lab's "
+                 f"repeats): predicted {lo['predicted_flips']:.0f} flips against {lo['observed_flips']} observed; "
+                 f"correlation of predicted and observed flips across pairs {f(lo['pearson_predicted_vs_observed_flips'])}; "
+                 f"the 95% band for the score difference of two repeats covers **{p(lo['coverage_of_95_band'])}** of the "
+                 f"{lo['n_pairs']} held-out pairs (mean over labs {p(lo['coverage_of_95_band_mean_over_labs'])}); mean "
+                 f"absolute score difference {pts(lo['mean_abs_score_difference_observed'])} observed, "
+                 f"{pts(lo['mean_abs_score_difference_predicted'])} predicted.")
+        if "external_dataset" in nm:
+            ex = nm["external_dataset"]
+            L.append(f"- **External dataset** (band from the pool only; other model sizes, temperature 1.0): the 95% band "
+                     f"covers {p(ex['coverage_of_95_band'])} of its {ex['n_pairs']} pairs; observed flips are "
+                     f"{f(ex['ratio_observed_to_predicted_flips'])} times the prediction; mean absolute score difference "
+                     f"{pts(ex['mean_abs_score_difference_observed'])} observed, {pts(ex['mean_abs_score_difference_predicted'])} "
+                     f"predicted.")
+        L.append("- `tools/compare_runs.py` applies the band to two sets of result files and says whether their "
+                 "difference is inside it, with the exact McNemar test (one run each) or an exact permutation test "
+                 "(several runs each) beside it, and the number of runs a given gain needs on those tasks. "
+                 "`scripts/test_compare_runs.py` checks it against the pooled repeats.\n")
     ext_path = results / "external_validation.json"
     if ext_path.exists():
         e = json.loads(ext_path.read_text(encoding="utf-8"))

@@ -272,5 +272,49 @@
    }
   },
   "pairs_with_unknown_temperature": 1
+ },
+ "S11_wrong_order": {
+  "note": "probability that the better of two agents scores lower when each is run once on the same tasks",
+  "leaderboard_58_tasks": {
+   "development_set_flip_rate": {
+    "flip_rate": 0.11153,
+    "gain_2pt": 0.33725,
+    "gain_3pt": 0.27182,
+    "gain_5pt": 0.17171,
+    "gain_10pt": 0.04887
+   },
+   "implied_by_identical_resubmissions": {
+    "flip_rate": 0.06775,
+    "gain_2pt": 0.30356,
+    "gain_3pt": 0.23246,
+    "gain_5pt": 0.13357,
+    "gain_10pt": 0.03148
+   }
+  },
+  "development_set_129_tasks": {
+   "gain_2pt": 0.26555,
+   "gain_3pt": 0.18255,
+   "gain_5pt": 0.07883,
+   "gain_10pt": 0.00677
+  }
+ },
+ "S12_best_of_n": {
+  "note": "expected gain in the best score from submitting the same agent N times to a 58-task leaderboard",
+  "development_set_flip_rate": {
+   "sd_of_one_score": 0.03101,
+   "n2": 0.01749,
+   "n3": 0.02624,
+   "n5": 0.03606,
+   "n10": 0.04771,
+   "n20": 0.05791
+  },
+  "implied_by_identical_resubmissions": {
+   "sd_of_one_score": 0.02417,
+   "n2": 0.01363,
+   "n3": 0.02045,
+   "n5": 0.02811,
+   "n10": 0.03719,
+   "n20": 0.04513
+  }
  }
 }

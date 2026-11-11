@@ -186,6 +186,36 @@ def main() -> int:
     out["S10_temperature"] = {"lab": "L02", "groups": groups,
                               "pairs_with_unknown_temperature": int((p2["temp"] == "unknown").sum())}
 
+    # S11 / S12. What the noise means for a leaderboard of about 58 tasks.
+    # Two noise levels: the development-set flip rate, and the flip rate implied by the identical
+    # resubmissions that labs report (mean absolute difference m of two scores -> sd = m / sqrt(2/pi)).
+    from scipy import integrate, stats as st
+    n_lb = 58
+    e1 = res.get("E1_leaderboard", {})
+    m = (e1.get("identical_resubmissions") or {}).get("abs_difference", {}).get("mean")
+    levels = {"development_set_flip_rate": flip_all}
+    if m:
+        sd_diff = m / math.sqrt(2 / math.pi)
+        levels["implied_by_identical_resubmissions"] = sd_diff ** 2 * n_lb
+
+    def p_wrong(n, flip, gain):
+        return float(st.norm.cdf(-gain * math.sqrt(n) / math.sqrt(flip + gain)))
+
+    def expected_max(k):
+        f = lambda x: x * k * st.norm.pdf(x) * st.norm.cdf(x) ** (k - 1)      # noqa: E731
+        return float(integrate.quad(f, -10, 10)[0])
+
+    out["S11_wrong_order"] = {
+        "note": "probability that the better of two agents scores lower when each is run once on the same tasks",
+        "leaderboard_58_tasks": {name: {"flip_rate": flip, **{f"gain_{int(100 * g)}pt": p_wrong(n_lb, flip, g) for g in (0.02, 0.03, 0.05, 0.10)}}
+                                 for name, flip in levels.items()},
+        "development_set_129_tasks": {f"gain_{int(100 * g)}pt": p_wrong(129, flip_all, g) for g in (0.02, 0.03, 0.05, 0.10)}}
+    out["S12_best_of_n"] = {
+        "note": "expected gain in the best score from submitting the same agent N times to a 58-task leaderboard",
+        **{name: {"sd_of_one_score": math.sqrt(flip / n_lb / 2),
+                  **{f"n{k}": expected_max(k) * math.sqrt(flip / n_lb / 2) for k in (2, 3, 5, 10, 20)}}
+           for name, flip in levels.items()}}
+
     def clean(x):
         if isinstance(x, dict):
             return {str(k): clean(v) for k, v in x.items()}
