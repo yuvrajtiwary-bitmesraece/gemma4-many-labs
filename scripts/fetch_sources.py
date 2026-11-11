@@ -37,7 +37,11 @@ def gh_json(path: str):
 
 
 def main() -> int:
-    repos = json.loads(SEARCH.read_text(encoding="utf-8"))
+    # Without arguments: the registered frame (the six searches of the plan). With a search file as
+    # argument (data/sources/search_results_extended.json): the extended frame, added after the results.
+    search = Path(sys.argv[1]) if len(sys.argv) > 1 else SEARCH
+    frame = "extended" if len(sys.argv) > 1 else "registered"
+    repos = json.loads(search.read_text(encoding="utf-8"))
     manifest = {}
     if MANIFEST.exists():
         manifest = {m["repo"]: m for m in json.loads(MANIFEST.read_text(encoding="utf-8"))}
@@ -45,7 +49,7 @@ def main() -> int:
 
     for i, r in enumerate(repos, 1):
         full = r["fullName"]
-        entry = manifest.get(full, {"repo": full})
+        entry = manifest.get(full, {"repo": full, "frame": frame})
         entry.setdefault("description", r.get("description") or "")
         entry.setdefault("created_at", r.get("createdAt"))
         entry.setdefault("size_kb", r.get("size"))

@@ -505,6 +505,20 @@ def main(argv=()) -> int:
             e1["expected_mean_abs_difference_58_tasks_at_dev_flip_rate"] = float(np.sqrt(flip / 58) * np.sqrt(2 / np.pi))
         print("E1:", json.dumps(rnd(e1)), flush=True)
     t.sort_values("d").to_csv(TABLES / "tasks.csv", index=False, lineterminator="\n")
+    if "audit_status" in t.columns:
+        # Task lists a team can use directly.
+        all_pass = (t["kaggle_audits_passing"] == t["kaggle_audits"]) & (t["empty_patch_resolves"] == 0)
+        lists = {
+            "valid_in_reference_audit": sorted(t.loc[t["audit_status"] == "valid", "task"]),
+            "reference_patch_passes_in_all_full_audits_and_empty_patch_fails": sorted(t.loc[all_pass, "task"]),
+            "reference_patch_fails_in_all_full_audits": sorted(t.loc[t["kaggle_audits_passing"] == 0, "task"]),
+            "passes_without_patch_in_reference_audit": sorted(t.loc[t["empty_patch_resolves"] == 1, "task"]),
+            "informative_core_valid_and_discriminating": sorted(
+                t.loc[(t["audit_status"] == "valid") & (t["class"] == "discriminating"), "task"]),
+            "valid_but_at_the_floor": sorted(t.loc[(t["audit_status"] == "valid") & (t["class"] == "floor"), "task"]),
+        }
+        (TABLES / "task_lists.json").write_text(json.dumps(lists, indent=1) + "\n", encoding="utf-8")
+        res["task_lists"] = {k: len(v) for k, v in lists.items()}
     mat.rename(index=codes).sort_index().to_csv(TABLES / "lab_task_matrix.csv", lineterminator="\n")
 
     res["robustness"], lo = robustness(att, codes)

@@ -976,6 +976,14 @@
   "expected_sd_of_difference_58_tasks_at_dev_flip_rate": 0.04385,
   "expected_mean_abs_difference_58_tasks_at_dev_flip_rate": 0.03499
  },
+ "task_lists": {
+  "valid_in_reference_audit": 68,
+  "reference_patch_passes_in_all_full_audits_and_empty_patch_fails": 67,
+  "reference_patch_fails_in_all_full_audits": 51,
+  "passes_without_patch_in_reference_audit": 5,
+  "informative_core_valid_and_discriminating": 41,
+  "valid_but_at_the_floor": 24
+ },
  "robustness": {
   "all": {
    "n_attempts": 15112,

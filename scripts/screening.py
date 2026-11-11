@@ -1,13 +1,16 @@
 """Write the screening table: what happened to each of the candidate sources.
 
-One row per repository returned by the searches in ANALYSIS_PLAN.md section 3,
-with the stage at which it left the study or the amount of data it contributed.
+One row per repository returned by the searches, with the stage at which it
+left the study or the amount of data it contributed. The registered frame
+(the six searches of ANALYSIS_PLAN.md section 3) and the extended frame (the
+broader search made after the results, scripts/search_extended.py) are kept
+in separate files.
 
-    data/derived/screening.csv
-    data/derived/screening_summary.json
+    data/derived/screening.csv, screening_summary.json                    registered frame
+    data/derived/screening_extended.csv, screening_extended_summary.json  extended frame, if any
 
 Reads data/sources/manifest.json, the discovery and triage outputs under
-data/raw/ (not committed), the adapters' cards and data/derived/sources.csv.
+data/raw/ (not committed), the adapters' cards and the pooled tables.
 
     python scripts/screening.py
 """
@@ -16,7 +19,7 @@ from __future__ import annotations
 import csv
 import json
 import sys
-from collections import Counter
+from collections import Counter, defaultdict
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -29,26 +32,59 @@ DERIVED = srcio.ROOT / "data" / "derived"
 MIN_TEXT_IDS = 10
 
 
+def usage() -> dict:
+    """source -> attempts, runs, systems in the pooled table(s)."""
+    out = defaultdict(lambda: {"n_attempts": 0, "runs": set(), "systems": set()})
+    path = DERIVED / "attempts_extended.csv"
+    if not path.exists():
+        path = DERIVED / "attempts.csv"
+    with path.open(encoding="utf-8", newline="") as fh:
+        for r in csv.DictReader(fh):
+            u = out[r["source"]]
+            u["n_attempts"] += 1
+            u["runs"].add(r["run"])
+            u["systems"].add(r["system"])
+    return out
+
+
+def summarise(rows) -> dict:
+    stages = Counter(r["stage"] for r in rows)
+    fetched = [r for r in rows if r["stage"] != "not fetched"]
+    with_ids = [r for r in fetched if r["stage"] != "no development-set task identifiers"]
+    licensed = [r for r in with_ids if r["stage"] != "no licence"]
+    return {
+        "candidates": len(rows), "fetched": len(fetched),
+        "not_fetched": dict(Counter(r["detail"] for r in rows if r["stage"] == "not fetched")),
+        "with_dev_task_ids": len(with_ids), "of_those_licensed": len(licensed),
+        "used": stages["used"], "stages": dict(stages),
+        "licences_of_used": dict(Counter(r["licence_used"] for r in rows if r["stage"] == "used")),
+        "labs_used": len({r["source"].split("/")[0] for r in rows if r["stage"] == "used"}),
+        "attempts_used": sum(r["n_attempts"] for r in rows if r["stage"] == "used"),
+    }
+
+
 def main() -> int:
     manifest = json.loads(srcio.MANIFEST.read_text(encoding="utf-8"))
     cards = {m.REPO: getattr(m, "CARD", {}) for m in harmonize.load_adapters()}
-    used = {}
-    with (DERIVED / "sources.csv").open(encoding="utf-8", newline="") as fh:
-        for row in csv.DictReader(fh):
-            used[row["source"]] = row
-    rows = []
+    used = usage()
+    by_frame = defaultdict(list)
     for m in sorted(manifest, key=lambda m: m["repo"].lower()):
         repo, stem = m["repo"], m["repo"].replace("/", "__")
         row = {"source": repo, "commit": m.get("commit", ""), "github_licence": m.get("license_spdx") or "",
                "ids_in_json_csv": "", "ids_in_text": "", "licence_used": "", "licence_evidence": "",
                "stage": "", "detail": "", "n_attempts": 0, "n_runs": 0, "n_systems": 0}
+        frame = m.get("frame", "registered")
+        by_frame[frame].append(row)
         if m.get("status") != "fetched":
             row["stage"] = "not fetched"
-            row["detail"] = "empty repository" if m.get("status") == "no_commit" else "larger than 60 MB"
-            rows.append(row)
+            row["detail"] = {"no_commit": "empty repository", "too_large": "larger than 60 MB"}.get(m.get("status"), str(m.get("status")))
             continue
-        disc = json.loads((RAW / "_discovery" / f"{stem}.json").read_text(encoding="utf-8"))
-        tri = json.loads((RAW / "_triage" / f"{stem}.json").read_text(encoding="utf-8"))
+        disc_path, tri_path = RAW / "_discovery" / f"{stem}.json", RAW / "_triage" / f"{stem}.json"
+        if not disc_path.exists() or not tri_path.exists():
+            row["stage"], row["detail"] = "not screened", "discovery or triage output missing"
+            continue
+        disc = json.loads(disc_path.read_text(encoding="utf-8"))
+        tri = json.loads(tri_path.read_text(encoding="utf-8"))
         n_struct = max([max(f["id_keys"].values(), default=0) for f in disc["families"]] +
                        [f["n_name_ids"] for f in disc["families"]] + [0])
         n_text = max([f["n_ids"] for f in tri["text_files_with_task_ids"]] + [0])
@@ -66,31 +102,23 @@ def main() -> int:
             row["stage"] = "no licence" if "licence" in str(card.get("reason", "")).lower()[:12] else "no eligible records"
             row["detail"] = str(card.get("reason", ""))[:300]
         else:
-            u = used.get(repo, {})
-            n = int(u.get("n_attempts") or 0)
-            row.update(n_attempts=n, n_runs=int(u.get("n_runs") or 0), n_systems=int(u.get("n_systems") or 0))
+            u = used.get(repo)
+            n = u["n_attempts"] if u else 0
+            row.update(n_attempts=n, n_runs=len(u["runs"]) if u else 0, n_systems=len(u["systems"]) if u else 0)
             row["stage"] = "used" if n else "no eligible records"
             if not n:
                 row["detail"] = "no run with at least 10 development-set tasks after the common rules"
-        rows.append(row)
-    with (DERIVED / "screening.csv").open("w", newline="", encoding="utf-8") as fh:
-        w = csv.DictWriter(fh, fieldnames=list(rows[0].keys()), lineterminator="\n")
-        w.writeheader()
-        w.writerows(rows)
-    stages = Counter(r["stage"] for r in rows)
-    fetched = [r for r in rows if r["stage"] != "not fetched"]
-    with_ids = [r for r in fetched if r["stage"] != "no development-set task identifiers"]
-    licensed = [r for r in with_ids if r["stage"] != "no licence"]
-    summary = {
-        "candidates": len(rows), "fetched": len(fetched),
-        "not_fetched": dict(Counter(r["detail"] for r in rows if r["stage"] == "not fetched")),
-        "with_dev_task_ids": len(with_ids), "of_those_licensed": len(licensed),
-        "used": stages["used"], "stages": dict(stages),
-        "licences_of_used": dict(Counter(r["licence_used"] for r in rows if r["stage"] == "used")),
-        "labs_used": len({r["source"].split("/")[0] for r in rows if r["stage"] == "used"}),
-    }
-    (DERIVED / "screening_summary.json").write_text(json.dumps(summary, indent=1) + "\n", encoding="utf-8")
-    print(json.dumps(summary))
+    for frame, name in (("registered", "screening"), ("extended", "screening_extended")):
+        rows = by_frame.get(frame, [])
+        if not rows:
+            continue
+        with (DERIVED / f"{name}.csv").open("w", newline="", encoding="utf-8") as fh:
+            w = csv.DictWriter(fh, fieldnames=list(rows[0].keys()), lineterminator="\n")
+            w.writeheader()
+            w.writerows(rows)
+        summary = summarise(rows)
+        (DERIVED / f"{name}_summary.json").write_text(json.dumps(summary, indent=1) + "\n", encoding="utf-8")
+        print(frame, json.dumps(summary))
     return 0
 
 

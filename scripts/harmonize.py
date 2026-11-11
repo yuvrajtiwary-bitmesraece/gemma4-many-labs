@@ -182,9 +182,64 @@ def check(repo: str, show_runs: bool) -> int:
     return 1 if problems else 0
 
 
+def frame_of(repo: str) -> str:
+    """'registered' for sources of the plan's six searches, 'extended' for sources found later."""
+    return srcio.manifest()[repo].get("frame", "registered")
+
+
+def write_extended(mods, registered_dev_tasks) -> dict:
+    """Pooled table of the registered AND the extended frame, for the robustness analysis only."""
+    rows_all = []
+    for mod in mods:
+        card = getattr(mod, "CARD", {})
+        if not card.get("eligible"):
+            continue
+        rows, problems, _ = collect(mod)
+        if problems:
+            raise SystemExit(f"{mod.REPO}: {problems[0]}")
+        hashes = file_hashes(mod.REPO, {r["file"] for r in rows})
+        first = {}
+        for path in sorted(hashes):
+            first.setdefault(hashes[path], path)
+        seen = set()
+        for r in rows:
+            h = hashes.get(r["file"])
+            if h is not None and first[h] != r["file"]:
+                continue
+            key = (r["run"], r["task"])
+            if key in seen or r["task"] not in registered_dev_tasks:
+                continue
+            seen.add(key)
+            r["frame"] = frame_of(mod.REPO)
+            rows_all.append(r)
+    n_by_run = Counter(r["run"] for r in rows_all)
+    final = [r for r in rows_all if n_by_run[r["run"]] >= MIN_TASKS_PER_RUN]
+    with (DERIVED / "attempts_extended.csv").open("w", newline="", encoding="utf-8") as fh:
+        w = csv.DictWriter(fh, fieldnames=ATTEMPT_COLUMNS + ["frame"], lineterminator="\n")
+        w.writeheader()
+        w.writerows(final)
+    # Runs of different labs with the same outcome on every shared task: possible copies of one execution.
+    by_run = defaultdict(dict)
+    lab = {}
+    for r in final:
+        by_run[r["run"]][r["task"]] = r["y"]
+        lab[r["run"]] = r["lab"]
+    sig = defaultdict(list)
+    for run, m in by_run.items():
+        if sum(m.values()) >= 5:
+            sig[tuple(sorted(m.items()))].append(run)
+    twins = [v for v in sig.values() if len({lab[x] for x in v}) > 1]
+    return {"attempts": len(final), "runs": len(by_run), "labs": len(set(lab.values())),
+            "labs_extended_only": len({r["lab"] for r in final if r["frame"] == "extended"} -
+                                      {r["lab"] for r in final if r["frame"] == "registered"}),
+            "attempts_from_extended_frame": sum(r["frame"] == "extended" for r in final),
+            "identical_runs_across_labs": twins}
+
+
 def build() -> int:
     DERIVED.mkdir(parents=True, exist_ok=True)
-    mods = load_adapters()
+    all_mods = load_adapters()
+    mods = [m for m in all_mods if frame_of(m.REPO) == "registered"]
     log = {"sources": {}, "totals": Counter()}
     all_rows = []
     source_rows = []
@@ -315,8 +370,13 @@ def build() -> int:
                      "labs": len({r["lab"] for r in runs}), "sources_with_adapter": len(mods),
                      "sources_used": len(used), "tasks": len({r["task"] for r in final})}
     log["sources"] = {k: dict(v) for k, v in log["sources"].items()}
+    if len(all_mods) > len(mods):
+        log["extended_pool"] = write_extended(all_mods, dev)
     (DERIVED / "harmonize_log.json").write_text(json.dumps(log, indent=1) + "\n", encoding="utf-8")
     print(json.dumps(log["totals"]), json.dumps(log["dev_set"]))
+    if "extended_pool" in log:
+        print("extended pool:", json.dumps({k: v for k, v in log["extended_pool"].items() if k != "identical_runs_across_labs"}),
+              "identical runs across labs:", len(log["extended_pool"]["identical_runs_across_labs"]))
     return 0
 
 
