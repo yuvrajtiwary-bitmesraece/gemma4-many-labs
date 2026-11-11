@@ -746,6 +746,16 @@ def main(argv) -> int:
                      f"which stays out of the pool. **{ss['used']}** of those examined have at least one eligible run "
                      f"(`data/derived/screening_extended.csv` lists every candidate). They were processed by the same "
                      f"rules and are kept out of every number above. This is a partial check, not a second census.\n")
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import harmonize
+        ext_items = [i for m in harmonize.load_adapters() if harmonize.frame_of(m.REPO) == "extended"
+                     for i in getattr(m, "CARD", {}).get("reported_numbers", [])]
+        if ext_items:
+            L.append(f"The cards of these adapters record {len(ext_items)} numbers that the sources state about "
+                     f"themselves; the adapters reproduce {sum(1 for i in ext_items if i.get('match') is True)} and "
+                     f"differ on {sum(1 for i in ext_items if i.get('match') is False)} (explained in the cards). "
+                     f"Unlike the four largest registered sources, these adapters have not had a second, independent "
+                     f"reading.\n")
         a, b = xp["registered"], xp["registered_plus_extended"]
         rows = []
         for label, k, fmt in (("Labs", "labs", str), ("Attempts", "attempts", lambda v: f"{v:,}"), ("Systems", "systems", str),

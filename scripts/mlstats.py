@@ -597,7 +597,7 @@ def rasch_fit(att: pd.DataFrame, lam: float = 0.05) -> dict:
 
 def predict_subset(theta: float, b: pd.Series, tasks) -> float:
     """Expected resolve rate of a system with ability theta on a task subset."""
-    bb = b.reindex(list(tasks)).dropna().to_numpy()
+    bb = b.reindex(sorted(tasks)).dropna().to_numpy()      # sorted: a set has no fixed order, and the sum should
     return float(np.mean(expit(theta - bb))) if bb.size else float("nan")
 
 
