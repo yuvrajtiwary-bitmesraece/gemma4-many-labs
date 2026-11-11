@@ -698,9 +698,14 @@ def main(argv) -> int:
                      f"participants' repositories contain) returned {sl['distinct_repositories']} repositories, "
                      f"{sl['already_in_registered_frame']} of them already in the registered frame. Of the "
                      f"{ss['candidates']} new candidates, {ss['fetched']} were fetched, {ss['with_dev_task_ids']} contain "
-                     f"development-set task identifiers, {ss['of_those_licensed']} of those are licensed, and "
-                     f"**{ss['used']}** have at least one eligible run (`data/derived/screening_extended.csv`). They were "
-                     f"processed by the same rules and are kept out of every number above.\n")
+                     f"development-set task identifiers and {ss['of_those_licensed']} of those are licensed. "
+                     f"**{ss.get('licensed_and_examined', '?')}** of the licensed candidates were examined before the "
+                     f"deadline, in an order fixed from the structure of their files before any of their outcomes "
+                     f"was read; {ss.get('licensed_not_examined', 0)} were not examined and "
+                     f"{ss.get('external_validation_set', 0)} is the repository of the external validation dataset, "
+                     f"which stays out of the pool. **{ss['used']}** of those examined have at least one eligible run "
+                     f"(`data/derived/screening_extended.csv` lists every candidate). They were processed by the same "
+                     f"rules and are kept out of every number above. This is a partial check, not a second census.\n")
         a, b = xp["registered"], xp["registered_plus_extended"]
         rows = []
         for label, k, fmt in (("Labs", "labs", str), ("Attempts", "attempts", lambda v: f"{v:,}"), ("Systems", "systems", str),
@@ -712,9 +717,25 @@ def main(argv) -> int:
                               ("Run-to-run noise share", "noise_share", p),
                               ("Pairs of repeated runs", "flip_n_pairs", str), ("Labs with repeats", "flip_n_labs", str),
                               ("Pooled flip rate", "flip_pooled", p), ("Lab-median flip rate", "flip_lab_median", p),
-                              ("Detectable improvement on 129 tasks", "mdd_129", pts)):
-            rows.append([label, fmt(a[k]) if a.get(k) is not None else "n/a", fmt(b[k]) if b.get(k) is not None else "n/a"])
-        L.append(table(rows, ["Quantity", "Registered frame", "Registered + extended"]))
+                              ("Mean of the lab-level flip rates", "flip_lab_mean", p),
+                              ("... 95% t interval", "flip_lab_mean_t_ci95", lambda v: f"{p(v[0])} to {p(v[1])}"),
+                              ("Detectable improvement on 129 tasks (planned calculation)", "mdd_129", pts)):
+            c = xp.get("extended_sources_only", {})
+            rows.append([label] + [fmt(z[k]) if z.get(k) is not None else "n/a" for z in (a, c, b)])
+        L.append(table(rows, ["Quantity", "Registered frame", "Extended sources alone", "Registered + extended"]))
+        big = [(name, z.get("pairs_with_100_or_more_shared_tasks")) for name, z in
+               (("registered frame", a), ("extended sources", xp.get("extended_sources_only", {})))]
+        big = [(name, z) for name, z in big if z and z.get("n_pairs")]
+        if big:
+            L.append("\nPairs of repeats that cover at least 100 tasks: " + "; ".join(
+                f"{name}: {z['n_pairs']} pairs in {n_of(z['n_labs'], 'lab')}, flip rate {p(z['pooled'])}, mean absolute "
+                f"score difference {pts(z['mean_abs_score_difference'])}" for name, z in big) + ".")
+        tw = xp.get("runs_of_different_labs_with_identical_outcomes") or []
+        if tw:
+            L.append(f"\n{n_of(len(tw), 'pair')} of runs from different labs has identical outcomes on every shared task "
+                     f"(" + "; ".join(" and ".join(f"`{x}`" for x in t) for t in tw) + "): two E4B agents on the same 72 "
+                     f"tasks that resolve the same 9. Neither repository refers to the other and the records come from "
+                     f"different pipelines, so both are kept as separate executions.")
         extra = []
         if "difficulty_registered_vs_new_labs" in xp:
             dv = xp["difficulty_registered_vs_new_labs"]

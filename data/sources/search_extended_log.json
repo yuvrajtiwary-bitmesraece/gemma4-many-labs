@@ -1,0 +1,159 @@
+{
+ "created_from": "2026-08-01",
+ "repo_queries": {
+  "gemma4 swe agent": 0,
+  "gemma 4 swe agent": 17,
+  "swegemma": 4,
+  "gemma4 coding agent": 0,
+  "gemma 4 coding agent": 20,
+  "gemma4 agent kaggle": 0,
+  "gemma 4 kaggle agent": 1,
+  "gemma4 kaggle": 0,
+  "gemma4 swe-bench": 0,
+  "gemma 4 software engineering agent": 2,
+  "gemma4 scaffold": 0,
+  "gemma4 paper": 0,
+  "gemma 4 paper track": 19,
+  "gemma developer agent": 5,
+  "gemma4 bug fix agent": 0,
+  "gemma4 agent": 1,
+  "gemma-4 agent": 52,
+  "kaggle gemma 4 competition": 1,
+  "gemma4 competition": 0,
+  "gemma 4 developer": 100,
+  "gemma4 developer": 2,
+  "gemma agent paper": 1,
+  "gemma4 lora agent": 0,
+  "gemma 4 31b agent": 2,
+  "gemma 4 e4b agent": 1
+ },
+ "code_queries": {
+  "\"fastapi_15589\"": {
+   "files": 100,
+   "repositories": 26
+  },
+  "\"fastapi_14372\"": {
+   "files": 100,
+   "repositories": 18
+  },
+  "\"fastapi_14851\"": {
+   "files": 100,
+   "repositories": 20
+  },
+  "\"fastapi_11194\"": {
+   "files": 100,
+   "repositories": 28
+  },
+  "\"fastapi_15661\"": {
+   "files": 100,
+   "repositories": 25
+  },
+  "\"fastapi_14077\"": {
+   "files": 100,
+   "repositories": 25
+  },
+  "\"fastapi_13537\"": {
+   "files": 100,
+   "repositories": 19
+  },
+  "\"fastapi_15023\"": {
+   "files": 100,
+   "repositories": 26
+  },
+  "\"fastapi_14794\"": {
+   "files": 100,
+   "repositories": 19
+  },
+  "\"fastapi_14186\"": {
+   "files": 100,
+   "repositories": 29
+  },
+  "\"rich_4077\"": {
+   "files": 100,
+   "repositories": 16
+  },
+  "\"rich_3930\"": {
+   "files": 100,
+   "repositories": 21
+  },
+  "\"rich_3006\"": {
+   "files": 100,
+   "repositories": 12
+  },
+  "\"rich_3953\"": {
+   "files": 100,
+   "repositories": 19
+  },
+  "\"rich_3772\"": {
+   "files": 100,
+   "repositories": 16
+  },
+  "\"rich_3471\"": {
+   "files": 100,
+   "repositories": 16
+  },
+  "\"rich_3944\"": {
+   "files": 100,
+   "repositories": 23
+  },
+  "\"requests_7205\"": {
+   "files": 100,
+   "repositories": 24
+  },
+  "\"requests_6644\"": {
+   "files": 100,
+   "repositories": 14
+  },
+  "\"requests_7315\"": {
+   "files": 100,
+   "repositories": 27
+  },
+  "\"requests_7433\"": {
+   "files": 100,
+   "repositories": 26
+  },
+  "\"httpx_3672\"": {
+   "files": 100,
+   "repositories": 24
+  },
+  "\"gemma-4-31b-it-qat-w4a16-ct\"": {
+   "files": 100,
+   "repositories": 34
+  },
+  "\"gemma-4-e4b-it-qat-w4a16-ct\"": {
+   "files": 100,
+   "repositories": 27
+  },
+  "\"gemma-4-12b-it-qat-w4a16-ct\"": {
+   "files": 100,
+   "repositories": 31
+  },
+  "\"gemma-4-e2b-it-qat-w4a16-ct\"": {
+   "files": 64,
+   "repositories": 25
+  },
+  "swegemma evaluate": {
+   "files": 2,
+   "repositories": 2
+  },
+  "swegemma summary.jsonl": {
+   "files": 0,
+   "repositories": 0
+  },
+  "adk-submission agent.yaml gemma": {
+   "files": 0,
+   "repositories": 0
+  }
+ },
+ "distinct_repositories": 265,
+ "already_in_registered_frame": 114,
+ "new_candidates": 127,
+ "dropped": {
+  "fork": 0,
+  "created_before": 12,
+  "too_large": 12,
+  "no_metadata": 0,
+  "off_topic": 0
+ },
+ "new_with_code_hit": 45
+}

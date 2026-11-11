@@ -31,7 +31,7 @@ pass/fail outcome.
 | `status` | the source's own status text, shortened |
 | `file` | path of the file in the source that the row comes from |
 
-Size: 15,112 attempts, 14 labs, 260 systems, 346 runs, 129 tasks; 3,832 resolved.
+Size: 15,112 attempts, 14 labs, 259 systems, 346 runs, 129 tasks; 3,829 resolved.
 265 runs use the 31B model, 65 E4B, 16 E2B. 309 runs were scored by the
 competition harness. 50 systems have repeated runs.
 
@@ -45,6 +45,10 @@ Beside it:
 - `dev_tasks.txt`: the 129 task identifiers.
 - `external_zenodo_attempts.csv`: a separate dataset in the same columns
   (Zenodo record 23834104), used only to test estimates, never pooled.
+- `attempts_extended.csv`: the same table plus 9,876 attempts from nine sources
+  found by a broader search after the results (column `frame` says which rows
+  are which). It is used only for the replication section of the report;
+  `screening_extended.csv` lists the candidates of that search.
 - `results/tables/tasks.csv`: per task, the consensus solve rate, the number of
   labs, its class, its status in the sandbox audits, its Rasch difficulty and
   how often repeats disagree on it. `results/tables/task_lists.json` holds
@@ -68,20 +72,29 @@ runs with fewer than 10 tasks, no hidden-test results.
 3. One adapter per source (`scripts/adapters/`) maps its files to the columns
    above and records the evidence for every decision. The common rules are in
    `scripts/adapters/README.md`.
-4. Checks: the adapters reproduce 120 of 131 numbers that the sources state
-   about themselves (the rest are explained per adapter); the three largest
-   sources (72% of the rows) were re-counted from the raw files with separate
-   code, with no disagreement.
+4. Checks: the adapters reproduce 119 of 131 numbers that the sources state
+   about themselves (the rest are explained per adapter); the four largest
+   sources (83% of the rows) were re-counted from the raw files with separate
+   code, with no disagreement in the outcome. Three of them were audited in
+   depth; the corrections that followed are Amendment 4 of `DEVIATIONS.md`.
 
 ## Things a user must know
 
 - **Not a random sample.** Labs published what they chose to publish. Three
   labs supply 72% of the rows; weight labs equally (as the analyses here do)
   or the largest lab dominates.
-- **A failure is not always the agent's failure.** In the standard sandbox the
-  reference patch itself fails on 51 to 56 of the 129 tasks. Some labs left
-  such tasks out of their runs, others ran them and recorded failures. Use
-  `results/tables/tasks.csv` (`audit_status`) to separate the two.
+- **A failure is not always the agent's failure.** In the stock sandbox the
+  reference patch itself fails on 51 of the 129 tasks in all four independent
+  audits (and four audits disagree on 9 more). Some labs left such tasks out of
+  their runs, others ran them and recorded failures, and four labs changed the
+  test environment and resolve some of them. Use `results/tables/tasks.csv`
+  (`audit_status`) to separate these cases.
+- **Some outcomes are known to be unreliable.** Eight early runs of one lab
+  (480 attempts, all failures) were scored in a test environment that could
+  not import the packages of 37 of their 60 tasks. They are kept because the
+  lab presents them as valid; the card of that adapter and sensitivity
+  analysis S3 give the details. Three attempts recorded as resolved with an
+  empty patch are coded as failures.
 - **Labs differ** in agent, budget, hardware, harness version and sandbox.
   The table records these differences where the source states them; it does
   not remove them.
@@ -100,7 +113,8 @@ tasks in different environments), or any claim about the hidden test set.
 
 ## Licence and credit
 
-The rows are facts taken from repositories under Apache-2.0, MIT or MIT-0;
+The rows are facts taken from repositories under Apache-2.0, MIT or MIT-0
+(and CC BY 4.0 for two sources of the extended table);
 `sources.csv` names each repository, its commit and its licence. The credit
 for every run belongs to the lab that produced it; cite the labs' own work
 when you use their runs. The compilation and the code are Apache-2.0.

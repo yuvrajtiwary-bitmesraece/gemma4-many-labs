@@ -1,0 +1,2280 @@
+[
+ {
+  "fullName": "abastosmikel-bit/gemma4-agent-paper",
+  "description": "",
+  "createdAt": "2026-10-21T22:21:37Z",
+  "size": 3053,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-07T23:09:06Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "abzokhattab/kg-code-review-thesis",
+  "description": "Code and assets for the Master's thesis on KG-augmented LLM code review (HPI, 2026)",
+  "createdAt": "2026-10-07T13:12:28Z",
+  "size": 39605,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-07T21:13:26Z",
+  "via": [
+   "code:\"requests_7433\""
+  ],
+  "example_paths": [
+   "experiments/2026-07-06_user_study_prs/assemble_study_draft.py",
+   "experiments/2026-07-06_user_study_prs/build_answer_key.py",
+   "experiments/2026-07-06_user_study_prs/build_evidence.py",
+   "experiments/2026-07-06_user_study_prs/generate_reviews.py",
+   "experiments/2026-07-06_user_study_prs/judge_reviews.py"
+  ]
+ },
+ {
+  "fullName": "acquayefrank/graft",
+  "description": "",
+  "createdAt": "2026-10-19T19:44:12Z",
+  "size": 1688,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-08T12:38:50Z",
+  "via": [
+   "code:\"fastapi_14077\"",
+   "code:\"fastapi_14186\"",
+   "code:\"fastapi_14794\"",
+   "code:\"rich_3930\""
+  ],
+  "example_paths": [
+   "eval/dev10.json",
+   "eval/dev30.json",
+   "eval/gold_calibration.jsonl"
+  ]
+ },
+ {
+  "fullName": "Agnuxo1/small-juries-early-verdicts",
+  "description": "A local Gemma 4 jury reads the first 10 steps of a SWE-agent run, predicts failure, and lets a fixed budget resolve 29% more issues. Pre-registered study, Gemma 4 Paper Track.",
+  "createdAt": "2026-10-28T07:52:12Z",
+  "size": 5034,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 1,
+  "updatedAt": "2026-11-07T21:30:38Z",
+  "via": [
+   "repos:gemma 4 paper track"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "agustindiazcano/apart-research-swarm-alignment",
+  "description": "LLM swarm infection testbed: split-canary prompt injection, 4 guardrails (lexical, micro-LLM, graph, tiered). Python, asyncio, scikit-learn, matplotlib, LaTeX. Gemma 4 31B agents, DeepSeek V4 Flash guardrail. Swarm Alignment Hackathon 2026.",
+  "createdAt": "2026-11-08T04:46:45Z",
+  "size": 41918,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-09T12:16:10Z",
+  "via": [
+   "repos:gemma 4 31b agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "akhileshvinnakota5/gemma4-swe-agent",
+  "description": "An offline, consumer-grade autonomous software engineering agent built using the ReAct framework",
+  "createdAt": "2026-09-26T03:29:43Z",
+  "size": 3,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-09-26T03:29:48Z",
+  "via": [
+   "repos:gemma 4 swe agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "akhterquddus-ops/plsql-fix",
+  "description": "PL/SQL bug-fix benchmark: does Oracle's dependency graph help a local Gemma 4 agent?",
+  "createdAt": "2026-10-21T15:11:10Z",
+  "size": 1352,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-28T19:46:27Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "Alex-Ust/Gemma_Kaggle",
+  "description": "",
+  "createdAt": "2026-10-18T20:41:24Z",
+  "size": 7473,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-11T08:23:24Z",
+  "via": [
+   "code:\"fastapi_11194\"",
+   "code:\"fastapi_13537\"",
+   "code:\"fastapi_14077\"",
+   "code:\"fastapi_14186\"",
+   "code:\"fastapi_14372\"",
+   "code:\"fastapi_14794\"",
+   "code:\"fastapi_14851\"",
+   "code:\"fastapi_15023\"",
+   "code:\"fastapi_15589\"",
+   "code:\"fastapi_15661\"",
+   "code:\"gemma-4-12b-it-qat-w4a16-ct\"",
+   "code:\"gemma-4-e2b-it-qat-w4a16-ct\""
+  ],
+  "example_paths": [
+   "data/task_sets.json",
+   "research/failure_taxonomy/group_1.jsonl",
+   "research/task_sets.json",
+   "runs/v02-no-graph-smoke/run.json",
+   "runs/v21-lora-v3-pod/run.json",
+   "runs/v23-public-lb024-pod105c3/run.json"
+  ]
+ },
+ {
+  "fullName": "AliceMessi/born-after-the-cutoff",
+  "description": "Contamination-controlled code-localization benchmark for small Gemma 4 agents",
+  "createdAt": "2026-11-05T07:51:59Z",
+  "size": 323,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-05T07:52:34Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "amber90-dev/gemma-pr-swarm",
+  "description": "A swarm of Gemma 4 agents that reviews GitHub PRs and catches Hacktoberfest spam",
+  "createdAt": "2026-10-24T08:28:07Z",
+  "size": 23,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-24T10:08:00Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "Anandk0/gemma4-agent",
+  "description": "",
+  "createdAt": "2026-09-03T09:48:36Z",
+  "size": 13,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-09-03T10:23:22Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "Ankith-m1006/ghosts-in-the-loop",
+  "description": "Gemma 4 coding agents install packages that don't exist: harness, frozen prompts, results (Kaggle paper)",
+  "createdAt": "2026-11-08T02:09:44Z",
+  "size": 413,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-08T02:30:21Z",
+  "via": [
+   "repos:gemma 4 coding agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "aoxendine3/gemma_developer_agent_paper_submission",
+  "description": "",
+  "createdAt": "2026-10-04T02:50:27Z",
+  "size": 2749,
+  "license": {
+   "key": "other"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-06T19:52:47Z",
+  "via": [
+   "code:\"gemma-4-31b-it-qat-w4a16-ct\"",
+   "repos:gemma developer agent"
+  ],
+  "example_paths": [
+   "adk_agent.py",
+   "agent.yaml",
+   "hexcell/gemma_agent.py"
+  ]
+ },
+ {
+  "fullName": "AraceliFradejas/tailorcode-gemma-developer-agent",
+  "description": "A Python debugging skill and visual learning lab, evolved from a Kaggle Gemma competition experiment into an independent portfolio project.",
+  "createdAt": "2026-09-26T12:07:03Z",
+  "size": 1585,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-17T18:28:16Z",
+  "via": [
+   "code:\"rich_4077\"",
+   "repos:gemma developer agent"
+  ],
+  "example_paths": [
+   "evaluation/smoke-suite.json",
+   "scripts/check_smoke_environment.py"
+  ]
+ },
+ {
+  "fullName": "arjunkshah12345-hash/gemma4-context-pruning",
+  "description": "Query-aware context pruning for Gemma 4 coding agents (Kaggle entry)",
+  "createdAt": "2026-11-01T00:09:56Z",
+  "size": 508,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-01T00:33:17Z",
+  "via": [
+   "repos:gemma 4 coding agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "arjunprabhulal/gemma4-agent",
+  "description": "Multimodal terminal agent (Text, Voice, Vision ) with Google Gemma 4",
+  "createdAt": "2026-08-07T18:50:21Z",
+  "size": 2462,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 4,
+  "updatedAt": "2026-10-21T09:07:06Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "Arubad/Gemma_post-training",
+  "description": "kaggle competition attempt",
+  "createdAt": "2026-10-29T14:02:04Z",
+  "size": 974,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-04T07:22:00Z",
+  "via": [
+   "code:\"gemma-4-12b-it-qat-w4a16-ct\"",
+   "code:\"gemma-4-31b-it-qat-w4a16-ct\"",
+   "code:\"gemma-4-e2b-it-qat-w4a16-ct\"",
+   "code:\"gemma-4-e4b-it-qat-w4a16-ct\""
+  ],
+  "example_paths": [
+   "gemma_swe/constants.py",
+   "notebooks/nb02_verify_gpu.py",
+   "notebooks/nb03_train_e4b.py",
+   "notebooks/nb04_local_eval.py",
+   "notebooks/nb05_rft_round.py",
+   "notebooks/nb06_package_finals.py"
+  ]
+ },
+ {
+  "fullName": "Ashura-asura/gemma4-coding-agent",
+  "description": "",
+  "createdAt": "2026-09-25T09:28:59Z",
+  "size": 18177,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 1,
+  "updatedAt": "2026-10-28T20:25:31Z",
+  "via": [
+   "repos:gemma 4 coding agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "athleticcoder21/coding-agent-hackathon",
+  "description": "",
+  "createdAt": "2026-10-14T15:26:47Z",
+  "size": 98,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-14T19:04:53Z",
+  "via": [
+   "code:\"gemma-4-31b-it-qat-w4a16-ct\""
+  ],
+  "example_paths": [
+   "scripts/validate_official.py"
+  ]
+ },
+ {
+  "fullName": "belemcrizan/Aeris_Competition",
+  "description": "",
+  "createdAt": "2026-09-24T17:11:08Z",
+  "size": 207,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-09-24T19:32:49Z",
+  "via": [
+   "code:\"gemma-4-31b-it-qat-w4a16-ct\""
+  ],
+  "example_paths": [
+   "aeris_comp/constants.py",
+   "aeris_comp/variants.py"
+  ]
+ },
+ {
+  "fullName": "Benadict-Git/codegraph-loc",
+  "description": "Laptop-scale code graphs and function-level gold locations for graph-guided bug localization with small local LLM agents (Gemma 4 Paper Track)",
+  "createdAt": "2026-09-26T12:23:13Z",
+  "size": 447,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-09T10:32:33Z",
+  "via": [
+   "repos:gemma 4 paper track"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "bhayuadhipramana-glitch/gemma-4-swe-agent-research",
+  "description": "",
+  "createdAt": "2026-10-29T12:51:00Z",
+  "size": 8,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-30T03:19:20Z",
+  "via": [
+   "repos:gemma 4 swe agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "Blackl1stV35/gemma4-agent-localization",
+  "description": "",
+  "createdAt": "2026-11-07T15:34:47Z",
+  "size": 592,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-09T07:54:25Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "bleymambwe/gemma-dev-agent-benchmark",
+  "description": "Reproducible Gemma developer agent benchmark kit",
+  "createdAt": "2026-10-20T15:35:25Z",
+  "size": 24,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 1,
+  "updatedAt": "2026-10-23T12:18:14Z",
+  "via": [
+   "repos:gemma developer agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "brainiac-star/Gemma-4-Developer",
+  "description": "",
+  "createdAt": "2026-10-18T17:19:25Z",
+  "size": 0,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-18T17:19:26Z",
+  "via": [
+   "repos:gemma 4 developer"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "bsw0610/gemma4-swe-harness-audit",
+  "description": "Audit of the Gemma 4 Developer Agent harness (swegemma): tools vs documentation, a localisation skill, context overflow",
+  "createdAt": "2026-11-04T18:47:42Z",
+  "size": 595,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-10T15:33:17Z",
+  "via": [
+   "repos:swegemma"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "callmeharshh/celo-stable-agent",
+  "description": "On-device Gemma 4 agent for Ripio wFIAT stablecoin payments on Celo \u2014 Agents on Open Rails hackathon",
+  "createdAt": "2026-11-04T08:43:59Z",
+  "size": 13876,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-04T09:01:43Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "catlikeflyer/repotopology",
+  "description": "",
+  "createdAt": "2026-10-25T00:40:44Z",
+  "size": 293,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-25T16:01:27Z",
+  "via": [
+   "code:\"gemma-4-31b-it-qat-w4a16-ct\""
+  ],
+  "example_paths": [
+   "repotopology/package_submission.py"
+  ]
+ },
+ {
+  "fullName": "Chandra142/gamma-4-graph-sleuth-agent",
+  "description": "Topological Code-Graph Distillation and Neuro-Symbolic Navigation for Local Gemma 4 SWE Agents",
+  "createdAt": "2026-11-02T11:18:00Z",
+  "size": 697,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-02T11:40:04Z",
+  "via": [
+   "repos:gemma 4 swe agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "CharlieHerbst331/gemma4-agent-lab",
+  "description": "Offline Gemma 4 coding-agent prototypes, official harness evaluation, and redacted experiment findings",
+  "createdAt": "2026-10-07T00:55:15Z",
+  "size": 1283,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-04T06:01:24Z",
+  "via": [
+   "repos:gemma 4 coding agent",
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "CodersAcademy006/gemma4-artifact-labels",
+  "description": "Label files + self-checking scripts auditing the Gemma 4 Developer Agent competition's tasks.jsonl and code graphs (edge types, hunk reachability, prompt leakage, withheld test spec)",
+  "createdAt": "2026-11-03T04:45:57Z",
+  "size": 50,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-03T04:46:07Z",
+  "via": [
+   "code:\"fastapi_14077\"",
+   "code:\"fastapi_14186\"",
+   "code:\"fastapi_14851\"",
+   "code:\"fastapi_15023\"",
+   "code:\"requests_7205\"",
+   "code:\"requests_7315\"",
+   "code:\"requests_7433\""
+  ],
+  "example_paths": [
+   "reachability.jsonl",
+   "task_inputs.jsonl"
+  ]
+ },
+ {
+  "fullName": "CodeTorso/walter-asset-copilot",
+  "description": "Walter: an oil-field asset intelligence copilot. Gemma 4 agent with a named crew, A2UI cards with cited evidence, shared and private memory, feedback and conflict handling. FlytBase Hack Day 2026.",
+  "createdAt": "2026-10-17T10:06:37Z",
+  "size": 759,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-17T11:39:56Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "DesignMaster-Solutions/where-the-fix-lives",
+  "description": "Where the Fix Lives: code-graph structure of bug localization and a training-free prior for small local models (Gemma 4 Paper Track)",
+  "createdAt": "2026-11-01T20:12:47Z",
+  "size": 266,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-02T08:43:48Z",
+  "via": [
+   "code:\"fastapi_14077\"",
+   "code:\"fastapi_14186\"",
+   "code:\"fastapi_14851\"",
+   "code:\"fastapi_15023\"",
+   "code:\"requests_7205\"",
+   "code:\"requests_7315\"",
+   "code:\"requests_7433\"",
+   "repos:gemma 4 paper track"
+  ],
+  "example_paths": [
+   "results/llm_predictions.jsonl"
+  ]
+ },
+ {
+  "fullName": "dhairya-pandya/beam-apprentice",
+  "description": "A coding-agent gym where Beam's test-verified reasoning teaches a small model to fix real bugs",
+  "createdAt": "2026-10-22T20:12:12Z",
+  "size": 108,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-26T05:48:38Z",
+  "via": [
+   "code:\"fastapi_11194\"",
+   "code:\"fastapi_13537\"",
+   "code:\"fastapi_14186\"",
+   "code:\"fastapi_14372\"",
+   "code:\"fastapi_14794\"",
+   "code:\"fastapi_15023\"",
+   "code:\"fastapi_15589\"",
+   "code:\"fastapi_15661\"",
+   "code:\"httpx_3672\"",
+   "code:\"requests_6644\"",
+   "code:\"requests_7205\"",
+   "code:\"requests_7315\""
+  ],
+  "example_paths": [
+   "splits/v1.json"
+  ]
+ },
+ {
+  "fullName": "divya234-hue/gemma4-autonomous-coding-agent",
+  "description": "An autonomous AI software engineering agent powered by Gemma 4, featuring multi-agent code analysis, root-cause investigation, automated testing strategies, and safe code modification workflows.",
+  "createdAt": "2026-11-06T10:25:31Z",
+  "size": 37,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-06T15:09:46Z",
+  "via": [
+   "code:\"gemma-4-e4b-it-qat-w4a16-ct\""
+  ],
+  "example_paths": [
+   "evaluation/experiment_card.json"
+  ]
+ },
+ {
+  "fullName": "draculess99/Gemma4-Coding-Agent-Research",
+  "description": "Reproducible Gemma 4 coding-agent research on deterministic test feedback, editing failures, and task resolution.",
+  "createdAt": "2026-11-09T20:17:37Z",
+  "size": 1566,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-09T21:07:54Z",
+  "via": [
+   "repos:gemma 4 coding agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "dustinober1/Gemma-4-developer",
+  "description": "",
+  "createdAt": "2026-10-30T23:06:49Z",
+  "size": 357,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-30T23:26:16Z",
+  "via": [
+   "code:\"fastapi_14077\"",
+   "code:\"fastapi_14186\"",
+   "code:\"fastapi_15023\"",
+   "code:\"gemma-4-12b-it-qat-w4a16-ct\"",
+   "code:\"gemma-4-e2b-it-qat-w4a16-ct\"",
+   "code:\"gemma-4-e4b-it-qat-w4a16-ct\"",
+   "code:\"httpx_3672\"",
+   "code:\"requests_7315\"",
+   "code:\"rich_3471\"",
+   "repos:gemma 4 developer"
+  ],
+  "example_paths": [
+   "data/eda_summary.json",
+   "data/tasks_minidev.jsonl",
+   "scripts/build_submission.py"
+  ]
+ },
+ {
+  "fullName": "Fearoff5214/Gemma_4_Kaggle_hackathon",
+  "description": "",
+  "createdAt": "2026-10-21T12:40:31Z",
+  "size": 65,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-23T11:33:57Z",
+  "via": [
+   "code:\"gemma-4-12b-it-qat-w4a16-ct\"",
+   "code:\"gemma-4-e2b-it-qat-w4a16-ct\"",
+   "code:\"gemma-4-e4b-it-qat-w4a16-ct\""
+  ],
+  "example_paths": [
+   "scripts/build_submission.py"
+  ]
+ },
+ {
+  "fullName": "Finerium/axi-paper-release",
+  "description": "Public files of the two Gemma 4 paper-track writeups (AXI): data, pre-registrations, recompute script, PDFs",
+  "createdAt": "2026-11-10T06:54:35Z",
+  "size": 351,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-10T08:27:42Z",
+  "via": [
+   "repos:gemma 4 paper track"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "frenzy2004/Polaris",
+  "description": "Local Gemma 4 agents for review-first clinical paging coordination",
+  "createdAt": "2026-08-09T21:02:01Z",
+  "size": 1710,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-08-10T06:15:01Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "gandli/local-ai-registry-zh",
+  "description": "Local AI Registry \u4e2d\u6587\u7248\uff08fork 0xSero/local-ai-registry\uff09\u2014 \u601d\u6e90\u9ed1\u4f53",
+  "createdAt": "2026-09-01T01:55:09Z",
+  "size": 6957,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-09-01T02:00:43Z",
+  "via": [
+   "code:\"gemma-4-e2b-it-qat-w4a16-ct\""
+  ],
+  "example_paths": [
+   "registry/benchmark/aime-2026.json",
+   "registry/benchmark/hle.json",
+   "registry/benchmark/math.json",
+   "registry/benchmark/mmlu-pro.json",
+   "registry/benchmark/mmmu.json"
+  ]
+ },
+ {
+  "fullName": "GeorgeRCAdamJohnson/Gemma_Competition",
+  "description": "",
+  "createdAt": "2026-10-10T05:04:46Z",
+  "size": 22380,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-11T05:56:36Z",
+  "via": [
+   "code:\"fastapi_11194\"",
+   "code:\"fastapi_13537\"",
+   "code:\"fastapi_14077\"",
+   "code:\"fastapi_14186\"",
+   "code:\"fastapi_14372\"",
+   "code:\"fastapi_14794\"",
+   "code:\"fastapi_14851\"",
+   "code:\"fastapi_15023\"",
+   "code:\"fastapi_15589\"",
+   "code:\"fastapi_15661\"",
+   "code:\"gemma-4-12b-it-qat-w4a16-ct\"",
+   "code:\"gemma-4-31b-it-qat-w4a16-ct\""
+  ],
+  "example_paths": [
+   "Outputs/_31b_always.json",
+   "Outputs/_bc_read.py",
+   "Outputs/_mechanism_drill.py",
+   "Outputs/_timeout_ab_read.py",
+   "Outputs/_viz_all.py",
+   "_gemma4_get.txt"
+  ]
+ },
+ {
+  "fullName": "granbellllc-png/gemma-wayfinder-agent",
+  "description": "Topological Code-Graph Slicing and Banach Fixed-Point Convergence for On-Device Gemma 4 SWE Agents",
+  "createdAt": "2026-11-10T16:51:39Z",
+  "size": 266,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-10T21:45:39Z",
+  "via": [
+   "repos:gemma 4 swe agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "guangyusong/gemma4-fresh-tasks-public",
+  "description": "1,566 audited Python coding tasks with labels, Gemma 4 outcomes and a timed scorer (Kaggle Gemma 4 paper track)",
+  "createdAt": "2026-10-31T08:21:37Z",
+  "size": 10196,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-31T08:22:05Z",
+  "via": [
+   "repos:gemma 4 paper track"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "HashanEranga/swegemma",
+  "description": "",
+  "createdAt": "2026-10-08T09:30:11Z",
+  "size": 118,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-15T16:05:02Z",
+  "via": [
+   "repos:swegemma"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "HRDevelops/gemma4-compute-allocation",
+  "description": "Gemma Agent Competition",
+  "createdAt": "2026-11-01T16:07:32Z",
+  "size": 1154,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-04T07:41:35Z",
+  "via": [
+   "code:\"fastapi_14186\"",
+   "code:\"fastapi_14851\"",
+   "code:\"fastapi_15023\"",
+   "code:\"gemma-4-31b-it-qat-w4a16-ct\"",
+   "code:\"requests_7205\"",
+   "code:\"requests_7315\"",
+   "code:\"requests_7433\""
+  ],
+  "example_paths": [
+   "code/hpc/run_agent.py",
+   "results/baseline/judge_scores.jsonl",
+   "results/baseline/seed0_task_results.jsonl",
+   "results/baseline/seed1_task_results.jsonl",
+   "results/baseline/seed4_task_results.jsonl",
+   "results/task_env_manifest.json"
+  ]
+ },
+ {
+  "fullName": "IzbassarO/gemma4-agent-lab",
+  "description": "",
+  "createdAt": "2026-10-02T22:09:07Z",
+  "size": 1132,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 1,
+  "updatedAt": "2026-10-11T15:19:52Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "JayGupta2003/gemma4-swe-agent-posttraining",
+  "description": "Gemma4 Post-training Kaggle Competition",
+  "createdAt": "2026-11-10T16:06:08Z",
+  "size": 2141,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-11T06:47:17Z",
+  "via": [
+   "repos:gemma 4 swe agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "jctux/gemma4-tool-faithful-distill",
+  "description": "Tool-faithful trajectory distillation for a small Gemma 4 SWE agent (Kaggle paper track): harness bridge, soundness controls, negative results",
+  "createdAt": "2026-11-10T14:14:17Z",
+  "size": 247,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-10T14:14:32Z",
+  "via": [
+   "repos:gemma 4 swe agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "JGM-droid/Gemma-coding-agent",
+  "description": "Autonomous coding agent that investigates software issues, edits code, runs tests, and verifies patches using Gemma and the official swegemma harness.",
+  "createdAt": "2026-09-25T21:53:48Z",
+  "size": 356,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-09-28T21:29:03Z",
+  "via": [
+   "repos:swegemma"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "Julian-Genuario/small-agent-stopping-rules",
+  "description": "When should a small repair agent stop testing? Held-out-test benchmark and Gemma 4 E2B results (Kaggle Gemma 4 Paper Track).",
+  "createdAt": "2026-11-06T17:34:13Z",
+  "size": 614,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-06T17:44:52Z",
+  "via": [
+   "repos:gemma 4 paper track"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "junicusmaximus/gemma4-agent-audit",
+  "description": "Verification package for the paper Different Collapse Outcomes After Finetuning on Successful Trajectories",
+  "createdAt": "2026-11-10T04:55:54Z",
+  "size": 3865,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-10T05:08:30Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "kawchar85/gemma4-agent-leaderboard",
+  "description": "",
+  "createdAt": "2026-10-01T08:48:50Z",
+  "size": 12182,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-01T01:59:56Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "kelbah29/browser-agent",
+  "description": "Exposure AI Academy Project 8 \u2014 Browser Use + Gemma 4 31B + Agent Lab",
+  "createdAt": "2026-08-10T18:16:14Z",
+  "size": 21,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-08-10T19:58:43Z",
+  "via": [
+   "repos:gemma 4 31b agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "kennedydot2004/gemma-agent-paper",
+  "description": "ool Budgets on a Laptop is a CPU-only pilot study of Gemma 4 E2B and E4B as local code-fixing agents. We evaluate both models across 57 hand-authored Python bug-fix tasks, comparing six configurations that vary the available tools and whether the model\u2019s thinking mode is enabled.  ",
+  "createdAt": "2026-10-16T17:22:27Z",
+  "size": 512,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-16T17:28:34Z",
+  "via": [
+   "repos:gemma agent paper"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "kesavsivakumar/gemma-dev-agent",
+  "description": "Kaggle Gemma 4 competition",
+  "createdAt": "2026-10-24T20:33:42Z",
+  "size": 1,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-24T21:08:42Z",
+  "via": [
+   "repos:kaggle gemma 4 competition"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "kim-bayern-dev/KI-Video-Analyse-Tool-Archivar",
+  "description": "Videoanalysen mithilfe von KI durchf\u00fchren",
+  "createdAt": "2026-10-12T09:05:35Z",
+  "size": 2398,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 2,
+  "updatedAt": "2026-10-29T09:56:46Z",
+  "via": [
+   "code:\"gemma-4-e4b-it-qat-w4a16-ct\""
+  ],
+  "example_paths": [
+   "Gemma4-E4B-QAT-W4A16/scripts/bench_mm2.py",
+   "archivar-poc/archivar.config.ts"
+  ]
+ },
+ {
+  "fullName": "knakra92/1profile",
+  "description": "One profile for your personal details, shared section by section with the people you approve. iOS app, provider portal, Gemma 4 agents.",
+  "createdAt": "2026-10-24T17:25:31Z",
+  "size": 3690,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-24T18:35:28Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "leomaxuz/repomem",
+  "description": "RepoMem: a distance-controlled code-memory benchmark and PFK-agent graph-retrieval working memory for small Gemma 4 code agents",
+  "createdAt": "2026-11-10T10:08:11Z",
+  "size": 8399,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-10T12:11:42Z",
+  "via": [
+   "repos:gemma 4 coding agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "lionel509/Switchboard",
+  "description": "Provider switching in Claude Code's /model picker \u2014 route to OpenRouter models alongside your Anthropic subscription",
+  "createdAt": "2026-09-01T00:27:29Z",
+  "size": 4175,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-26T15:09:46Z",
+  "via": [
+   "code:\"gemma-4-31b-it-qat-w4a16-ct\""
+  ],
+  "example_paths": [
+   "router.py"
+  ]
+ },
+ {
+  "fullName": "LittleExian/gemma4-agent-training-evaluation",
+  "description": "Gemma 4 W4 LoRA training and 129-task evaluation: execution code, environment profiles, generated patches, metrics and provenance.",
+  "createdAt": "2026-10-22T14:11:11Z",
+  "size": 16044,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-26T11:44:11Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "m-ibrahim-khalil/gemma4-graphswap",
+  "description": "Does rebuilding the code graph and embeddings help a Gemma 4 coding agent resolve issues? Pre-registered study, Kaggle Gemma 4 paper track.",
+  "createdAt": "2026-11-07T18:30:44Z",
+  "size": 1119,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-07T18:31:13Z",
+  "via": [
+   "repos:gemma 4 coding agent",
+   "repos:gemma 4 paper track"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "M4-on-Github/Gemma4_Dev_Agent_Kaggle",
+  "description": "",
+  "createdAt": "2026-10-12T21:03:57Z",
+  "size": 3904,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-11T06:07:29Z",
+  "via": [
+   "code:\"fastapi_13537\"",
+   "code:\"fastapi_15589\"",
+   "code:\"fastapi_15661\"",
+   "code:\"gemma-4-31b-it-qat-w4a16-ct\"",
+   "code:\"gemma-4-e2b-it-qat-w4a16-ct\"",
+   "code:\"gemma-4-e4b-it-qat-w4a16-ct\"",
+   "code:\"httpx_3672\"",
+   "code:\"requests_6644\"",
+   "code:\"requests_7205\"",
+   "code:\"requests_7315\"",
+   "code:\"rich_3006\"",
+   "code:\"rich_3953\""
+  ],
+  "example_paths": [
+   ".claude/skills/harness-stack/reference/small-variants.md",
+   "experiments/EXP-020-today-plan.md",
+   "experiments/EXP-033-e4b-single-loop-smoke8.md",
+   "experiments/EXP-036/aggregates.json",
+   "experiments/EXP-036/summary.jsonl",
+   "experiments/EXP-037/desk_checks.json"
+  ]
+ },
+ {
+  "fullName": "Manimaran-tech/gemma4-dual-integrity-agents",
+  "description": "Source-Bound Execution Provenance and Dynamic KV-Cache Precision Management for Autonomous Gemma 4 Coding Agents",
+  "createdAt": "2026-11-01T09:48:14Z",
+  "size": 9216,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-01T09:51:57Z",
+  "via": [
+   "repos:gemma 4 coding agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "Mattbusel/swegraph-lite",
+  "description": "Who should drive the graph? Harness- vs model-driven bug localization for on-device Gemma 4 agents, plus SWE-Graph Lite (SWE-bench Lite as competition-format code graphs)",
+  "createdAt": "2026-11-01T19:21:17Z",
+  "size": 4491,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-01T19:27:14Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "MaximumCell/thunder",
+  "description": "Conversational AI studio for video and image generation: a Gemma 4 agent refines your brief, BytePlus Seedance/Seedream render it on an infinite canvas.",
+  "createdAt": "2026-09-19T06:48:02Z",
+  "size": 39535,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-22T18:07:24Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "MaxwellBrohm/maxgpt-planck",
+  "description": "Finding the smallest language model that can hold a real multi-turn conversation",
+  "createdAt": "2026-09-24T13:44:55Z",
+  "size": 39499,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-08T16:36:08Z",
+  "via": [
+   "code:\"gemma-4-12b-it-qat-w4a16-ct\""
+  ],
+  "example_paths": [
+   "pipeline/teachers/serve.py"
+  ]
+ },
+ {
+  "fullName": "mayankgoel214/homecrew",
+  "description": "Point your phone at your apartment: Gemma 4 agents inspect it, cite Virginia tenant law, and build your evidence file and repair paperwork. GDG Build with AI x Hacktoberfest 2026 @ Virginia Tech.",
+  "createdAt": "2026-10-24T16:39:34Z",
+  "size": 6298,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-25T09:04:42Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "mobius-style/gemma4-scaffold-capacity",
+  "description": "Scaffolding helps the smallest Gemma 4 agent, not the larger ones: pre-registered 3 capacities x 2 scaffold levels x 5 seeds on 104 SWE tasks; run records, analysis code, grader repair. Apache-2.0.",
+  "createdAt": "2026-10-30T17:17:58Z",
+  "size": 3354,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-31T10:14:43Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "Moriyuki-S/kaggle_ws",
+  "description": "Kaggle Workspace",
+  "createdAt": "2026-10-25T16:50:52Z",
+  "size": 219,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-09T14:52:32Z",
+  "via": [
+   "code:\"gemma-4-12b-it-qat-w4a16-ct\"",
+   "code:\"gemma-4-e2b-it-qat-w4a16-ct\"",
+   "code:\"gemma-4-e4b-it-qat-w4a16-ct\""
+  ],
+  "example_paths": [
+   "competitions/gemma-4-developer-agent/exp/exp001/build_submission.py",
+   "competitions/gemma-4-developer-agent/exp/exp002/build_submission.py",
+   "competitions/gemma-4-developer-agent/exp/exp003/build_submission.py",
+   "competitions/gemma-4-developer-agent/exp/exp004/build_submission.py"
+  ]
+ },
+ {
+  "fullName": "nawazdev/faultlines",
+  "description": "Failure taxonomy, labeled traces and a safe tool-call repair library (toolguard) for local Gemma 4 coding agents.",
+  "createdAt": "2026-10-05T22:37:35Z",
+  "size": 264,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-14T00:45:01Z",
+  "via": [
+   "repos:gemma 4 coding agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "nicknnamsa/gemma4-swe-agent",
+  "description": "",
+  "createdAt": "2026-09-27T09:49:02Z",
+  "size": 53,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-09-27T09:51:16Z",
+  "via": [
+   "repos:gemma 4 swe agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "nishanthrjn/init-Lego-AI-Operating-Layer",
+  "description": "Initial - Lego-AI-Operating-Layer",
+  "createdAt": "2026-09-15T18:07:55Z",
+  "size": 36481,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-26T17:48:25Z",
+  "via": [
+   "code:\"fastapi_11194\"",
+   "code:\"fastapi_14186\"",
+   "code:\"fastapi_15023\"",
+   "code:\"fastapi_15589\"",
+   "code:\"gemma-4-e2b-it-qat-w4a16-ct\"",
+   "code:\"httpx_3672\"",
+   "code:\"requests_7315\"",
+   "code:\"rich_3471\""
+  ],
+  "example_paths": [
+   "experiments/gemma4_competition/local_eval/dev-16v.json",
+   "experiments/gemma4_competition/local_eval/evidence/controls-05706c6a.json",
+   "experiments/gemma4_competition/local_eval/evidence/gold-locations.json",
+   "experiments/gemma4_competition/local_eval/localization.py",
+   "experiments/gemma4_competition/local_eval/subsets.json",
+   "experiments/gemma4_competition/source-register.json"
+  ]
+ },
+ {
+  "fullName": "noomesh/noomesh",
+  "description": "noomesh: a private, self-hosted AI mesh for your own machines (AGPL-3.0)",
+  "createdAt": "2026-10-13T15:36:09Z",
+  "size": 17869,
+  "license": {
+   "key": "agpl-3.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-11T03:52:02Z",
+  "via": [
+   "code:\"gemma-4-12b-it-qat-w4a16-ct\""
+  ],
+  "example_paths": [
+   "gateway-rust/src/harness_fit.rs",
+   "gateway-rust/src/model_capabilities.rs"
+  ]
+ },
+ {
+  "fullName": "ns-0437/gemma4-agent-lab",
+  "description": "Reproducible Gemma 4 coding-agent experiments, frozen releases, honest results, and CPU-only validation.",
+  "createdAt": "2026-09-27T09:30:24Z",
+  "size": 225,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-09-30T16:05:42Z",
+  "via": [
+   "repos:gemma 4 coding agent",
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "oanaunc/Kaggriculture",
+  "description": "",
+  "createdAt": "2026-09-27T06:24:42Z",
+  "size": 2543,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-19T00:13:35Z",
+  "via": [
+   "code:\"httpx_3672\""
+  ],
+  "example_paths": [
+   "gemma/tools/dry_run_mock.py"
+  ]
+ },
+ {
+  "fullName": "Piyushsahu99/agentbench-gemma",
+  "description": "An open benchmark + evaluation toolkit for measuring how Gemma 4 coding agents actually solve software-engineering tasks.",
+  "createdAt": "2026-09-24T16:47:19Z",
+  "size": 21,
+  "license": {
+   "key": "other"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-09-24T17:07:09Z",
+  "via": [
+   "repos:gemma 4 coding agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "pranav-6944/GraphRL-SWE",
+  "description": "GraphRL-SWE: Graph-Guided Reinforcement Learning for Efficient Code Agent Navigation on Consumer Hardware (Google Gemma 4 Paper Track)",
+  "createdAt": "2026-10-16T06:05:02Z",
+  "size": 1049,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-16T06:08:00Z",
+  "via": [
+   "repos:gemma 4 paper track"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "Pruthvirajcodes/walter-asset-copilot",
+  "description": "Walter: an oil-field asset intelligence copilot. Gemma 4 agent with a named crew, A2UI cards with cited evidence, shared and private memory, feedback and conflict handling. FlytBase Hack Day 2026.",
+  "createdAt": "2026-10-17T13:01:38Z",
+  "size": 616,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-17T13:02:14Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "rajab-rajab/GEMMA-4-AGENT-PAPERTRACK",
+  "description": "A research framework for evaluating reliable local Gemma 4 code repair using typed evidence graphs, reproducible bug validation, and traceable verification.",
+  "createdAt": "2026-10-04T21:09:36Z",
+  "size": 53880,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-04T21:45:53Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "rapha18th/ouroboros",
+  "description": "Ouroboros: a pre-registered study of Beam-1.0's expert routing on its own agent work",
+  "createdAt": "2026-11-02T13:42:21Z",
+  "size": 2643,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-02T21:18:42Z",
+  "via": [
+   "code:\"fastapi_13537\"",
+   "code:\"fastapi_14794\"",
+   "code:\"fastapi_15589\"",
+   "code:\"fastapi_15661\"",
+   "code:\"requests_7433\"",
+   "code:\"rich_3471\"",
+   "code:\"rich_3930\"",
+   "code:\"rich_3944\"",
+   "code:\"rich_3953\""
+  ],
+  "example_paths": [
+   "ouroboros/render/tripwire.py",
+   "ouroboros/stageb.py"
+  ]
+ },
+ {
+  "fullName": "Rayboy2002/gemma4-agent-preregistration",
+  "description": "Timestamped predictions and SHA-256 commitments for a Gemma 4 Developer Agent Kaggle entry and paper",
+  "createdAt": "2026-10-15T04:23:13Z",
+  "size": 15,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-07T08:36:06Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "renorai/gemma4-memory-study",
+  "description": "Code, data and pre-registration for the paper One Run Is Not Enough: a pre-registered test of finding re-injection in a small Gemma 4 coding agent.",
+  "createdAt": "2026-11-10T20:50:23Z",
+  "size": 1765,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-10T22:10:22Z",
+  "via": [
+   "repos:gemma 4 coding agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "reute-oss/gemma4-agentplatform-workshop",
+  "description": "",
+  "createdAt": "2026-08-10T10:16:11Z",
+  "size": 8,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-08-10T10:17:19Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "richie1988/gemma4-evidence-first-swe-agent",
+  "description": "Graph-guided evidence-first software repair agent for the Google Gemma 4 Developer Agent Competition by Richard Sikaonga.",
+  "createdAt": "2026-09-25T08:20:27Z",
+  "size": 15,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-09-25T10:47:32Z",
+  "via": [
+   "code:\"gemma-4-31b-it-qat-w4a16-ct\""
+  ],
+  "example_paths": [
+   "validate_submission.py"
+  ]
+ },
+ {
+  "fullName": "rocksolid911/gemma4-code-graph-ablation",
+  "description": "Code, configs and per-run numbers for the Kaggle Gemma 4 Paper Track writeup 'Finding the Code Isn't the Problem'",
+  "createdAt": "2026-11-09T15:02:44Z",
+  "size": 840,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-09T15:03:51Z",
+  "via": [
+   "code:\"fastapi_14077\"",
+   "code:\"fastapi_14851\"",
+   "code:\"gemma-4-12b-it-qat-w4a16-ct\"",
+   "code:\"gemma-4-31b-it-qat-w4a16-ct\"",
+   "code:\"gemma-4-e2b-it-qat-w4a16-ct\"",
+   "code:\"gemma-4-e4b-it-qat-w4a16-ct\"",
+   "code:\"httpx_3672\"",
+   "code:\"requests_6644\"",
+   "code:\"requests_7433\"",
+   "code:\"rich_3006\"",
+   "code:\"rich_3471\"",
+   "repos:gemma 4 paper track"
+  ],
+  "example_paths": [
+   "experiments/20261023-e4b-e8-s0/summary.json",
+   "experiments/20261023-e4b-e8-s0/tasks/httpx_3672.json",
+   "experiments/20261023-e4b-e8-s0/tasks/rich_3471.json",
+   "experiments/20261024-e4b-e4off-s1/summary.json",
+   "experiments/20261024-e4b-e4off-s1/tasks/rich_3471.json",
+   "experiments/20261024-e4b-e4off-s2/summary.json"
+  ]
+ },
+ {
+  "fullName": "sagarml4949/gemma4-swe-agent",
+  "description": "Autonomous SWE agent on Gemma-4 31B: ADK agent config, mined SWE training data, and LoRA recipes",
+  "createdAt": "2026-09-28T18:32:02Z",
+  "size": 9354,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-09-28T18:41:57Z",
+  "via": [
+   "repos:gemma 4 swe agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "Sai-Ishaan/Gemma_4_Agent",
+  "description": "Part of a Study that investigates a resource-conscious approach to local code generation and refinement",
+  "createdAt": "2026-10-01T09:55:44Z",
+  "size": 270,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-31T12:25:08Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "SamsondareHUB/Codegraph-agent",
+  "description": "Graph-based bug localization for Gemma 4 agents",
+  "createdAt": "2026-10-07T14:54:30Z",
+  "size": 21,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-07T15:02:40Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "satiricalguru/Gemma-graph-nav",
+  "description": "Should a small LLM navigate your code graph, or should the graph navigate for it? Gemma 4 study on a 16 GB Mac (Kaggle Paper Track)",
+  "createdAt": "2026-10-04T11:50:15Z",
+  "size": 1128,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 1,
+  "updatedAt": "2026-10-05T16:15:38Z",
+  "via": [
+   "code:\"fastapi_14186\"",
+   "code:\"gemma-4-31b-it-qat-w4a16-ct\""
+  ],
+  "example_paths": [
+   "results/runs/apn_cv/no_llm/seed0/tasks_public.jsonl",
+   "scripts/make_kaggle_kernel.py"
+  ]
+ },
+ {
+  "fullName": "satish9177/gemma4-agent-posttraining-research",
+  "description": "Preregistered research on Gemma 4 coding agents: thinking, tool use, trajectory SFT, evaluation, and train/serve consistency.",
+  "createdAt": "2026-10-27T11:40:31Z",
+  "size": 770,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-28T06:49:33Z",
+  "via": [
+   "repos:gemma 4 coding agent",
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "satyarthshukla500/hidden-test-agent-kit",
+  "description": "Evaluation kit for small-model SWE agents under hidden tests. Companion code and prompts for the paper No Test to Anchor On.",
+  "createdAt": "2026-11-10T05:39:39Z",
+  "size": 2679,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-11T08:24:53Z",
+  "via": [
+   "code:\"fastapi_11194\"",
+   "code:\"fastapi_13537\"",
+   "code:\"fastapi_14077\"",
+   "code:\"fastapi_14186\"",
+   "code:\"fastapi_14372\"",
+   "code:\"fastapi_14794\"",
+   "code:\"fastapi_14851\"",
+   "code:\"fastapi_15023\"",
+   "code:\"fastapi_15589\"",
+   "code:\"fastapi_15661\"",
+   "code:\"gemma-4-12b-it-qat-w4a16-ct\"",
+   "code:\"gemma-4-31b-it-qat-w4a16-ct\""
+  ],
+  "example_paths": [
+   "results/heldout-p03/buckets.json",
+   "results/heldout-p07/buckets.json",
+   "results/p01/buckets.json",
+   "results/p03/buckets.json",
+   "results/p08bsmoke/buckets.json",
+   "results/p08csmoke/buckets.json"
+  ]
+ },
+ {
+  "fullName": "saurin16/mind-the-map",
+  "description": "Auditing and repairing the Gemma 4 agent code graphs (Kaggle paper track)",
+  "createdAt": "2026-11-05T01:56:46Z",
+  "size": 401,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-09T04:17:24Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "shaileshvats/inheritance-engine",
+  "description": "Find forgotten software. Understand it. Restore it. Give it a future. Local Gemma 4 agents inherit abandoned repos, repair them in a sandbox, and prove every fix.",
+  "createdAt": "2026-10-28T08:45:35Z",
+  "size": 30592,
+  "license": {
+   "key": "other"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-01T06:43:42Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "shawnbaako/gemma4-agent-failure-analysis",
+  "description": "Where a small-model coding agent loses tasks: tool-call mechanics, stop-token supervision and missing issue text (Gemma 4)",
+  "createdAt": "2026-11-10T21:31:59Z",
+  "size": 225,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-10T22:11:40Z",
+  "via": [
+   "code:\"fastapi_11194\"",
+   "code:\"fastapi_13537\"",
+   "code:\"fastapi_14077\"",
+   "code:\"fastapi_14372\"",
+   "code:\"fastapi_14794\"",
+   "code:\"fastapi_14851\"",
+   "code:\"rich_3006\"",
+   "code:\"rich_3471\"",
+   "code:\"rich_3772\"",
+   "code:\"rich_3930\"",
+   "code:\"rich_3944\"",
+   "code:\"rich_3953\""
+  ],
+  "example_paths": [
+   "results/issue_oracle_tasks.json",
+   "results/pools.json"
+  ]
+ },
+ {
+  "fullName": "SheikhAbdullahNasir/gemma-harness",
+  "description": "A drop-in wrapper for the google-genai SDK that ensures Gemma 4 agents never fail silently.",
+  "createdAt": "2026-10-24T10:13:36Z",
+  "size": 6,
+  "license": {
+   "key": "other"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-24T16:04:59Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "Shengboj0324/Gemma-4-Agentic-Platform",
+  "description": "",
+  "createdAt": "2026-10-06T07:41:19Z",
+  "size": 34488,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-29T19:41:29Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "ShreySharma07/gemma4-swe-agent",
+  "description": "",
+  "createdAt": "2026-10-06T15:04:02Z",
+  "size": 35539,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-11T06:50:08Z",
+  "via": [
+   "repos:gemma 4 swe agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "SRINIVASTA/risk-gemma4-agent",
+  "description": "Enterprise AML/CFT risk assessment intelligence platform powered by Gemma 4 (gemma-4-26b-a4b-it) and LangChain Vector RAG, adhering strictly to RBI Master KYC Directions. Built on a modular multi-tab Streamlit architecture featuring granular zero-trust Role-Based Access Control (RBAC).",
+  "createdAt": "2026-10-13T13:25:15Z",
+  "size": 670,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 1,
+  "updatedAt": "2026-10-31T07:23:38Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "stevenliii/raser",
+  "description": "",
+  "createdAt": "2026-11-04T22:03:06Z",
+  "size": 8149,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 1,
+  "updatedAt": "2026-11-05T21:08:00Z",
+  "via": [
+   "code:\"fastapi_11194\"",
+   "code:\"fastapi_13537\"",
+   "code:\"fastapi_14372\"",
+   "code:\"fastapi_14794\"",
+   "code:\"fastapi_15023\"",
+   "code:\"fastapi_15589\"",
+   "code:\"fastapi_15661\"",
+   "code:\"httpx_3672\"",
+   "code:\"requests_6644\"",
+   "code:\"requests_7205\"",
+   "code:\"requests_7315\"",
+   "code:\"rich_3006\""
+  ],
+  "example_paths": [
+   "tasks/valid_tasks.json"
+  ]
+ },
+ {
+  "fullName": "subasreeswastika-sudo/Gemma4_Agent",
+  "description": "New repository create to load sample data for testing Gemma4 agent code",
+  "createdAt": "2026-10-02T16:36:50Z",
+  "size": 0,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-02T16:36:51Z",
+  "via": [
+   "repos:gemma-4 agent",
+   "repos:gemma4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "sundarshahi/gemma4-agents-rarely-lose-a-fix",
+  "description": "",
+  "createdAt": "2026-11-08T07:37:38Z",
+  "size": 2604,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-08T08:23:37Z",
+  "via": [
+   "code:\"fastapi_11194\"",
+   "code:\"fastapi_13537\"",
+   "code:\"fastapi_14077\"",
+   "code:\"fastapi_14186\"",
+   "code:\"fastapi_14372\"",
+   "code:\"fastapi_14794\"",
+   "code:\"fastapi_14851\"",
+   "code:\"fastapi_15023\"",
+   "code:\"fastapi_15589\"",
+   "code:\"fastapi_15661\"",
+   "code:\"gemma-4-e4b-it-qat-w4a16-ct\"",
+   "code:\"httpx_3672\""
+  ],
+  "example_paths": [
+   "results/audit/verdicts.jsonl",
+   "results/gold_hunks.json",
+   "results/run-e4b/run_meta.json",
+   "results/run-tn/replay_fidelity.jsonl",
+   "results/summary.json",
+   "results/verify-live-0/verdicts.jsonl"
+  ]
+ },
+ {
+  "fullName": "supawichza40/imperial-deepmind-hackathon",
+  "description": "UK AI Agent Lab: Gemini Edition (Imperial College London, 22 Aug 2026) \u2014 hybrid Gemini 3.7 Flash + Gemma 4 agent",
+  "createdAt": "2026-08-22T12:20:25Z",
+  "size": 1066,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-08-22T16:26:47Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "sweeden-ttu/agentic_verification",
+  "description": "A framework that classifies autonomous AI agents by the Chomsky hierarchy, reduces unverifiable agents into verifiable ones through architectural interventions, and backs the whole thing with an epistemically self-aware knowledge base that knows what it does not know",
+  "createdAt": "2026-10-07T05:40:38Z",
+  "size": 4343,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-14T06:48:30Z",
+  "via": [
+   "code:\"fastapi_14186\""
+  ],
+  "example_paths": [
+   "gemma-4-developer-agent/examples/_runs/20261007T092139Z/bundles/cookbook-datagen-20261007T092343Z-87ed0d/traces.jsonl",
+   "gemma-4-developer-agent/examples/_runs/20261007T092139Z/bundles/cookbook-metrics-20261007T092509Z-68f18a/traces.jsonl",
+   "gemma-4-developer-agent/examples/_runs/20261007T092139Z/bundles/cookbook-recsys-20261007T092723Z-c5823f/traces.jsonl",
+   "gemma-4-developer-agent/examples/_runs/20261007T092139Z/bundles/future-reviews-20261007T093351Z-4a536b/traces.jsonl",
+   "gemma-4-developer-agent/examples/_runs/20261007T092139Z/bundles/grafana-baseline-20261007T093135Z-b9fc5e/traces.jsonl"
+  ]
+ },
+ {
+  "fullName": "sybil-solutions/local-ai-registry",
+  "description": "Local AI registry: one validated recipe per machine, with the evidence attached",
+  "createdAt": "2026-08-26T12:39:46Z",
+  "size": 47181,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 294,
+  "updatedAt": "2026-11-10T21:53:23Z",
+  "via": [
+   "code:\"gemma-4-12b-it-qat-w4a16-ct\"",
+   "code:\"gemma-4-31b-it-qat-w4a16-ct\"",
+   "code:\"gemma-4-e2b-it-qat-w4a16-ct\"",
+   "code:\"gemma-4-e4b-it-qat-w4a16-ct\""
+  ],
+  "example_paths": [
+   "data/registry/benchmark/aime-2026.json",
+   "data/registry/benchmark/hle.json",
+   "data/registry/benchmark/math.json",
+   "data/registry/benchmark/mmlu-pro.json",
+   "data/registry/benchmark/mmmu.json"
+  ]
+ },
+ {
+  "fullName": "Tarekswd/g-hrr-gemma4",
+  "description": "Official implementation of \"Graph-Guided Hierarchical Repository Reasoning (G-HRR) for Local Software Engineering Agents\" (Google Gemma 4 Paper Track).",
+  "createdAt": "2026-09-27T07:37:20Z",
+  "size": 6207,
+  "license": {
+   "key": "other"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-09-27T10:02:46Z",
+  "via": [
+   "repos:gemma 4 paper track"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "thorOdinson16/SolvedButHowLate",
+  "description": "",
+  "createdAt": "2026-10-15T12:51:49Z",
+  "size": 1015,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-15T13:27:11Z",
+  "via": [
+   "code:\"gemma-4-12b-it-qat-w4a16-ct\"",
+   "code:\"gemma-4-31b-it-qat-w4a16-ct\"",
+   "code:\"gemma-4-e2b-it-qat-w4a16-ct\"",
+   "code:\"gemma-4-e4b-it-qat-w4a16-ct\""
+  ],
+  "example_paths": [
+   "kaggle/build_calibration.py"
+  ]
+ },
+ {
+  "fullName": "tmnestor/bank-statement-error-analysis",
+  "description": "",
+  "createdAt": "2026-08-17T07:03:59Z",
+  "size": 3847,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-09-03T04:24:14Z",
+  "via": [
+   "code:\"gemma-4-12b-it-qat-w4a16-ct\""
+  ],
+  "example_paths": [
+   "analysis/figures.py",
+   "measure_throughput.sh"
+  ]
+ },
+ {
+  "fullName": "treining2016-oss/fail-closed-swe-agent-benchmark",
+  "description": "Reproducible fail-closed benchmark for reliable software-engineering agents - Gemma 4 Paper Track",
+  "createdAt": "2026-10-07T21:43:39Z",
+  "size": 87,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-24T11:57:32Z",
+  "via": [
+   "repos:gemma 4 paper track"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "ubiratantavares/gemma4-agentic-software-engineering",
+  "description": "Research and implementation framework for advancing agentic software engineering with Gemma 4, combining code-graph reasoning, repository understanding, tool use, parameter-efficient adaptation, and reproducible evaluation for autonomous software engineering agents.",
+  "createdAt": "2026-09-26T12:01:25Z",
+  "size": 3,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-09-26T12:01:30Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "ubiratantavares/gemma4-swe-agent-lab",
+  "description": "Research and engineering laboratory for building autonomous software engineering agents with Gemma 4, focused on codebase understanding, graph-based reasoning, tool use, verified patch generation, and reproducible evaluation for the Kaggle Gemma 4 Developer Agent Competition.",
+  "createdAt": "2026-09-26T11:59:32Z",
+  "size": 3,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-09-26T11:59:37Z",
+  "via": [
+   "repos:gemma 4 swe agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "unifyWeb3/gemma4-agent-spend-cap",
+  "description": "Gemma 4 paper track: indirect prompt injection in coding agents and the cost of a hard spend cap",
+  "createdAt": "2026-11-04T16:35:27Z",
+  "size": 1163,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-07T10:10:42Z",
+  "via": [
+   "repos:gemma 4 paper track",
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "usp787/Gemma4_paper_track",
+  "description": "",
+  "createdAt": "2026-10-08T02:45:13Z",
+  "size": 15975,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-06T01:17:30Z",
+  "via": [
+   "repos:gemma 4 paper track"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "Utsav-X-bit/Gemma-4-Agent",
+  "description": "",
+  "createdAt": "2026-10-23T20:29:18Z",
+  "size": 10856,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-29T10:42:40Z",
+  "via": [
+   "code:\"fastapi_15661\"",
+   "code:\"gemma-4-31b-it-qat-w4a16-ct\"",
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": [
+   "docs/06-experiments-and-tracking.md",
+   "phase5/check_adapter.py"
+  ]
+ },
+ {
+  "fullName": "VaibhavSoni24/Impulse",
+  "description": "",
+  "createdAt": "2026-09-25T09:28:17Z",
+  "size": 1771,
+  "license": {
+   "key": "other"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-23T17:41:12Z",
+  "via": [
+   "code:\"fastapi_11194\"",
+   "code:\"fastapi_13537\"",
+   "code:\"fastapi_14077\"",
+   "code:\"fastapi_14186\"",
+   "code:\"fastapi_14372\"",
+   "code:\"fastapi_14794\"",
+   "code:\"fastapi_14851\"",
+   "code:\"fastapi_15023\"",
+   "code:\"fastapi_15589\"",
+   "code:\"fastapi_15661\"",
+   "code:\"gemma-4-12b-it-qat-w4a16-ct\"",
+   "code:\"gemma-4-31b-it-qat-w4a16-ct\""
+  ],
+  "example_paths": [
+   "benchmark/splits/v1/held_out.jsonl",
+   "benchmark/splits/v1/held_out.lock",
+   "benchmark/splits/v1/manifest.json",
+   "docs/decisions/local_task_runner.md",
+   "local/lora_data/contracts.py",
+   "local/lora_opt/baseline.py"
+  ]
+ },
+ {
+  "fullName": "ValikProgrammer/Gemma4Kagl",
+  "description": "Today\u2019s best coding agents rely on massive API models. What if every developer could rely on an autonomous agent equally capable offline, on consumer hardware?  Post-train an open model into a reliable agent that navigates complex codebases and drafts fixes for real software issues, accelerating developer workflows on everyday hardware.",
+  "createdAt": "2026-10-14T18:22:47Z",
+  "size": 388,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-04T20:41:03Z",
+  "via": [
+   "code:\"fastapi_15589\"",
+   "code:\"fastapi_15661\"",
+   "code:\"gemma-4-12b-it-qat-w4a16-ct\"",
+   "code:\"gemma-4-e2b-it-qat-w4a16-ct\"",
+   "code:\"gemma-4-e4b-it-qat-w4a16-ct\"",
+   "code:\"httpx_3672\""
+  ],
+  "example_paths": [
+   "scripts/build_smoke_notebook.py",
+   "scripts/check_before_submission.py",
+   "scripts/make_smoke_tasks.py"
+  ]
+ },
+ {
+  "fullName": "velocitylabo/gemma4-agent-budget-audit",
+  "description": "Pre-registered check of verify-and-retry for a Gemma 4 coding agent under a fixed budget (Kaggle Paper Track)",
+  "createdAt": "2026-11-06T06:23:25Z",
+  "size": 291,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-06T06:23:37Z",
+  "via": [
+   "repos:gemma 4 coding agent",
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "Victorandrade94/patchgraph-qa",
+  "description": "",
+  "createdAt": "2026-11-10T01:44:07Z",
+  "size": 336,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-10T21:51:23Z",
+  "via": [
+   "code:\"fastapi_11194\""
+  ],
+  "example_paths": [
+   "README.md"
+  ]
+ },
+ {
+  "fullName": "vigohan95/doclag",
+  "description": "DocLag: 443 real documentation fixes from 185 repositories as a paired test of how stale docs mislead local Gemma 4 agents",
+  "createdAt": "2026-11-08T06:06:00Z",
+  "size": 4674,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-08T06:06:46Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "Viraj465/Gemma-4-Kaggle-Agent-Paper-track",
+  "description": "Why SFT Deludes while LoRA-GRPO Fortifies: Resilience Bounds of Gemma 4 Developer Agents under Hackable Verifiers",
+  "createdAt": "2026-11-02T17:05:42Z",
+  "size": 1346,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-04T15:41:49Z",
+  "via": [
+   "repos:gemma 4 kaggle agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "vlyot/navalign",
+  "description": "Navigation-alignment scoring for coding-agent traces",
+  "createdAt": "2026-10-15T14:06:09Z",
+  "size": 311,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-26T12:52:54Z",
+  "via": [
+   "code:\"fastapi_15661\"",
+   "code:\"rich_3944\""
+  ],
+  "example_paths": [
+   "notebooks/collect_traces.py"
+  ]
+ },
+ {
+  "fullName": "WuShang-d/g4p-contract-hints",
+  "description": "Contract-gap extractor and preregistered analysis of oracle interface hints for a Gemma 4 coding agent (Kaggle Gemma 4 Paper Track)",
+  "createdAt": "2026-10-15T04:10:18Z",
+  "size": 178,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-15T04:10:28Z",
+  "via": [
+   "repos:gemma 4 coding agent",
+   "repos:gemma 4 paper track"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "xiningli/correct-but-not-kernels",
+  "description": "Correct, But Not Kernels: RL on a permissive verifier raised Gemma 4's correctness, not its kernel writing (Gemma 4 Paper Track)",
+  "createdAt": "2026-10-28T00:36:43Z",
+  "size": 5086,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-28T00:36:55Z",
+  "via": [
+   "repos:gemma 4 paper track"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "yoursrishiii/gemma4-swe-agent",
+  "description": "",
+  "createdAt": "2026-10-31T09:56:19Z",
+  "size": 3,
+  "license": {
+   "key": ""
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-31T09:59:09Z",
+  "via": [
+   "repos:gemma 4 swe agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "Yuxiang-Ren-HUB/gemma4-graph-toolkit-audit",
+  "description": "Audit of the code-graph tools in the Gemma 4 Developer Agent harness (swegemma 0.2.7 and 0.2.11), with scripts that reproduce every number.",
+  "createdAt": "2026-11-10T10:50:49Z",
+  "size": 226,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-10T10:51:32Z",
+  "via": [
+   "code:\"fastapi_14186\"",
+   "code:\"fastapi_15023\"",
+   "code:\"requests_7315\"",
+   "code:\"requests_7433\"",
+   "repos:swegemma"
+  ],
+  "example_paths": [
+   "results_0.2.11/s03_gold.json",
+   "results_0.2.11/s04_audit.json",
+   "results_0.2.7/s01_dataset.json",
+   "results_0.2.7/s03_gold.json",
+   "results_0.2.7/s04_audit.json"
+  ]
+ },
+ {
+  "fullName": "Yuxiang-Ren-HUB/metswe-offline-agent",
+  "description": "MetSWE: 147 offline, execution-validated repair tasks from Python libraries used in atmospheric science, with sandbox recipes, per-task results and agent traces for a single-GPU Gemma 4 agent with mechanical pre-submission checks.",
+  "createdAt": "2026-11-10T09:00:46Z",
+  "size": 17501,
+  "license": {
+   "key": "apache-2.0"
+  },
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-10T11:00:23Z",
+  "via": [
+   "repos:gemma-4 agent"
+  ],
+  "example_paths": []
+ },
+ {
+  "fullName": "Zi-Yi-Ming/kaggle-archive",
+  "description": "An archive of Kaggle competition solutions and write-ups: full code and submission records for medal-less practice competitions, with active medal competitions archived after the fact",
+  "createdAt": "2026-09-04T05:36:58Z",
+  "size": 43553,
+  "license": {
+   "key": "mit"
+  },
+  "stargazersCount": 1,
+  "updatedAt": "2026-10-30T14:28:37Z",
+  "via": [
+   "code:\"fastapi_11194\""
+  ],
+  "example_paths": [
+   "results/kaggle/gpu_smoke_v6_telemetry.jsonl"
+  ]
+ }
+]

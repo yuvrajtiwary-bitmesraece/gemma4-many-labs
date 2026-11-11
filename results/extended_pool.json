@@ -1,0 +1,161 @@
+{
+ "registered": {
+  "attempts": 15112,
+  "labs": 14,
+  "systems": 259,
+  "runs": 346,
+  "tasks": 129,
+  "systems_with_repeats": 50,
+  "full_129_runs": 6,
+  "n_attempts": 15112,
+  "n_labs": 14,
+  "n_systems": 259,
+  "n_runs": 346,
+  "split_half_median": 0.79618,
+  "split_half_sb": 0.88653,
+  "n_tasks_5_labs": 101,
+  "floor_tasks": 41,
+  "ceiling_tasks": 3,
+  "discriminating_tasks": 57,
+  "r2_task": 0.44884,
+  "r2_lab": 0.14629,
+  "r2_system": 0.18502,
+  "r2_task_plus_system": 0.58425,
+  "noise_share": 0.22807,
+  "noise_variance": 0.05289,
+  "flip_pooled": 0.10895,
+  "flip_lab_median": 0.10432,
+  "flip_n_labs": 9,
+  "flip_n_pairs": 127,
+  "mdd_129": 0.125,
+  "flip_lab_mean": 0.10437,
+  "flip_lab_min": 0.0,
+  "flip_lab_max": 0.16667,
+  "flip_lab_mean_t_ci95": [
+   0.0696,
+   0.13914
+  ],
+  "effective_number_of_labs": 2.60531,
+  "pairs_with_100_or_more_shared_tasks": {
+   "n_pairs": 19,
+   "n_labs": 1,
+   "pooled": 0.12669,
+   "mean_abs_score_difference": 0.02049
+  }
+ },
+ "registered_plus_extended": {
+  "attempts": 24988,
+  "labs": 23,
+  "systems": 351,
+  "runs": 526,
+  "tasks": 129,
+  "systems_with_repeats": 89,
+  "full_129_runs": 9,
+  "n_attempts": 24988,
+  "n_labs": 23,
+  "n_systems": 351,
+  "n_runs": 526,
+  "split_half_median": 0.87882,
+  "split_half_sb": 0.9355,
+  "n_tasks_5_labs": 125,
+  "floor_tasks": 55,
+  "ceiling_tasks": 2,
+  "discriminating_tasks": 68,
+  "r2_task": 0.41677,
+  "r2_lab": 0.13892,
+  "r2_system": 0.17347,
+  "r2_task_plus_system": 0.55388,
+  "noise_share": 0.22451,
+  "noise_variance": 0.05059,
+  "flip_pooled": 0.09906,
+  "flip_lab_median": 0.10432,
+  "flip_n_labs": 17,
+  "flip_n_pairs": 290,
+  "mdd_129": 0.12,
+  "flip_lab_mean": 0.09937,
+  "flip_lab_min": 0.0,
+  "flip_lab_max": 0.16667,
+  "flip_lab_mean_t_ci95": [
+   0.07649,
+   0.12224
+  ],
+  "effective_number_of_labs": 3.39258,
+  "pairs_with_100_or_more_shared_tasks": {
+   "n_pairs": 94,
+   "n_labs": 2,
+   "pooled": 0.11485,
+   "mean_abs_score_difference": 0.02641
+  }
+ },
+ "extended_sources_only": {
+  "attempts": 9876,
+  "labs": 9,
+  "systems": 92,
+  "runs": 180,
+  "tasks": 129,
+  "systems_with_repeats": 39,
+  "full_129_runs": 3,
+  "n_attempts": 9876,
+  "n_labs": 9,
+  "n_systems": 92,
+  "n_runs": 180,
+  "split_half_median": 0.88192,
+  "split_half_sb": 0.93726,
+  "n_tasks_5_labs": 99,
+  "floor_tasks": 46,
+  "ceiling_tasks": 2,
+  "discriminating_tasks": 51,
+  "r2_task": 0.43711,
+  "r2_lab": 0.12595,
+  "r2_system": 0.15376,
+  "r2_task_plus_system": 0.5559,
+  "noise_share": 0.22147,
+  "noise_variance": 0.04801,
+  "flip_pooled": 0.09481,
+  "flip_lab_median": 0.10657,
+  "flip_n_labs": 8,
+  "flip_n_pairs": 163,
+  "mdd_129": 0.1175,
+  "flip_lab_mean": 0.09374,
+  "flip_lab_min": 0.02431,
+  "flip_lab_max": 0.14583,
+  "flip_lab_mean_t_ci95": [
+   0.05526,
+   0.13222
+  ],
+  "effective_number_of_labs": 1.88113,
+  "pairs_with_100_or_more_shared_tasks": {
+   "n_pairs": 75,
+   "n_labs": 1,
+   "pooled": 0.11198,
+   "mean_abs_score_difference": 0.02791
+  }
+ },
+ "difficulty_registered_vs_new_labs": {
+  "tasks": 101,
+  "new_labs": 9,
+  "spearman": 0.8939
+ },
+ "flip_rate_extended_sources_only": {
+  "n_pairs": 163,
+  "n_labs": 8,
+  "pooled": 0.09481
+ },
+ "sources_added": [
+  "Finerium/axi-paper-release",
+  "HRDevelops/gemma4-compute-allocation",
+  "ShreySharma07/gemma4-swe-agent",
+  "bsw0610/gemma4-swe-harness-audit",
+  "junicusmaximus/gemma4-agent-audit",
+  "renorai/gemma4-memory-study",
+  "rocksolid911/gemma4-code-graph-ablation",
+  "satyarthshukla500/hidden-test-agent-kit",
+  "sundarshahi/gemma4-agents-rarely-lose-a-fix"
+ ],
+ "runs_of_different_labs_with_identical_outcomes": [
+  [
+   "matisdsp/screening/s26/rep0",
+   "sundarshahi/e4b-s1"
+  ]
+ ]
+}

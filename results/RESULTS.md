@@ -321,6 +321,40 @@ Zenodo record 23834104 (doi:10.5281/zenodo.23834104, Apache-2.0) holds the run r
 | E4B-mid | E4B | 3 | 11, 14, 14 | 10.3% |
 | E4B-min | E4B | 5 | 10, 10, 11, 9, 12 | 7.5% |
 
+## Extended pool (sources found by a broader search after the results; not in the registered frame)
+
+After the results were known, 25 further repository searches and 29 code searches (for task identifiers and for strings that only participants' repositories contain) returned 265 repositories, 114 of them already in the registered frame. Of the 127 new candidates, 125 were fetched, 51 contain development-set task identifiers and 33 of those are licensed. **16** of the licensed candidates were examined before the deadline, in an order fixed from the structure of their files before any of their outcomes was read; 16 were not examined and 1 is the repository of the external validation dataset, which stays out of the pool. **9** of those examined have at least one eligible run (`data/derived/screening_extended.csv` lists every candidate). They were processed by the same rules and are kept out of every number above. This is a partial check, not a second census.
+
+| Quantity | Registered frame | Extended sources alone | Registered + extended |
+|---|---|---|---|
+| Labs | 14 | 9 | 23 |
+| Attempts | 15,112 | 9,876 | 24,988 |
+| Systems | 259 | 92 | 351 |
+| Runs | 346 | 180 | 526 |
+| Systems with repeats | 50 | 39 | 89 |
+| Tasks attempted by at least 5 labs | 101 | 99 | 125 |
+| Split-half reliability of task difficulty | 0.80 | 0.88 | 0.88 |
+| Floor tasks | 41 | 46 | 55 |
+| Discriminating tasks | 57 | 51 | 68 |
+| R² task (lab-balanced) | 44.9% | 43.7% | 41.7% |
+| R² lab | 14.6% | 12.6% | 13.9% |
+| Run-to-run noise share | 22.8% | 22.1% | 22.5% |
+| Pairs of repeated runs | 127 | 163 | 290 |
+| Labs with repeats | 9 | 8 | 17 |
+| Pooled flip rate | 10.9% | 9.5% | 9.9% |
+| Lab-median flip rate | 10.4% | 10.7% | 10.4% |
+| Mean of the lab-level flip rates | 10.4% | 9.4% | 9.9% |
+| ... 95% t interval | 7.0% to 13.9% | 5.5% to 13.2% | 7.6% to 12.2% |
+| Detectable improvement on 129 tasks (planned calculation) | 12.5 points | 11.8 points | 12.0 points |
+
+Pairs of repeats that cover at least 100 tasks: registered frame: 19 pairs in 1 lab, flip rate 12.7%, mean absolute score difference 2.0 points; extended sources: 75 pairs in 1 lab, flip rate 11.2%, mean absolute score difference 2.8 points.
+
+1 pair of runs from different labs has identical outcomes on every shared task (`matisdsp/screening/s26/rep0` and `sundarshahi/e4b-s1`): two E4B agents on the same 72 tasks that resolve the same 9. Neither repository refers to the other and the records come from different pipelines, so both are kept as separate executions.
+
+Consensus task difficulty from the registered labs against the 9 labs that appear only in the extended frame: Spearman 0.89 over 101 tasks. Flip rate in the extended sources alone: 9.5% (163 pairs, 8 labs).
+
+Sources added: `Finerium/axi-paper-release`, `HRDevelops/gemma4-compute-allocation`, `ShreySharma07/gemma4-swe-agent`, `bsw0610/gemma4-swe-harness-audit`, `junicusmaximus/gemma4-agent-audit`, `renorai/gemma4-memory-study`, `rocksolid911/gemma4-code-graph-ablation`, `satyarthshukla500/hidden-test-agent-kit`, `sundarshahi/gemma4-agents-rarely-lose-a-fix`.
+
 ## Tables and figures
 
 - `results/tables/tasks.csv`: per task, consensus solve rate, number of labs, class, Rasch difficulty, replicate disagreement.

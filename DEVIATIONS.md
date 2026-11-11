@@ -174,3 +174,170 @@ no disagreement). Every row of `data/sources/leaderboard_pairs.csv` was
 re-checked against the cited file; three rows were corrected and seven added,
 and the E1 summary changed accordingly (git history shows the before and
 after).
+
+## Amendment 4 — 2026-11-11, 09:30 to 21:00 UTC — after an independent review and three audits
+
+After the results of Amendment 3, four independent checks were run by readers
+who had not written the code they checked (AI-assisted, like the rest of the
+pipeline; their working notes are not in this repository because they quote the
+sources at length):
+
+- a **statistical review** that recomputed every reported number with
+  separately written code, from the definitions in the plan and in this file.
+  Every number was reproduced. The review then listed where a number was right
+  but the claim, the weighting or the derivation built on it was not;
+- three **source audits** (L01, L02 and L04: three of the four largest
+  sources, 68% of the attempts). Each recounted the source from its raw files
+  before reading the adapter, compared every pooled row with its source row
+  (10,214 rows, no disagreement in the outcome), and graded the evidence
+  behind every group of repeats, every label and every exclusion.
+
+Everything below follows from those four documents. None of the definitions of
+P1 to P4 changed. Where a number of the first results was wrong or misleading,
+both values are in the table at the end.
+
+**4a. Corrections to three adapters (they change the pooled table).**
+
+- *L01, one merge undone.* Two experiments had been treated as repeats of one
+  system on the strength of two script docstrings that list them under one
+  version label. The audit found no statement that they are repeats, and found
+  that the two sessions ran at different speeds. The plan counts unclear cases
+  as different systems, so they are now two systems. A second group in this
+  lab (three files, six runs) is kept: its only evidence is a pooled
+  percentage in the lab's outline that equals the three files added together.
+  The sensitivity analysis S2 splits it.
+- *L04, three outcomes recoded.* Three attempts were recorded as resolved with
+  an empty patch (one task, three early runs). The lab itself calls this an
+  "environmental false positive" and its later scorer refuses it. They are
+  now failures.
+- *L04, one merge added.* Two runs of one community adapter on two task suites
+  were kept apart because the two scripts load it from two directory names.
+  The lab's paper lists them as one configuration, exactly as it does for
+  another adapter that was already merged. They are now one system.
+- *L04, eight early runs: kept, and documented.* The audit showed from the
+  result files that these runs (480 attempts, none resolved after the
+  recoding) were scored in a test environment that could not import the
+  packages needed by 37 of their 60 tasks, with a tool layer that lost most
+  edits. One fix that the same scorer accepts 18 times out of 18 in later runs
+  is scored as failed five times. The lab presents the runs as valid results,
+  and section 4 of the plan drops attempts only where the source marks them
+  invalid, so they stay in the pool. S3 removes them, and nothing moves.
+- *L02, one merge added.* One third-party configuration was run once in the
+  lab's Kaggle stack and four times on its local rig, with the same server
+  software and weights. The first version split by rig. The lab pools exactly
+  these runs as repeats in its own analysis, so they are now one system.
+  Another configuration, which the lab contrasts between the two rigs, stays
+  split.
+- The wording of the three cards was corrected in several places (what a
+  leaderboard file is, which rows a lab counts as failures, which statements
+  are inferences). A flag for a modified test environment was added to L01.
+
+**4b. Errors in analysis code and derivations.**
+
+- *Weights on the replicated cells (P2, robustness table).* "Lab-balanced"
+  weights were computed on the whole table and then applied to the cells with
+  repeats, where they do not give the labs equal weight (one lab had 28% of
+  the weight, another 2.5%). They are now computed on those cells.
+- *Model check of P4.* The reported check (predicted against observed resolve
+  rate per run, in sample) was true by construction: the score equations of
+  the model force predicted and observed totals per system to agree. It is
+  replaced by two out-of-sample checks: five-fold cross-validation over
+  system × task cells, and a test of the subset effect in which task
+  difficulties are fitted without the system's lab and its ability is fitted
+  on its tasks outside the subset.
+- *"What repeats buy" (S9).* The table used a variance of
+  (flip rate + gain) / (k n) for the mean difference of two agents run k times
+  on n fixed tasks. That is the null variance of a one-run McNemar test, not
+  the variance for k runs. With tasks fixed the sampling variance is
+  flip rate / (k n), and the null variance of the test that permutes run
+  labels within a task is (flip rate / k + gain / (2k − 1)) / n. The table is
+  recomputed with the exact stratified permutation test, by simulation, and a
+  second table is added for a different question: whether a gain would hold
+  on new tasks, where more runs do not remove the task-sampling part.
+- *Probability of a wrong order (S11).* The same mistake: the variance of the
+  difference of two single runs on fixed tasks is flip rate / n, not
+  (flip rate + gain) / n. The corrected probabilities are lower for large
+  gains.
+- *Lab-balanced resolve rate.* Runs are now averaged within a system before
+  systems are averaged within a lab, as section 6 of the plan says. The code
+  had pooled a system's attempts.
+- *Number of random splits.* The robustness rows used 500 and the
+  leave-one-lab-out rows 300 splits, against 2,000 for the headline. All use
+  2,000 now.
+
+**4c. Task validity (X1) no longer rests on one audit.**
+X1 took a task's status from the one audit that ran both controls on all 129
+tasks. The review showed that this audit is the one that disagrees most with
+the other three full audits of the same sandbox: the three agree with each
+other on 127 to 129 tasks and with it on 121. A task's status now comes from
+the agreement of the four: valid if the reference patch resolves in all four
+and the task does not resolve with no patch; "reference patch fails" if it
+fails in all four; "audits disagree" otherwise. The old definition is kept as
+sensitivity analysis S8.
+
+The review also showed that the sentence "28% of pooled attempts were made on
+tasks where the reference patch fails" added two different things: labs whose
+environment is the stock sandbox, which never resolve such a task, and labs
+that changed the test environment, which resolve a fifth of them. The report
+now gives the two groups separately and no longer reads the pooled share as
+lost effort.
+
+**4d. Additions that show the limits of the planned numbers.**
+For P3: the weight of single labs and systems in the pooled flip rate, five
+other ways of averaging the same pairs, the share of flips whose failing
+attempt carries an error flag, and the planned detectable difference under two
+other assumptions about how an improvement spreads over tasks. For the
+uncertainty of the flip rate (S1): a t interval on the lab-level rates and a
+simulation of the coverage of all three intervals. The bootstrap interval of
+the first results was too narrow. For P4: which subsets a lab chose from its
+own earlier outcomes (both extreme predictions are such subsets) and the range
+without them. For the robustness table: a second error-flag row that re-applies
+the 10-task minimum, and a note on why those rows cannot be compared with the
+others. For E2: a t interval on the lab means beside the bootstrap interval.
+
+**4e. Extended pool: a partial replication outside the registered frame**
+(`scripts/search_extended.py`, `scripts/extended_pool.py`). A broader search,
+made after the results, returned 127 further repositories. 33 carry a licence
+and development-set task identifiers. 16 of those were examined before the
+deadline (the order was set from the structure of their files, before any of
+their outcomes was read), 16 were not, and one is the repository of the
+external validation dataset. Nine have eligible runs. They are processed by
+the same adapters and rules, kept out of every registered number, and reported
+in their own section beside the registered frame.
+
+**4f. Not changed.** The eight early runs of L04 and the three-file group of
+L01 stay in the pool (S3 and S2 remove them). Attempts that ended in a
+rig-specific cut-off in L02 stay failures, as the lab counts them. The planned
+detectable difference keeps its planned alternative; the other assumptions are
+reported beside it.
+
+**4g. First results and corrected results.**
+
+| Quantity | First results | After Amendment 4 | Cause |
+|---|---|---|---|
+| Attempts / systems / runs | 15,112 / 260 / 346 | 15,112 / 259 / 346 | 4a |
+| Resolved attempts | 3,832 | 3,829 | 4a (three recoded) |
+| Lab-balanced resolve rate | 29.9% | 30.2% | 4b |
+| Split-half reliability (Spearman–Brown) | 0.80 (0.89) | 0.80 (0.89) | |
+| Floor / discriminating / ceiling tasks | 40 / 58 / 3 | 41 / 57 / 3 | 4a (one task crosses the 10% line) |
+| R² task / lab / system (lab-balanced) | 44.8% / 14.6% / 18.5% | 44.9% / 14.6% / 18.5% | 4a |
+| Run-to-run noise share (lab-balanced) | 22.6% | 22.8% | 4a, 4b (22.5% with the old weights on the new table) |
+| Cells with repeats | 1,861 | 1,760 | 4a |
+| P2b, median Eρ² (129 tasks, 1 run) | 0.56 | 0.29 | 4a (one weak system left the block of L01) |
+| P2b, median SE of a difference (129 tasks) | 3.2 points | 3.1 points | 4a |
+| Pairs of repeats / labs | 123 / 9 | 127 / 9 | 4a |
+| Pooled flip rate | 11.2% | 10.9% | 4a |
+| Flip rate, median of labs | 10.4% | 10.4% | |
+| 95% interval of the flip rate | 8.6% to 12.3% (bootstrap over labs) | 7.0% to 13.9% (t interval on lab-level rates) | 4d |
+| Detectable difference, 30 / 60 / 129 tasks | 34.8 / 20.8 / 12.5 points | 34.5 / 20.8 / 12.5 points | 4a |
+| Subset predictions, all 52 subsets | 5.7% to 66.7% | 5.6% to 66.7% | 4a |
+| ... without subsets chosen from outcomes | not reported | 17.7% to 64.4% (25.5% to 39.3% for 30 tasks or more) | 4d |
+| P4 model check | Pearson 0.99, error 1.4 points (in sample) | Pearson 0.986, error 1.9 points (held-out cells) | 4b |
+| X1: valid / reference patch fails / other | 68 / 56 / 5 | 67 / 51 / 11 | 4c |
+| Attempts on tasks whose reference patch fails | 27.7% | 24.6% (8.2% in ten labs, none resolved; 32.0% in four labs, 21.6% resolved) | 4c |
+| Floor tasks that are valid | 24 of 40 | 23 of 41 | 4a, 4c |
+| Runs per agent to detect 3 / 5 / 10 points on 129 tasks | 10 / 4 / 2 | 9 / 4 / 2 | 4b |
+| Detectable with 3 / 5 / 10 runs per agent, 129 tasks | 5.9 / 4.3 / 2.9 points | 5.3 / 4.1 / 2.8 points | 4b |
+| Wrong order on 58 tasks, true gain 5 / 10 points | 17.2% / 4.9% | 12.4% / 1.1% | 4b |
+| Noise band: scale; coverage leave-one-lab-out | 0.78; 95.9% | 0.78; 96.1% | 4a |
+| External validation: Spearman of task difficulty | 0.84 | 0.84 | |

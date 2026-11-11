@@ -15,6 +15,9 @@
   "no eligible records": 21,
   "used": 14
  },
+ "licensed_not_examined": 0,
+ "external_validation_set": 0,
+ "licensed_and_examined": 35,
  "licences_of_used": {
   "Apache-2.0": 9,
   "MIT": 4,

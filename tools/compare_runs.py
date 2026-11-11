@@ -7,7 +7,7 @@ the Gemma 4 Developer Agent competition (one or more runs each). It reports
   - the noise band: how far two runs of ONE agent at this score level differ
     on exactly these tasks. The band comes from the pooled results of 14 labs
     (task difficulties and a noise scale in noise_band.json). Leave-one-lab-out,
-    its 95% band covered 95.9% of the score differences between repeated runs;
+    its 95% band covered 96% of the score differences between repeated runs;
   - how many runs per agent a difference of this size needs to be detected.
 
 Standard library only. Result files may be the harness's summary.jsonl

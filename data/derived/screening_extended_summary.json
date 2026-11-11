@@ -1,0 +1,29 @@
+{
+ "candidates": 127,
+ "fetched": 125,
+ "not_fetched": {
+  "empty repository": 2
+ },
+ "with_dev_task_ids": 51,
+ "of_those_licensed": 33,
+ "used": 9,
+ "stages": {
+  "no development-set task identifiers": 74,
+  "no licence": 18,
+  "no eligible records": 7,
+  "not fetched": 2,
+  "used": 9,
+  "licensed, not examined": 16,
+  "external validation set": 1
+ },
+ "licensed_not_examined": 16,
+ "external_validation_set": 1,
+ "licensed_and_examined": 16,
+ "licences_of_used": {
+  "Apache-2.0": 4,
+  "CC-BY-4.0": 2,
+  "MIT": 3
+ },
+ "labs_used": 9,
+ "attempts_used": 9876
+}

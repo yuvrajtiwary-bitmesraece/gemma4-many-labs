@@ -30,6 +30,9 @@ import srcio  # noqa: E402
 RAW = srcio.ROOT / "data" / "raw"
 DERIVED = srcio.ROOT / "data" / "derived"
 MIN_TEXT_IDS = 10
+# The dataset used for external validation has a repository of its own in the extended frame. It is
+# kept out of the pool so that the validation stays out of sample.
+EXTERNAL_VALIDATION = {"mobius-style/gemma4-scaffold-capacity"}
 
 
 def usage() -> dict:
@@ -57,6 +60,9 @@ def summarise(rows) -> dict:
         "not_fetched": dict(Counter(r["detail"] for r in rows if r["stage"] == "not fetched")),
         "with_dev_task_ids": len(with_ids), "of_those_licensed": len(licensed),
         "used": stages["used"], "stages": dict(stages),
+        "licensed_not_examined": stages["licensed, not examined"],
+        "external_validation_set": stages["external validation set"],
+        "licensed_and_examined": len(licensed) - stages["licensed, not examined"] - stages["external validation set"],
         "licences_of_used": dict(Counter(r["licence_used"] for r in rows if r["stage"] == "used")),
         "labs_used": len({r["source"].split("/")[0] for r in rows if r["stage"] == "used"}),
         "attempts_used": sum(r["n_attempts"] for r in rows if r["stage"] == "used"),
@@ -95,6 +101,13 @@ def main() -> int:
             row["licence_evidence"] = (card.get("licence") or {}).get("evidence", "")
         if n_struct == 0 and n_text < MIN_TEXT_IDS:
             row["stage"] = "no development-set task identifiers"
+        elif repo in EXTERNAL_VALIDATION:
+            row["stage"] = "external validation set"
+            row["detail"] = "the repository of the dataset used for external validation; not pooled"
+        elif card is None and frame == "extended" and (m.get("license_spdx") or "NOASSERTION") != "NOASSERTION":
+            # Only in the extended frame: every licensed candidate of the registered frame was examined.
+            row["stage"] = "licensed, not examined"
+            row["detail"] = "not examined before the deadline"
         elif card is None:
             row["stage"] = "no licence"
             row["detail"] = "no licence file and no licence statement in the README"

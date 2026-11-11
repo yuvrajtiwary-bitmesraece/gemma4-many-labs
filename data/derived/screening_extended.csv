@@ -1,0 +1,128 @@
+source,commit,github_licence,ids_in_json_csv,ids_in_text,licence_used,licence_evidence,stage,detail,n_attempts,n_runs,n_systems
+abastosmikel-bit/gemma4-agent-paper,5b3d426f381fea10dc252f8c9df60c5aaa3a0224,MIT,0,0,,,no development-set task identifiers,,0,0,0
+abzokhattab/kg-code-review-thesis,4894daead43e802ebaa4bf205fc04c409df5e2d1,,2,0,,,no licence,no licence file and no licence statement in the README,0,0,0
+acquayefrank/graft,a57a67ec22df35b4f3d94b78327f414b83d9df66,,129,64,,,no licence,no licence file and no licence statement in the README,0,0,0
+Agnuxo1/small-juries-early-verdicts,f8d8f364e58f9e0f645f4fd87aa9d166b573a692,Apache-2.0,0,0,,,no development-set task identifiers,,0,0,0
+agustindiazcano/apart-research-swarm-alignment,a0da2a7affab6b3470c7ec11a39714b461855337,MIT,0,0,,,no development-set task identifiers,,0,0,0
+akhileshvinnakota5/gemma4-swe-agent,8e7701d01154a98b851937c2954d3fd2bf26b0ff,MIT,0,0,,,no development-set task identifiers,,0,0,0
+akhterquddus-ops/plsql-fix,bb97bc01919283f580c7118770955620af5e8025,Apache-2.0,0,0,,,no development-set task identifiers,,0,0,0
+Alex-Ust/Gemma_Kaggle,49c6e1484d1fac173c51f625072ef9ee1a8ea151,,101,101,,,no licence,no licence file and no licence statement in the README,0,0,0
+AliceMessi/born-after-the-cutoff,c08c7372c85e6c84e5250ce9fe1b3f977f26bf02,Apache-2.0,0,0,,,no development-set task identifiers,,0,0,0
+amber90-dev/gemma-pr-swarm,42ccc142accb3f058295438ed208c4ad09c2307d,MIT,0,0,,,no development-set task identifiers,,0,0,0
+Anandk0/gemma4-agent,6914a70f8f26f79953eb09f2c9aff3cb3dd1b337,,0,0,,,no development-set task identifiers,,0,0,0
+Ankith-m1006/ghosts-in-the-loop,ce0b65af7199de7a97d3c16b28bc38ebbcc57d23,Apache-2.0,0,0,,,no development-set task identifiers,,0,0,0
+aoxendine3/gemma_developer_agent_paper_submission,06907494a9e797522a82498ea20e30a4c10ab9ab,NOASSERTION,0,0,,,no development-set task identifiers,,0,0,0
+AraceliFradejas/tailorcode-gemma-developer-agent,94d49b2e4ee60b03d1dd1c976737d264a655ced9,,5,191,,,no licence,no licence file and no licence statement in the README,0,0,0
+arjunkshah12345-hash/gemma4-context-pruning,7ae6c8412ee30d3fd6223eba1190f0be91b1763d,MIT,0,0,,,no development-set task identifiers,,0,0,0
+arjunprabhulal/gemma4-agent,c0f7749091ee9fc2e8cd2beb9da3ccd86a0fbbb6,MIT,0,0,,,no development-set task identifiers,,0,0,0
+Arubad/Gemma_post-training,607074295bd15e92c3d80c2be1811b9611cf4e78,,129,0,,,no licence,no licence file and no licence statement in the README,0,0,0
+Ashura-asura/gemma4-coding-agent,cef2af725c0766c62db6ce49d3c6705751116fdf,Apache-2.0,1,0,Apache-2.0,"LICENSE: 'Apache License Version 2.0, January 2004'; DATA_LICENSES.md: '`LICENSE` (Apache-2.0) was added by the audit as a **placeholder for the code**'; the same file says the data files 'are derived from the SWE-bench test split' and that 'Each upstream project keeps its own licence'. README.md has no licence section",no eligible records,"no development-set tasks: every task is a SWE-bench instance (data/holdout_tasks.jsonl 291, data/holdout_eval_subset.jsonl 24, data/rl_task_pool.jsonl 291; 'source': 'SWE-bench'), evaluated with the lab's own sandbox and harness, and the result (0/20 resolved for both the base Gemma 4 E4B and its QL",0,0,0
+athleticcoder21/coding-agent-hackathon,4827238842db303bba4f45a9e28ef1dec7a707d3,,0,0,,,no development-set task identifiers,,0,0,0
+belemcrizan/Aeris_Competition,242db46024430a8fec504b09ad239e828406e84a,MIT,0,0,,,no development-set task identifiers,,0,0,0
+Benadict-Git/codegraph-loc,d0a4cad843ed6a732b66d435e063485e0e792f24,Apache-2.0,0,0,,,no development-set task identifiers,,0,0,0
+bhayuadhipramana-glitch/gemma-4-swe-agent-research,973a68a4aec0670627a6a7e33a2960f1f4a39c53,,0,0,,,no development-set task identifiers,,0,0,0
+Blackl1stV35/gemma4-agent-localization,1ef826d6faa18096c131d23ed99352517abf7db4,MIT,124,0,MIT,LICENSE: 'MIT License Copyright (c) 2026 Blackl1stV35'; README.md '## License' / 'MIT.',no eligible records,"no agent outcomes: the only data file (paper/results.json, 124 per-task records) holds file-localisation results (per task the rank at which each of six retrieval strategies first returns a file the reference patch edits, summarised as MRR and recall@k) without any language model (lexical_bm25, seed",0,0,0
+bleymambwe/gemma-dev-agent-benchmark,40938810bb024c436fde06d30272757ff7e2688e,MIT,0,0,,,no development-set task identifiers,,0,0,0
+brainiac-star/Gemma-4-Developer,,,,,,,not fetched,empty repository,0,0,0
+bsw0610/gemma4-swe-harness-audit,30cb42b923974e513f9cfe0d66451b76e0dcd053,Apache-2.0,120,125,Apache-2.0,"LICENSE: 'Apache License Version 2.0, January 2004'; README.md '## License': 'Apache 2.0, see `LICENSE`.'; README.md '## Data': 'It does include aggregate results and per-run metrics of our own runs (`results/c3_run_rows.csv`, `results/c3_unjudgeable_tasks.csv`).'",used,,208,4,2
+callmeharshh/celo-stable-agent,2f93bfba33d63d135288dd74754de226282f359c,Apache-2.0,0,0,,,no development-set task identifiers,,0,0,0
+catlikeflyer/repotopology,d7dd655fb3b34bd5f6096f612dc29d91b19a8c04,,0,0,,,no development-set task identifiers,,0,0,0
+Chandra142/gamma-4-graph-sleuth-agent,6ebd41752ddafd7953b6f8ac332479c0941704d4,,0,0,,,no development-set task identifiers,,0,0,0
+CharlieHerbst331/gemma4-agent-lab,cbcb4b1a5b9fb55d1b579c9bea436ef3306e1984,Apache-2.0,0,13,,,"licensed, not examined",not examined before the deadline,0,0,0
+CodersAcademy006/gemma4-artifact-labels,fc3c9234d7db4797c82e2efd17219b108e40f167,,129,0,,,no licence,no licence file and no licence statement in the README,0,0,0
+CodeTorso/walter-asset-copilot,5e07eba93dc507ac9becd29c10372dc43040438c,MIT,0,0,,,no development-set task identifiers,,0,0,0
+DesignMaster-Solutions/where-the-fix-lives,c7ff2d99648cc142f8c17efadb33f42098fab5a4,Apache-2.0,115,0,Apache-2.0,"LICENSE: 'Apache License Version 2.0, January 2004'; README.md: 'Author: Alan De Bortolo, Design Master Solutions LLC. License: Apache-2.0.'",no eligible records,"no per-task resolved outcomes: localisation study (hit@k of training-free rankers and of single-shot Gemma 4 E4B function predictions on 115 public tasks); no agent runs, no patches, no grading",0,0,0
+dhairya-pandya/beam-apprentice,64daad9164d16efdf523944750f5cee15672fe8c,Apache-2.0,0,0,,,no development-set task identifiers,,0,0,0
+divya234-hue/gemma4-autonomous-coding-agent,ff3a58b7d2618e913098b47d262ec1e41838fdd6,,0,0,,,no development-set task identifiers,,0,0,0
+draculess99/Gemma4-Coding-Agent-Research,29eecfd27ac968dbfbd500d5281c55c4951ced00,,0,0,,,no development-set task identifiers,,0,0,0
+dustinober1/Gemma-4-developer,a67b55b7fc493ed07e57b3a622421598ad8a6288,,129,0,,,no licence,no licence file and no licence statement in the README,0,0,0
+Fearoff5214/Gemma_4_Kaggle_hackathon,eef83e58ed1f0575b1c408171014be064a4dfc73,,0,0,,,no development-set task identifiers,,0,0,0
+Finerium/axi-paper-release,0dcaff7d584652482db2d0edf64dbaa4f8f582c7,Apache-2.0,71,29,CC-BY-4.0,"README.md: 'Licences: data (this folder's csv, jsonl, md, txt, json) CC BY 4.0; code (code/, analysis/*.py) Apache-2.0.'; LICENSE: 'Apache License Version 2.0, January 2004' (the file GitHub detects). The records used here are in ledger-public.jsonl and e3-session-exit.csv (data, CC BY 4.0)",used,,1096,31,27
+frenzy2004/Polaris,f58b847ddfecf3f25766f5234e5945b1c59bf6df,,0,0,,,no development-set task identifiers,,0,0,0
+gandli/local-ai-registry-zh,0411f0d13112c08f9e1a0483a0b90b73d90186b7,MIT,0,0,,,no development-set task identifiers,,0,0,0
+GeorgeRCAdamJohnson/Gemma_Competition,e5d3e2595708b7e33de976d4e2d6b22b3e69f491,,129,191,,,no licence,no licence file and no licence statement in the README,0,0,0
+granbellllc-png/gemma-wayfinder-agent,b26167f19c7f2964b93815fc515c5c300d2f5b10,Apache-2.0,0,0,,,no development-set task identifiers,,0,0,0
+guangyusong/gemma4-fresh-tasks-public,d40c24bb34df4471acd7cc0d7bb75920ca5b4879,Apache-2.0,103,6,,,"licensed, not examined",not examined before the deadline,0,0,0
+HashanEranga/swegemma,90a3e48c466699d0afb8f8a7a38a89478340dbe5,Apache-2.0,0,0,,,no development-set task identifiers,,0,0,0
+HRDevelops/gemma4-compute-allocation,40de1ea74713088ae084f06b24b7b69b09188387,MIT,129,0,MIT,LICENSE: 'MIT License Copyright (c) 2026 Husnain Rasool'; README.md '## License': 'Code and results: MIT (see LICENSE). Competition tasks and data are not redistributed here and remain under the competition's terms.',used,,2950,25,4
+IzbassarO/gemma4-agent-lab,5877c7dfcd34583c1edf02d77f5453c3b1f6a3e7,,129,129,,,no licence,no licence file and no licence statement in the README,0,0,0
+JayGupta2003/gemma4-swe-agent-posttraining,77cf8936ea027f82918a3f1b8eae7e15bc46727f,Apache-2.0,129,75,Apache-2.0,"LICENSE: 'Apache License Version 2.0, January 2004'; README.md '## Licence': 'Apache License 2.0, see LICENSE and NOTICE. The agent prompts in `submission*/prompts/` are adapted from the competition's sample submission.'; NOTICE: 'Copyright 2026 Jay Gupta. This product is licensed under the Apache License, Version 2.0'",no eligible records,"aggregated only: the agent rounds on public tasks are reported as totals per round (docs/paper/tables.md, docs/paper/tables_2.md, docs/paper/figure_data*.json, docs/STRATEGY.md); no per-task agent outcome is in the repository. The only per-task file, docs/kaggle_env_gold_results.json (129 records), ",0,0,0
+jctux/gemma4-tool-faithful-distill,4e919db48bfb1fe751713ab0c6e220ba076b610d,Apache-2.0,129,55,,,"licensed, not examined",not examined before the deadline,0,0,0
+JGM-droid/Gemma-coding-agent,80ba7a66dcf62c24cb2eb6cda1917f2ed4cc322f,,0,22,,,no licence,no licence file and no licence statement in the README,0,0,0
+Julian-Genuario/small-agent-stopping-rules,336e327c8e51bf64cc20faf88917e8f72620893d,MIT,60,17,MIT,"LICENSE: 'MIT License Copyright (c) 2026 Julián Genuario'; README.md: 'License: MIT (see LICENSE). Upstream excerpts in `data/` and `results/` keep their licenses (see NOTICE.md).'; NOTICE.md: rich excerpts MIT, click excerpts BSD-3-Clause, 'Everything else in this repository is MIT (see LICENSE).'",no eligible records,"no attempt on the competition's development set: the 120 tasks are one-token bugs that the lab seeded itself into rich 14.3.4 and click 8.5.0 (ids rich-000 ... rich-059, click-000 ... click-059, mutant indices, not competition task numbers), repaired by Gemma 4 E2B (llama.cpp, single function, up to",0,0,0
+junicusmaximus/gemma4-agent-audit,2bf76d8396a3794966ce8dc27e345f11803e855b,Apache-2.0,48,48,CC-BY-4.0,README.md '## Licence and scope': 'Own documents and figures and tables are released under Creative Commons Attribution 4.0 International (`LICENSE-CC-BY-4.0`). This covers the reports and per-task tables and contracts and pre-registrations and figures'; 'Own code is released under the Apache License 2.0 (`LICENSE`). This covers `code/` and `verify/` and the plotting scripts in `figures/`'; NOTICE.md repeats both. The records used here come from the reports (CC-BY-4.0); GitHub detects the repository as Apache-2.0 from LICENSE,used,,2304,48,16
+kawchar85/gemma4-agent-leaderboard,f65b3cbeee99280f5ed11a159e91bd80aa8dd305,MIT,0,0,,,no development-set task identifiers,,0,0,0
+kelbah29/browser-agent,b2416143e211db4c13f9bd07441d763720a0970a,,0,0,,,no development-set task identifiers,,0,0,0
+kennedydot2004/gemma-agent-paper,04c0abc88a2323621b1c8f43a394bbbb9b254659,,0,0,,,no development-set task identifiers,,0,0,0
+kesavsivakumar/gemma-dev-agent,8a09503f2a34ad8dc2c1a79b50c8639523d778d7,,0,0,,,no development-set task identifiers,,0,0,0
+kim-bayern-dev/KI-Video-Analyse-Tool-Archivar,ac67f50b2f70c5abf8d50d3e0912cd4ef0b4441d,MIT,0,0,,,no development-set task identifiers,,0,0,0
+knakra92/1profile,a2b5f6525ed1463db584187eecac574dff69f69e,MIT,0,0,,,no development-set task identifiers,,0,0,0
+leomaxuz/repomem,d8deac62a12a8c4ce376e8958d4e2837c6957488,Apache-2.0,0,0,,,no development-set task identifiers,,0,0,0
+lionel509/Switchboard,79918373199048cd983a760157b364ac22df95be,MIT,0,0,,,no development-set task identifiers,,0,0,0
+LittleExian/gemma4-agent-training-evaluation,8694d4193f17c6f2c18daf054e0f13f8071bd699,,196,29,,,no licence,no licence file and no licence statement in the README,0,0,0
+m-ibrahim-khalil/gemma4-graphswap,30f927848da373022de6193640affcd1c1ab3296,Apache-2.0,129,60,,,"licensed, not examined",not examined before the deadline,0,0,0
+M4-on-Github/Gemma4_Dev_Agent_Kaggle,4109550be556e6107b7695e16b2cc29857052b1d,Apache-2.0,48,49,,,"licensed, not examined",not examined before the deadline,0,0,0
+Manimaran-tech/gemma4-dual-integrity-agents,e0621f9a883a9446415b7f6ce0f5bff211570407,,1,128,,,no licence,no licence file and no licence statement in the README,0,0,0
+Mattbusel/swegraph-lite,41e676e919000fffce1001d6fbc8debfe1a96818,MIT,6,0,MIT,"LICENSE: 'MIT License Copyright (c) 2026 Tensorust LLC'; README.md '## License': 'MIT, Tensorust LLC. The graphs contain source code from the benchmark repositories, which keeps each repository's own license (see the dataset card).'",no eligible records,"no development-set attempts and no resolved/not-resolved outcome: every run is on the 300 tasks of SWE-bench Lite (plus its 23-task dev split for tuning), rebuilt as code graphs in the competition's format (ids such as astropy__astropy-12907, django__django-11099, psf__requests-1963), and the Gemma ",0,0,0
+MaximumCell/thunder,cbebd3b2b151dec02670de0734d267abe7884d84,,0,0,,,no development-set task identifiers,,0,0,0
+MaxwellBrohm/maxgpt-planck,a90cfc415a79f0562c9b5469a0f31284ed94cfda,,0,0,,,no development-set task identifiers,,0,0,0
+mayankgoel214/homecrew,a247821f1ca610bc5b879792735085f9f2add194,MIT,0,0,,,no development-set task identifiers,,0,0,0
+mobius-style/gemma4-scaffold-capacity,7356b06b0f5c8b5cc185a03b8ac2b4b68d210425,Apache-2.0,129,104,,,external validation set,the repository of the dataset used for external validation; not pooled,0,0,0
+Moriyuki-S/kaggle_ws,48f9582a6215219fd9da388e2594e2351ba43f7b,,0,0,,,no development-set task identifiers,,0,0,0
+nawazdev/faultlines,f96d7ef85ea3431247a713bae4f59a6c62c95af6,Apache-2.0,70,81,,,"licensed, not examined",not examined before the deadline,0,0,0
+nicknnamsa/gemma4-swe-agent,1b41ab7d206028809024ae890469099b661cb347,,0,0,,,no development-set task identifiers,,0,0,0
+nishanthrjn/init-Lego-AI-Operating-Layer,6cf6ce87206ce31a13fcc95b7995183a09561ad8,Apache-2.0,129,19,,,"licensed, not examined",not examined before the deadline,0,0,0
+noomesh/noomesh,465e066d66076c2246792e93a98314717c353a1f,AGPL-3.0,0,0,,,no development-set task identifiers,,0,0,0
+ns-0437/gemma4-agent-lab,3d3f417cbfe59f9222b22983f2a77d197f31d1b2,,0,0,,,no development-set task identifiers,,0,0,0
+oanaunc/Kaggriculture,b55f612cbed4ddbdc50ddb9427ec33ac4c217cb9,,40,5,,,no licence,no licence file and no licence statement in the README,0,0,0
+Piyushsahu99/agentbench-gemma,b561d51a141a2763b4e15b700948e8eaa1fc338b,NOASSERTION,0,0,,,no development-set task identifiers,,0,0,0
+pranav-6944/GraphRL-SWE,4180f7fd74d5227c15e7e7fb5091aeb9b7d07268,,0,0,,,no development-set task identifiers,,0,0,0
+Pruthvirajcodes/walter-asset-copilot,5e07eba93dc507ac9becd29c10372dc43040438c,MIT,0,0,,,no development-set task identifiers,,0,0,0
+rajab-rajab/GEMMA-4-AGENT-PAPERTRACK,0845a3de66f36e8ba54248f41c3985071929fabe,,0,0,,,no development-set task identifiers,,0,0,0
+rapha18th/ouroboros,e789e34fe4f91e23c6bcc384193d48bd73ec9502,Apache-2.0,2,0,,,"licensed, not examined",not examined before the deadline,0,0,0
+Rayboy2002/gemma4-agent-preregistration,22b61c6d163920dc4861fb75a703f717056a1b4f,,0,0,,,no development-set task identifiers,,0,0,0
+renorai/gemma4-memory-study,c5ccfd5bf4bbbad451fc4a56fe3ee170ca4d26c4,Apache-2.0,129,98,Apache-2.0,"LICENSE: 'Apache License Version 2.0, January 2004'; README.md: 'This study is licensed under the Apache License 2.0; see `LICENSE`'",used,,276,9,2
+reute-oss/gemma4-agentplatform-workshop,b1ab982b9502d8998ec57ea40d3500cc6ba25797,,0,0,,,no development-set task identifiers,,0,0,0
+richie1988/gemma4-evidence-first-swe-agent,8884104c187a8a5330d41df4a7a377d9ae245bef,,0,0,,,no development-set task identifiers,,0,0,0
+rocksolid911/gemma4-code-graph-ablation,5b785b2ef18853ff4955a4e78fbfe9a5ee8fdc76,Apache-2.0,20,20,Apache-2.0,"LICENSE: 'Apache License Version 2.0, January 2004'; README.md: '**Licence:** Apache 2.0 (see `LICENSE`).'",used,,585,30,18
+sagarml4949/gemma4-swe-agent,bc1095a6ac1596e86d0eef0990c4ab1628de2989,,0,0,,,no development-set task identifiers,,0,0,0
+Sai-Ishaan/Gemma_4_Agent,7dffbd8ef4d31b8a850a5142c69df47f2e37faf1,,0,0,,,no development-set task identifiers,,0,0,0
+SamsondareHUB/Codegraph-agent,2472551751827089b2ae0ae5c69366217701b301,,0,0,,,no development-set task identifiers,,0,0,0
+satiricalguru/Gemma-graph-nav,6e136004f0b58b597db15ea7eceeccb779690cbd,Apache-2.0,129,122,Apache-2.0,"LICENSE: 'Apache License Version 2.0, January 2004'; README.md '## License and data': 'Code: **Apache 2.0**'; paper/paper.md abstract: 'Code, prompts, per-task results and statistics are released (Apache-2.0).'",no eligible records,"localisation study without resolved/not-resolved outcomes: the 16 per-task files (results/runs/<method>/<model>/seed<k>/tasks_public.jsonl, 1,973 records on the 129 public tasks, 122 with function-level gold labels) hold a ranked list of code-graph symbols and Recall@k / Acc@k against the symbols th",0,0,0
+satish9177/gemma4-agent-posttraining-research,90672c7c6a219e7b00c76abd5de2023ebb74aea0,Apache-2.0,0,0,,,no development-set task identifiers,,0,0,0
+satyarthshukla500/hidden-test-agent-kit,a6acd8843526f4e7069c8731e7ab3484e82f41c5,MIT,129,90,MIT,"LICENSE: 'MIT License Copyright (c) 2026 Satyarth Shukla Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files'; README.md last line 'MIT license.'; PAPER.md s10 '(MIT)'",used,,1488,20,15
+saurin16/mind-the-map,27fee72c53302db93ff46d051cd4e378862f1d1e,Apache-2.0,129,98,,,"licensed, not examined",not examined before the deadline,0,0,0
+shaileshvats/inheritance-engine,85a4f7c60e17a643c662ae0e2d36a485954a8d46,NOASSERTION,0,0,,,no development-set task identifiers,,0,0,0
+shawnbaako/gemma4-agent-failure-analysis,f345b8b437278bdf48c0a89e0f4e7c66e39df466,Apache-2.0,64,0,,,"licensed, not examined",not examined before the deadline,0,0,0
+SheikhAbdullahNasir/gemma-harness,353b9b2f24b5e0ec30ba58d5edc74ba80fbd4ca5,NOASSERTION,0,0,,,no development-set task identifiers,,0,0,0
+Shengboj0324/Gemma-4-Agentic-Platform,1ad4bfec64628c991a9cfbfb3e404dca4594337c,,12,6,,,no licence,no licence file and no licence statement in the README,0,0,0
+ShreySharma07/gemma4-swe-agent,370d19ccd43a493125891b92dfef9f6cedc9cea0,MIT,129,30,MIT,"LICENSE: 'MIT License Copyright (c) 2026 Shrey Sharma Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files'; README.md 'License: MIT.'; research_deliverables/kaggle_writeup_fields.md 'Code, analysis scripts and aggregate results (MIT)'",used,,897,12,7
+SRINIVASTA/risk-gemma4-agent,16a195ed0fb8298fc49f1e391dbe2fd80f5c05d7,MIT,0,0,,,no development-set task identifiers,,0,0,0
+stevenliii/raser,a4dd9fd876540b2a2f9644026ac2004aaa0abd18,,0,0,,,no development-set task identifiers,,0,0,0
+subasreeswastika-sudo/Gemma4_Agent,,,,,,,not fetched,empty repository,0,0,0
+sundarshahi/gemma4-agents-rarely-lose-a-fix,6ea7f22a1079d049c0876633b60c17e53b1c8545,Apache-2.0,129,0,Apache-2.0,"LICENSE: 'Apache License Version 2.0, January 2004'; README.md '## License' / 'Apache-2.0.'; README.md '## Data policy': '`results/` holds agent-produced diffs and verdicts, which the hosts confirmed may be published as derived labels (competition discussion 749803)'",used,,72,1,1
+supawichza40/imperial-deepmind-hackathon,cec6b3177cc24a1c2f8bfb3744d0ac01f9b4f25e,Apache-2.0,0,0,,,no development-set task identifiers,,0,0,0
+sweeden-ttu/agentic_verification,ffa22fcc65c4804c1c5492445942cef86c21dd5a,,129,114,,,no licence,no licence file and no licence statement in the README,0,0,0
+sybil-solutions/local-ai-registry,7f33b184a1986e7b2890dfbe75660ccda6593bbe,MIT,0,0,,,no development-set task identifiers,,0,0,0
+Tarekswd/g-hrr-gemma4,4becfb7904704c7a5752dfa2ae029ca707bf3a8d,NOASSERTION,0,0,,,no development-set task identifiers,,0,0,0
+thorOdinson16/SolvedButHowLate,e4475607d9000c5fac84a2ffa293dd0d1a4bfe10,MIT,0,8,,,no development-set task identifiers,,0,0,0
+tmnestor/bank-statement-error-analysis,ced5b9068c9065ac7dfd317dc96f5f9ed0eb98ab,,0,0,,,no development-set task identifiers,,0,0,0
+treining2016-oss/fail-closed-swe-agent-benchmark,cae5f44004769941d42a74745bfd88be7303034b,MIT,0,0,,,no development-set task identifiers,,0,0,0
+ubiratantavares/gemma4-agentic-software-engineering,2da70b9acf8c0358fd0b82407001921d98c77b07,MIT,0,0,,,no development-set task identifiers,,0,0,0
+ubiratantavares/gemma4-swe-agent-lab,d6a4a4debed9d5a525b018c9d43d2ac609ecc7d4,MIT,0,0,,,no development-set task identifiers,,0,0,0
+unifyWeb3/gemma4-agent-spend-cap,384963bd763e4ff052a2e8660fc243bcb54af4b8,Apache-2.0,0,0,,,no development-set task identifiers,,0,0,0
+usp787/Gemma4_paper_track,a556ae6dd2ac344fb806be595483361d12d7ca80,Apache-2.0,0,70,,,"licensed, not examined",not examined before the deadline,0,0,0
+Utsav-X-bit/Gemma-4-Agent,2ce59afa0e5b4c8b0abd4aa8c7cc2438ecd8ac54,,13,13,,,no licence,no licence file and no licence statement in the README,0,0,0
+VaibhavSoni24/Impulse,769afb100c6ae258f9e9e4cb31fd23661e696d76,NOASSERTION,67,6,,,no licence,no licence file and no licence statement in the README,0,0,0
+ValikProgrammer/Gemma4Kagl,240073eeb67ed7ebcead7f599c1160cc4368f5c9,,129,30,,,no licence,no licence file and no licence statement in the README,0,0,0
+velocitylabo/gemma4-agent-budget-audit,3f4acedee8b5c169a508fc27c67ca0df050ec2de,MIT,43,43,,,"licensed, not examined",not examined before the deadline,0,0,0
+Victorandrade94/patchgraph-qa,ad1d27a94b4a089d7220425e1d196404d74c8761,Apache-2.0,129,0,,,"licensed, not examined",not examined before the deadline,0,0,0
+vigohan95/doclag,b2ab7a9de505150d42222161346604db4951aa54,Apache-2.0,0,0,,,no development-set task identifiers,,0,0,0
+Viraj465/Gemma-4-Kaggle-Agent-Paper-track,beab6a0f1ab57a55ec6075fdade0959fa76c1c71,Apache-2.0,0,0,,,no development-set task identifiers,,0,0,0
+vlyot/navalign,0b8c99231d55f6df1ab003fea88b94103573583e,Apache-2.0,0,0,,,no development-set task identifiers,,0,0,0
+WuShang-d/g4p-contract-hints,1084f7db02b3790896cee45b06cf0a959c057cbe,MIT,0,16,,,"licensed, not examined",not examined before the deadline,0,0,0
+xiningli/correct-but-not-kernels,afb17d1af5a5b9db2bddc0ce732e5b864e12f840,Apache-2.0,0,0,,,no development-set task identifiers,,0,0,0
+yoursrishiii/gemma4-swe-agent,243886160ec7322a025211a065574e20ff1b201a,,0,0,,,no development-set task identifiers,,0,0,0
+Yuxiang-Ren-HUB/gemma4-graph-toolkit-audit,28fd77294536ab98c002af7909309a50b56a4532,Apache-2.0,129,0,,,"licensed, not examined",not examined before the deadline,0,0,0
+Yuxiang-Ren-HUB/metswe-offline-agent,28a2b7b5782df1399aeb1120902a0961538eaa38,Apache-2.0,0,0,,,no development-set task identifiers,,0,0,0
+Zi-Yi-Ming/kaggle-archive,d3a9e7380f4464e9d368c085c121edba343574a3,MIT,63,0,,,"licensed, not examined",not examined before the deadline,0,0,0
