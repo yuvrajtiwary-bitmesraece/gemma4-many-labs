@@ -1,0 +1,1666 @@
+[
+ {
+  "createdAt": "2026-10-30T15:20:15Z",
+  "description": "Testing tool and orchestrator for the gemma 4 developer agent competiton on Kaggle",
+  "fullName": "wallysource/gemma4_paperTrack",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 18,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-11T04:53:03Z"
+ },
+ {
+  "createdAt": "2026-11-03T23:56:54Z",
+  "description": "Kaggle Google - The Gemma 4 Developer Agent Competition Realtime Dashboard & Ablation Monitor",
+  "fullName": "chiba244qq/gemma4-agent-dashboard",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 416,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-11T04:28:44Z"
+ },
+ {
+  "createdAt": "2026-11-10T22:52:46Z",
+  "description": "Do code-graph tools help a small local coding agent? 312 attempts, Gemma 4 31B. Kaggle Gemma 4 Developer Agent, paper track.",
+  "fullName": "sumitmehta1025/given-a-map",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 444,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-11T04:25:35Z"
+ },
+ {
+  "createdAt": "2026-10-09T16:58:55Z",
+  "description": "Gemma 4 Developer Agent competition entry (private until submission)",
+  "fullName": "emamira02/gemma4-swe-agent",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 1557,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-11T04:21:51Z"
+ },
+ {
+  "createdAt": "2026-10-29T04:55:33Z",
+  "description": "Gemma 4 E4B agent entry (agent.yaml, prompts, budgets) and source of the paper \"Can a small local agent redo a cloud agent's work?\" for Kaggle's Gemma 4 Developer Agent Paper Track. Includes where every number in the paper comes from and a check against the competition's rules.",
+  "fullName": "healthtransformationlab/gemma-developer-agent",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 2902,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-11T04:19:21Z"
+ },
+ {
+  "createdAt": "2026-11-10T15:57:57Z",
+  "description": "Measurement-first agent bundles for the Kaggle Gemma 4 Developer Agent competition: harness tools, sound splits, experiment log and paper",
+  "fullName": "SebAustin/gemma4-developer-agent",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 558,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-11T03:59:41Z"
+ },
+ {
+  "createdAt": "2026-11-07T11:22:52Z",
+  "description": "Gemma 4 Developer Agent Kaggle competition entry",
+  "fullName": "leejianrong/gemma-4-dev-agent",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 641,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-11T03:30:34Z"
+ },
+ {
+  "createdAt": "2026-11-03T09:20:30Z",
+  "description": "Code for \"Where the Fix Lives\" \u2014 Kaggle Gemma 4 Developer Agent Paper Track",
+  "fullName": "Haresh276/where-the-fix-lives",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 1873,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-11T02:13:21Z"
+ },
+ {
+  "createdAt": "2026-09-29T02:39:42Z",
+  "description": "Reproducible Gemma 4 SWE-agent research: AST-guided verification, assertion-aware traceback compression, and empirical code-repair benchmarks.",
+  "fullName": "msingatullin/gemma-4-developer-agent",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 2164,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-11T02:02:13Z"
+ },
+ {
+  "createdAt": "2026-11-11T01:54:50Z",
+  "description": "Code for the Gemma 4 Developer Agent paper-track writeup: verifier validity under floating dependencies and 31B-to-E4B distillation",
+  "fullName": "Whyme-Labs/gemma4-e4b-swe-validity",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 34,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-11T01:55:00Z"
+ },
+ {
+  "createdAt": "2026-11-06T20:48:06Z",
+  "description": "MOEPA cognitive governance architecture for the Google Gemma 4 Developer Agent Paper Track (Kaggle)",
+  "fullName": "PhilipAsiala/moepa-gemma4-agent",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 139,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-11T01:13:02Z"
+ },
+ {
+  "createdAt": "2026-11-10T23:57:22Z",
+  "description": "Replicated, pre-registered ablations of a Gemma 4 31B coding agent for the Gemma 4 Developer Agent Competition: prompts, configs, local eval and results.",
+  "fullName": "nishanthrjn/gemma4-agent-ablations",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 248,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-11T00:38:56Z"
+ },
+ {
+  "createdAt": "2026-11-10T17:39:21Z",
+  "description": "How far is the bug? A controlled benchmark that dials symptom-to-cause distance for code-graph bug localization (Gemma 4 Developer Agent Paper Track)",
+  "fullName": "big14way/bugdial",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 731,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-11T00:09:57Z"
+ },
+ {
+  "createdAt": "2026-11-10T23:08:25Z",
+  "description": "Local evaluation kit and paper reproduction for the Kaggle Gemma 4 developer-agent competition",
+  "fullName": "HIAPPtitude-owner/gemma-eval-kit",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 68,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-10T23:31:54Z"
+ },
+ {
+  "createdAt": "2026-10-04T04:35:11Z",
+  "description": "Kaggle Gemma 4 Developer Agent competition: agent config, tools, training scripts",
+  "fullName": "fatu/gemma4-dev-agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 1116,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-10T22:59:46Z"
+ },
+ {
+  "createdAt": "2026-10-04T19:12:16Z",
+  "description": "",
+  "fullName": "j-holou/gemma-4-developer-agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 189,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-10T22:34:21Z"
+ },
+ {
+  "createdAt": "2026-11-10T20:26:05Z",
+  "description": "Bounded Rationality Autonomous SWE-Agent for Google - The Gemma 4 Developer Agent Competition (Kaggle)",
+  "fullName": "Ronak1167/gemma-4-developer-agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 369,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-10T22:07:06Z"
+ },
+ {
+  "createdAt": "2026-09-27T04:05:48Z",
+  "description": "Coding agent for the Kaggle gemma-4-developer-agent competition.",
+  "fullName": "emiliodavola/kaggle-gemma-agent",
+  "license": {
+   "key": "mit",
+   "name": "MIT License",
+   "url": "https://api.github.com/licenses/mit"
+  },
+  "size": 1096,
+  "stargazersCount": 1,
+  "updatedAt": "2026-11-10T21:58:34Z"
+ },
+ {
+  "createdAt": "2026-11-10T00:17:11Z",
+  "description": "DATA 266 Group 5 (team of 5): Gemma 4 Developer Agent Kaggle competition",
+  "fullName": "DipinJassal/data266-gemm4-group5-a",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 80,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-10T21:43:44Z"
+ },
+ {
+  "createdAt": "2026-10-20T19:00:03Z",
+  "description": "GraphFaultBench: deterministic graph-corruption benchmark harness for code localisation agents \u2014 Kaggle Gemma 4 Developer Agent Paper Track entry",
+  "fullName": "MdTanjilIslamBappi/graphfaultbench",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 586,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-10T21:40:52Z"
+ },
+ {
+  "createdAt": "2026-11-06T12:04:10Z",
+  "description": "Measurement harness, raw per-call records and scored results for \"Misbinding, not fabrication: attribution error in an offline developer agent\" (Kaggle, Gemma 4 Developer Agent Paper Track).",
+  "fullName": "Constantinos999/fit_engine_probe",
+  "license": {
+   "key": "other",
+   "name": "Other",
+   "url": ""
+  },
+  "size": 1004,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-10T21:37:36Z"
+ },
+ {
+  "createdAt": "2026-10-14T19:41:32Z",
+  "description": "Open research: turning Gemma 4 on a single accelerator into a reliable software-engineering agent. Entry for Google DeepMind's Gemma 4 Developer Agent Paper Track (Kaggle).",
+  "fullName": "TechNaom/gemma4-agentic-swe",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 6257,
+  "stargazersCount": 1,
+  "updatedAt": "2026-11-10T16:44:20Z"
+ },
+ {
+  "createdAt": "2026-10-10T07:26:57Z",
+  "description": "https://www.kaggle.com/competitions/gemma-4-developer-agent",
+  "fullName": "hA0oooooo/Gemma4-Developer-Agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 4961,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-10T16:43:50Z"
+ },
+ {
+  "createdAt": "2026-10-03T06:24:28Z",
+  "description": "Kaggle gemma-4-developer-agent: declarative ADK agent package, static validator, and notebook builder",
+  "fullName": "Karna14314/gemma4hack",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 5723,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-10T16:16:36Z"
+ },
+ {
+  "createdAt": "2026-09-24T04:20:40Z",
+  "description": "Kaggle: Gemma 4 Developer Agent competition entry (SWE agent scaffold + local eval harness)",
+  "fullName": "happyc0der/gemma-swe-agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 1436,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-10T14:04:31Z"
+ },
+ {
+  "createdAt": "2026-11-07T17:57:47Z",
+  "description": "Code and agent configs for our Gemma 4 Developer Agent Paper Track writeup (Apache-2.0)",
+  "fullName": "Muhammad-Dabeer-23/gemma4-agent-paper",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 437,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-10T10:11:48Z"
+ },
+ {
+  "createdAt": "2026-11-04T10:26:31Z",
+  "description": "SWE-Pocket: a repository-size-stratified evaluation resource for consumer-hardware coding agents (Gemma 4 Developer Agent Paper Track)",
+  "fullName": "divinenwobodo19-creator/swe-pocket",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 445,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-10T09:21:07Z"
+ },
+ {
+  "createdAt": "2026-11-10T07:02:43Z",
+  "description": "Gemma 4 Developer Agent paper track: agent configurations, harness tools and per-task results behind \"Out of Time, Not Out of Ideas\". MIT-0.",
+  "fullName": "HivemindEnt/hivemind-gemma4-dev-agent-pub",
+  "license": {
+   "key": "mit-0",
+   "name": "MIT No Attribution",
+   "url": "https://api.github.com/licenses/mit-0"
+  },
+  "size": 575,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-10T07:13:41Z"
+ },
+ {
+  "createdAt": "2026-11-10T06:35:00Z",
+  "description": "",
+  "fullName": "erhiteshkumar/gemma4-developer-agent",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 304,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-10T06:36:04Z"
+ },
+ {
+  "createdAt": "2026-11-10T05:16:18Z",
+  "description": "Deepmind Competiton submission",
+  "fullName": "Ritabanm/gemma-4-developer-agent-paper",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 93,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-10T06:22:39Z"
+ },
+ {
+  "createdAt": "2026-11-10T04:25:57Z",
+  "description": "Companion notes for repository-level coding-agent experiments (Gemma 4 Developer Agent hackathon): narrow synthetic-repair SFT result, tool-call compatibility and measurement protocol",
+  "fullName": "taruki11/gemma4-developer-agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 3,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-10T04:26:08Z"
+ },
+ {
+  "createdAt": "2026-10-28T00:50:32Z",
+  "description": "Evidence and scripts for 'When Edits Vanish' \u2014 Gemma 4 Developer Agent Paper Track submission",
+  "fullName": "dp-pcs/gemma4-tool-call-reliability",
+  "license": {
+   "key": "other",
+   "name": "Other",
+   "url": ""
+  },
+  "size": 90,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-10T03:49:18Z"
+ },
+ {
+  "createdAt": "2026-11-09T19:05:19Z",
+  "description": "Pre-registered factorial screening of eight prompt recipes for a Gemma 4 E4B coding agent (Kaggle Gemma 4 Developer Agent paper track): code, run files, per-attempt records and analysis.",
+  "fullName": "matisdsp/gemma-4-developer-agent",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 1173,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-09T19:05:39Z"
+ },
+ {
+  "createdAt": "2026-10-06T07:38:34Z",
+  "description": "",
+  "fullName": "Axentalan-VI/gemma-4-developer-agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 739,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-09T14:21:26Z"
+ },
+ {
+  "createdAt": "2026-11-02T19:19:02Z",
+  "description": "",
+  "fullName": "Mohit20057/gemma4-developer-agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 304,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-09T13:21:27Z"
+ },
+ {
+  "createdAt": "2026-11-09T11:03:14Z",
+  "description": "A Gemma 4 coding agent on a laptop chip: grader copy, agent runner, context policies, power logging and analysis for the Kaggle Gemma 4 Developer Agent Paper Track",
+  "fullName": "CVasilopoulos/gemma4-laptop-agent",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 610,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-09T11:07:35Z"
+ },
+ {
+  "createdAt": "2026-11-05T12:04:46Z",
+  "description": "Code and data for 'Moving Failures Around': a Gemma 4 31B coding agent for Kaggle's Gemma 4 Developer Agent competition (paper track)",
+  "fullName": "lspecian/gemma4-moving-failures",
+  "license": {
+   "key": "mit",
+   "name": "MIT License",
+   "url": "https://api.github.com/licenses/mit"
+  },
+  "size": 1135,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-09T10:05:07Z"
+ },
+ {
+  "createdAt": "2026-11-05T03:49:42Z",
+  "description": "Code, data and adapter for 'When the Score Is Noise: Mechanism Metrics for Evaluating Budget-Limited Coding Agents' (Gemma 4 Developer Agent paper track)",
+  "fullName": "yesterdaysrebel/when-the-score-is-noise",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 22463,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-09T04:05:47Z"
+ },
+ {
+  "createdAt": "2026-10-02T18:37:37Z",
+  "description": "The Gemma 4 Developer Agent Competition",
+  "fullName": "dominicftsmith/inkandpen-ops-agent",
+  "license": {
+   "key": "mit",
+   "name": "MIT License",
+   "url": "https://api.github.com/licenses/mit"
+  },
+  "size": 40,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-09T02:23:18Z"
+ },
+ {
+  "createdAt": "2026-11-09T00:30:23Z",
+  "description": "Task metadata and scripts for a budget/prompt/structure study of a Gemma 4 SWE agent (Kaggle Gemma 4 Developer Agent)",
+  "fullName": "brunojmbq/gemma4-agent-budget-study",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 11,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-09T00:30:34Z"
+ },
+ {
+  "createdAt": "2026-10-25T11:38:54Z",
+  "description": "Kaggle Google - The Gemma 4 Developer Agent",
+  "fullName": "EAnge1o/kaggle-google-the-gemma-4-developer-agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 0,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-08T15:06:50Z"
+ },
+ {
+  "createdAt": "2026-11-08T02:42:55Z",
+  "description": "Code, agent bundles, frozen analysis and pre-registration for a Gemma 4 Developer Agent Paper Track writeup",
+  "fullName": "earthmaker/count-zero-not-indexed",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 115,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-08T04:34:37Z"
+ },
+ {
+  "createdAt": "2026-10-30T16:33:15Z",
+  "description": "Code, per-task results and analysis behind 'Most Agent Improvements Are Noise' (Gemma 4 Developer Agent paper track)",
+  "fullName": "fjcarmona78/gemma4-agent-noise-study",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 294,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-08T00:42:32Z"
+ },
+ {
+  "createdAt": "2026-11-07T18:38:34Z",
+  "description": "",
+  "fullName": "damoonsh/gemma-4-developer-agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 318,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-07T18:38:44Z"
+ },
+ {
+  "createdAt": "2026-11-07T13:00:56Z",
+  "description": "Submission One: frozen supporting evidence for independent Gemma 4 Developer Agent Paper Track research by Aridio Silva.",
+  "fullName": "aridiosilva/Gemma4_Google_Deepmind_S1",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 52,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-07T14:05:21Z"
+ },
+ {
+  "createdAt": "2026-11-03T03:06:47Z",
+  "description": "Ripple walk over a rebuilt code graph vs keyword search for predicting a bug fix's edit set: code, data and a negative result (Gemma 4 Developer Agent Paper Track, 2026)",
+  "fullName": "GrandMastaShake/blast-radius",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 165,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-07T11:15:38Z"
+ },
+ {
+  "createdAt": "2026-11-07T06:28:28Z",
+  "description": "",
+  "fullName": "subham20206-cloud/gemma4-developer-agent",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 128,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-07T07:14:29Z"
+ },
+ {
+  "createdAt": "2026-10-31T14:02:42Z",
+  "description": "AST-guided retrieval and test-driven self-correction for local Gemma 4 coding agents (Kaggle Gemma 4 Developer Agent Paper Track)",
+  "fullName": "anisha274/gemma-ast-agent",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 635,
+  "stargazersCount": 1,
+  "updatedAt": "2026-11-07T07:00:52Z"
+ },
+ {
+  "createdAt": "2026-09-30T02:52:27Z",
+  "description": "Gemma 4 Developer Agent competition workspace and evaluation viewer",
+  "fullName": "satter0827/gemma-4-developer-agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 756,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-07T02:11:02Z"
+ },
+ {
+  "createdAt": "2026-10-17T14:40:02Z",
+  "description": "Code and experiments for Kaggle competition Gemma 4 Developer Agent",
+  "fullName": "lmassaron/gemma-4-developer-agent",
+  "license": {
+   "key": "mit",
+   "name": "MIT License",
+   "url": "https://api.github.com/licenses/mit"
+  },
+  "size": 8687,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-06T20:05:26Z"
+ },
+ {
+  "createdAt": "2026-11-06T11:09:09Z",
+  "description": "Google - The Gemma 4 Developer Agent Paper Track",
+  "fullName": "Alphine/gemma4",
+  "license": {
+   "key": "other",
+   "name": "Other",
+   "url": ""
+  },
+  "size": 2218,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-06T11:31:38Z"
+ },
+ {
+  "createdAt": "2026-11-06T08:30:48Z",
+  "description": "Gemma 4 E2B coding agent: where it fails and why harness changes do not help (Kaggle Gemma 4 Developer Agent, Paper Track) \u2014 configs, trajectories, analysis scripts",
+  "fullName": "sigongjoa/gemma4-e2b-edit-failure",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 4284,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-06T08:31:05Z"
+ },
+ {
+  "createdAt": "2026-11-05T22:38:08Z",
+  "description": "MR-AST: Multi-Resolution AST Context Selection for Google Gemma 4 Developer Agents",
+  "fullName": "gautamhardik/mr-ast",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 10295,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-05T22:44:10Z"
+ },
+ {
+  "createdAt": "2026-10-28T22:20:14Z",
+  "description": "Entry for Gemma 4 Developer Agent Competition",
+  "fullName": "soum-stacks/darkedges",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 156,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-05T22:14:32Z"
+ },
+ {
+  "createdAt": "2026-10-15T23:30:12Z",
+  "description": "GemmaPilot \u2014 autonomous SWE agent for the Google Gemma 4 Developer Agent Competition (Kaggle, $100k)",
+  "fullName": "Zhiyilang/gemmapilot",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 267,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-05T17:23:56Z"
+ },
+ {
+  "createdAt": "2026-11-05T07:56:33Z",
+  "description": "",
+  "fullName": "veljjanoski/gemma4-developer-agent",
+  "license": {
+   "key": "mit",
+   "name": "MIT License",
+   "url": "https://api.github.com/licenses/mit"
+  },
+  "size": 205,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-05T08:55:14Z"
+ },
+ {
+  "createdAt": "2026-11-04T19:57:30Z",
+  "description": "Governed experience for an offline Gemma 4 coding agent (Kaggle Gemma 4 Developer Agent, Paper Track)",
+  "fullName": "gorigamidev/governed-experience-gemma4",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 310,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-04T20:02:11Z"
+ },
+ {
+  "createdAt": "2026-11-03T17:51:16Z",
+  "description": "Google - The Gemma 4 Developer Agent Competition",
+  "fullName": "kadimetla/gemma_4_coding_agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 187,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-04T17:24:22Z"
+ },
+ {
+  "createdAt": "2026-10-22T06:22:53Z",
+  "description": "Gemma 4 Developer Agent Competition (Kaggle) - post-training Gemma 4 into an offline Python bug-fixing agent: ADK harness, multipath-consistent trajectory SFT, LoRA, calibrated verifier patch selection.",
+  "fullName": "Peoplerepabulic/kaggle-gemma4-developer-agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 290,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-03T23:13:17Z"
+ },
+ {
+  "createdAt": "2026-11-03T07:05:17Z",
+  "description": "Kaggle Gemma 4 Developer Agent research: repository repair components, evidence validation and historical demo",
+  "fullName": "rodriguezrobertbfrkx6857-sudo/gemma4-coding-agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 111,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-03T07:05:28Z"
+ },
+ {
+  "createdAt": "2026-11-03T02:53:32Z",
+  "description": "Gemma 4 Developer Agent: submission packages + audit tools (Paper Track resources)",
+  "fullName": "W1nnnd/gemma4-silent-zeros",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 36,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-03T02:53:44Z"
+ },
+ {
+  "createdAt": "2026-11-03T00:58:06Z",
+  "description": "",
+  "fullName": "aviationengineer/gemma-4-developer-agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 7,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-03T01:57:17Z"
+ },
+ {
+  "createdAt": "2026-10-21T03:12:18Z",
+  "description": "ATLAS: audited static-graph diagnostics for repository repair (Gemma 4 Developer Agent Paper Track)",
+  "fullName": "xzy554422/atlas-gemma4-paper-track",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 1362,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-02T21:11:13Z"
+ },
+ {
+  "createdAt": "2026-11-02T18:01:09Z",
+  "description": "Gemma4 developer agent",
+  "fullName": "somye91/gemma4-developer-agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 288,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-02T18:03:39Z"
+ },
+ {
+  "createdAt": "2026-10-16T17:27:39Z",
+  "description": "Source code for https://www.kaggle.com/competitions/gemma-4-developer-agent-paper",
+  "fullName": "MrPickle200/gemma-4-dev-paper-track",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 10738,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-02T16:21:13Z"
+ },
+ {
+  "createdAt": "2026-10-31T11:08:54Z",
+  "description": "",
+  "fullName": "SauravBisht007/gemma4-Developer-agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 5,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-02T15:13:05Z"
+ },
+ {
+  "createdAt": "2026-11-01T06:33:46Z",
+  "description": "",
+  "fullName": "MadeNavaneeth/Gemma-4-Developer-Agent-Kaggle",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 3,
+  "stargazersCount": 0,
+  "updatedAt": "2026-11-01T06:33:55Z"
+ },
+ {
+  "createdAt": "2026-10-07T10:15:02Z",
+  "description": "",
+  "fullName": "temelinho/Google---The-Gemma-4-Developer-Agent-Competition",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 209,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-31T13:55:24Z"
+ },
+ {
+  "createdAt": "2026-09-12T06:41:52Z",
+  "description": "",
+  "fullName": "chukka-venugopalam/gemma4-developer-agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 3735,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-30T17:14:46Z"
+ },
+ {
+  "createdAt": "2026-10-25T21:22:56Z",
+  "description": "State-Filtered Deliberation (SFD): Eliminating Trajectory Entropy for Small Gemma-4 Developer Agents (Google Gemma 4 Hackathon Paper Track)",
+  "fullName": "KarandeepSinghSodhi/gemma-sfd-agent",
+  "license": {
+   "key": "other",
+   "name": "Other",
+   "url": ""
+  },
+  "size": 12123,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-29T13:50:15Z"
+ },
+ {
+  "createdAt": "2026-10-27T14:31:17Z",
+  "description": "Kaggle Competition :  Google - The Gemma 4 Developer Agent Competition",
+  "fullName": "johnsonhk88/kaggle-Google-The-Gemma-4-Developer-Agent-Competition",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 61,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-28T15:25:09Z"
+ },
+ {
+  "createdAt": "2026-10-28T13:56:51Z",
+  "description": "Fair audit of code-graph localization for the Gemma 4 Developer Agent Paper Track: BM25 vs graph PPR, hub prior, exact McNemar, MDE calculator (Apache-2.0)",
+  "fullName": "Natpaphonnn/gemma4-hub-prior-audit",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 76,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-28T14:14:06Z"
+ },
+ {
+  "createdAt": "2026-10-27T18:24:10Z",
+  "description": "Gemma 4 Developer Agent Competition - Autonomous SWE Agent with Pante\u00e3o orchestration",
+  "fullName": "rafasdiass/gemma4-swe-agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 270,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-28T13:50:08Z"
+ },
+ {
+  "createdAt": "2026-10-14T22:23:04Z",
+  "description": "https://www.kaggle.com/competitions/gemma-4-developer-agent/overview",
+  "fullName": "YufanPeter/Gemma-4-Developer-Agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 9269,
+  "stargazersCount": 2,
+  "updatedAt": "2026-10-27T20:37:31Z"
+ },
+ {
+  "createdAt": "2026-10-25T18:58:16Z",
+  "description": "Gemma 4 Developer Agent Competition",
+  "fullName": "sujith-kamme/gemma-swe-agent",
+  "license": {
+   "key": "mit",
+   "name": "MIT License",
+   "url": "https://api.github.com/licenses/mit"
+  },
+  "size": 413,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-26T23:57:49Z"
+ },
+ {
+  "createdAt": "2026-09-24T20:28:41Z",
+  "description": "Offline-first, human-governed Gemma 4 software engineering agent for the Google Developer Agent Competition.",
+  "fullName": "faithfulord1/palm92-repoguard",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 153,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-26T00:43:01Z"
+ },
+ {
+  "createdAt": "2026-10-04T09:54:17Z",
+  "description": "",
+  "fullName": "cubres/gemma-4-developer-agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 5476,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-25T21:07:07Z"
+ },
+ {
+  "createdAt": "2026-10-18T16:15:50Z",
+  "description": "Starter template for the Kaggle Gemma 4 Developer Agent competition",
+  "fullName": "xoda18/gemma-4-developer-agent",
+  "license": {
+   "key": "mit",
+   "name": "MIT License",
+   "url": "https://api.github.com/licenses/mit"
+  },
+  "size": 20,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-25T18:38:09Z"
+ },
+ {
+  "createdAt": "2026-10-25T13:09:13Z",
+  "description": "Reproduction code for 'Task or Trajectory?' (Gemma 4 Developer Agent Paper Track)",
+  "fullName": "zysbnd1/task-or-trajectory",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 438,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-25T13:09:56Z"
+ },
+ {
+  "createdAt": "2026-10-14T11:16:55Z",
+  "description": "Kaggle Gemma 4 Developer Agent: scripts, notes and submission config (data/venvs ignored)",
+  "fullName": "bellosahmed/gemma-4-developer-agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 239,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-25T11:47:27Z"
+ },
+ {
+  "createdAt": "2026-10-23T07:46:10Z",
+  "description": "",
+  "fullName": "Ditt-A/The-Gemma-4-Developer-Agent",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 108,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-25T10:48:42Z"
+ },
+ {
+  "createdAt": "2026-10-24T14:11:52Z",
+  "description": "",
+  "fullName": "sxkhooventure/Google---The-Gemma-4-Developer-Agent-Competition",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 0,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-24T14:11:54Z"
+ },
+ {
+  "createdAt": "2026-09-25T06:22:26Z",
+  "description": "Gemma 4 Developer Agent  \u2014 autonomous software engineering agent",
+  "fullName": "jcdumlao14/gemma4-developer-agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 322,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-23T03:52:26Z"
+ },
+ {
+  "createdAt": "2026-10-22T20:39:38Z",
+  "description": "",
+  "fullName": "abenih/gemma-4-developer-agent-spectrace",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 652,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-22T20:39:51Z"
+ },
+ {
+  "createdAt": "2026-10-18T14:55:43Z",
+  "description": "Selected code-only developer-agent experiment utilities; bilingual docs; no models or datasets.",
+  "fullName": "taruki11/gemma4-developer-agent-code",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 169,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-22T10:44:36Z"
+ },
+ {
+  "createdAt": "2026-10-20T01:57:44Z",
+  "description": "Research on reliable, resource-efficient agentic software engineering with Gemma 4. Exploring repository understanding, adaptive code navigation, test-guided debugging, and evidence-grounded automated code repair for small language model coding agents. Developed for the Google \u2013 The Gemma 4 Developer Agent Paper Track.",
+  "fullName": "jcdumlao14/gemma-4-developer-agent-paper-track",
+  "license": {
+   "key": "other",
+   "name": "Other",
+   "url": ""
+  },
+  "size": 83,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-22T02:58:00Z"
+ },
+ {
+  "createdAt": "2026-10-21T05:03:22Z",
+  "description": "Symbol-level Python call graphs and questions for the Gemma 4 Developer Agent paper track.",
+  "fullName": "jjoyceline/callset",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 2041,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-21T06:22:42Z"
+ },
+ {
+  "createdAt": "2026-10-21T04:07:37Z",
+  "description": "",
+  "fullName": "IrohasDarknesss/Gemma-4-Developer-Agent-Competition",
+  "license": {
+   "key": "mit",
+   "name": "MIT License",
+   "url": "https://api.github.com/licenses/mit"
+  },
+  "size": 42,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-21T05:51:32Z"
+ },
+ {
+  "createdAt": "2026-10-20T10:54:38Z",
+  "description": "Images for the Kaggle cards of the public Gemma 4 Developer Agent datasets",
+  "fullName": "Gluzdov-Dmitrii/Gemma-4-Developer-Agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 834,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-20T17:29:18Z"
+ },
+ {
+  "createdAt": "2026-10-13T20:15:14Z",
+  "description": "Google DeepMind \u2014 Gemma 4 Developer Agent Competition https://www.kaggle.com/competitions/gemma-4-developer-agent/overview",
+  "fullName": "diego-escobar-git/mostaza-harness",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 1741,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-20T17:13:22Z"
+ },
+ {
+  "createdAt": "2026-10-19T20:48:08Z",
+  "description": "Graph-Guided Evidence and Test-Verified Planning for Efficient Repository-Level Coding Agents (Gemma 4 Developer Agent Paper Track)",
+  "fullName": "Janeferdinant/gemma-4-developer-agent-paper",
+  "license": {
+   "key": "mit",
+   "name": "MIT License",
+   "url": "https://api.github.com/licenses/mit"
+  },
+  "size": 143,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-19T20:49:08Z"
+ },
+ {
+  "createdAt": "2026-10-19T11:45:19Z",
+  "description": "https://www.kaggle.com/competitions/gemma-4-developer-agent",
+  "fullName": "Launch-Silo/kaggle-gemma-agent-competition",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 0,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-19T11:54:54Z"
+ },
+ {
+  "createdAt": "2026-09-28T02:38:08Z",
+  "description": "Solution to https://www.kaggle.com/competitions/gemma-4-developer-agent",
+  "fullName": "Strider221B/gemma4_dev_agent",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 554,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-19T08:24:47Z"
+ },
+ {
+  "createdAt": "2026-09-29T03:53:45Z",
+  "description": "",
+  "fullName": "Gosling-dude/gemma4-developer-agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 13785,
+  "stargazersCount": 1,
+  "updatedAt": "2026-10-19T06:30:25Z"
+ },
+ {
+  "createdAt": "2026-09-27T22:29:17Z",
+  "description": "",
+  "fullName": "AMonFer/Gemma4-Developer-Agent-Competition",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 814,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-18T19:55:00Z"
+ },
+ {
+  "createdAt": "2026-10-14T07:54:02Z",
+  "description": "LIFECORE-SWE: Experience-Conditioned Code Graphs for Autonomous Software Engineering - Google DeepMind Gemma 4 Developer Agent Paper Track (Kaggle 2026)",
+  "fullName": "Innnervision/lifecore-swe",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 803,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-16T18:56:01Z"
+ },
+ {
+  "createdAt": "2026-10-11T00:56:44Z",
+  "description": "Kaggle Competition: Gemma4 Developer Agent Competition",
+  "fullName": "seekshreyas/kaggle-gemma4-developer-agent",
+  "license": {
+   "key": "mit",
+   "name": "MIT License",
+   "url": "https://api.github.com/licenses/mit"
+  },
+  "size": 41,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-11T18:06:28Z"
+ },
+ {
+  "createdAt": "2026-10-11T06:11:57Z",
+  "description": "",
+  "fullName": "huwungG/Kaggle_Gemma4_Developer_Agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 14,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-11T07:38:24Z"
+ },
+ {
+  "createdAt": "2026-10-10T22:18:28Z",
+  "description": "Google DeepMind Gemma 4 Developer Agent Challenge \u2014 Autonomous evaluation harness, dual-container sandbox, and AST benchmark suite.",
+  "fullName": "HindsightWise/gemma-4-developer-agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 5,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-10T22:19:16Z"
+ },
+ {
+  "createdAt": "2026-10-10T15:02:09Z",
+  "description": "Reproduction kit for the code-graph retrieval-surface read-outs (Gemma 4 Developer Agent Paper Track)",
+  "fullName": "laa1991/gemma4-tool-surface-repro",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 4,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-10T15:02:19Z"
+ },
+ {
+  "createdAt": "2026-10-10T08:23:30Z",
+  "description": "",
+  "fullName": "zadevpenseo/gemma-4-developer-agent-ast",
+  "license": {
+   "key": "other",
+   "name": "Other",
+   "url": ""
+  },
+  "size": 152,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-10T08:58:22Z"
+ },
+ {
+  "createdAt": "2026-10-09T22:14:44Z",
+  "description": "",
+  "fullName": "pendingbhc25/gemma4-developer-agent-pipeline",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 15,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-09T23:24:44Z"
+ },
+ {
+  "createdAt": "2026-10-09T16:58:27Z",
+  "description": "",
+  "fullName": "aakashdeepX/TheGemma4DeveloperAgentPaperTrack",
+  "license": {
+   "key": "apache-2.0",
+   "name": "Apache License 2.0",
+   "url": "https://api.github.com/licenses/apache-2.0"
+  },
+  "size": 282,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-09T16:58:33Z"
+ },
+ {
+  "createdAt": "2026-09-25T05:57:12Z",
+  "description": "An autonomous software engineering agent inspired by the Kaggle Gemma 4 Developer Agent Competition.",
+  "fullName": "Rudrapratapsinh-Chauhan1507/gemma-4-developer-agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 229,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-09T04:40:49Z"
+ },
+ {
+  "createdAt": "2026-10-08T22:44:10Z",
+  "description": "repos of gemma 4 developer agent competition",
+  "fullName": "nmuru/gemma-task-repo-issues",
+  "license": {
+   "key": "mit",
+   "name": "MIT License",
+   "url": "https://api.github.com/licenses/mit"
+  },
+  "size": 285080,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-08T23:14:44Z"
+ },
+ {
+  "createdAt": "2026-09-24T17:49:53Z",
+  "description": "",
+  "fullName": "biswalprince/gemma4-developer-agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 10,
+  "stargazersCount": 1,
+  "updatedAt": "2026-10-07T18:50:29Z"
+ },
+ {
+  "createdAt": "2026-10-03T15:20:58Z",
+  "description": "",
+  "fullName": "sofiyagpu/Gemma-4-developer-agent-competition",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 3515,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-07T03:58:25Z"
+ },
+ {
+  "createdAt": "2026-10-06T17:53:40Z",
+  "description": "",
+  "fullName": "Inam-DataScientist/Google---The-Gemma-4-Developer-Agent-Competition",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 2,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-06T17:59:35Z"
+ },
+ {
+  "createdAt": "2026-10-05T10:07:07Z",
+  "description": "Artifacts (paper, figures, per-task outcomes, replay tools) for the Gemma 4 Developer Agent Paper Track writeup",
+  "fullName": "yosh95/g4-developer-agent-paper",
+  "license": {
+   "key": "other",
+   "name": "Other",
+   "url": ""
+  },
+  "size": 145,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-05T10:48:38Z"
+ },
+ {
+  "createdAt": "2026-10-04T12:53:36Z",
+  "description": "",
+  "fullName": "Rajdp-krmkr/gemma4-developer-agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 304,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-04T13:39:11Z"
+ },
+ {
+  "createdAt": "2026-10-01T20:05:21Z",
+  "description": "https://www.kaggle.com/competitions/gemma-4-developer-agent/overview",
+  "fullName": "bansal1600/kaggle-finetune-gemma",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 17924,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-01T21:43:18Z"
+ },
+ {
+  "createdAt": "2026-10-01T13:32:29Z",
+  "description": "Research workspace for the Gemma 4 Developer Agent competition",
+  "fullName": "apedintensor/gemma-developer-agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 129,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-01T14:24:56Z"
+ },
+ {
+  "createdAt": "2026-09-27T07:00:07Z",
+  "description": "Hierarchical Code-Graph Reasoning & Test-Driven Self-Correction for Local Autonomous Software Engineering Agents powered by Google Gemma 4.",
+  "fullName": "nazarcoder123/Google---The-Gemma-4-Developer-Agent-Paper-Track-Kaggle-",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 823,
+  "stargazersCount": 1,
+  "updatedAt": "2026-10-01T11:01:56Z"
+ },
+ {
+  "createdAt": "2026-10-01T01:23:45Z",
+  "description": "",
+  "fullName": "Manjugadupudi/The-Gemma-4-Developer-Agent-Paper-Track",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 140,
+  "stargazersCount": 0,
+  "updatedAt": "2026-10-01T01:26:57Z"
+ },
+ {
+  "createdAt": "2026-09-25T20:51:32Z",
+  "description": "Experimental software-engineering agents built with Gemma 4. Tracking architecture, prompt, routing, localization, and review experiments for the Gemma 4 Developer Agent Competition.",
+  "fullName": "ahmad-alalony-ramaaz/gemma-4-agent-lab",
+  "license": {
+   "key": "other",
+   "name": "Other",
+   "url": ""
+  },
+  "size": 77,
+  "stargazersCount": 0,
+  "updatedAt": "2026-09-30T08:38:56Z"
+ },
+ {
+  "createdAt": "2026-09-26T22:43:45Z",
+  "description": "Coding agent built for the Google Gemma 4 Developer Agent Competition, with tool use, evaluation, and benchmark-driven iteration.",
+  "fullName": "rlawoals0529/gemma-4-developer-agent",
+  "license": {
+   "key": "mit",
+   "name": "MIT License",
+   "url": "https://api.github.com/licenses/mit"
+  },
+  "size": 24,
+  "stargazersCount": 0,
+  "updatedAt": "2026-09-30T03:09:18Z"
+ },
+ {
+  "createdAt": "2026-09-29T10:20:48Z",
+  "description": "",
+  "fullName": "iencislennon/The-Gemma-4-Developer-Agent-Competition",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 0,
+  "stargazersCount": 0,
+  "updatedAt": "2026-09-29T10:20:49Z"
+ },
+ {
+  "createdAt": "2026-09-28T17:00:25Z",
+  "description": "Gemma 4 Developer Agent Studio ADK Suite Autonomous SWE Agent Config & Submission Workbench",
+  "fullName": "shaikmohseen164-png/Gemma-4-Developer-Agent-Studio-ADK-Suite-Autonomous-SWE-Agent-Config-Submission-Workbench",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 1209,
+  "stargazersCount": 0,
+  "updatedAt": "2026-09-29T04:40:25Z"
+ },
+ {
+  "createdAt": "2026-09-28T17:16:42Z",
+  "description": "GDPR-SWE: Graph-Guided Dual-Process Reasoning for Offline Autonomous Software Engineering with Gemma-4 (Google DeepMind Kaggle Track)",
+  "fullName": "manojvenaram/GDPR-SWE-Gemma-4-Developer-Agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 700,
+  "stargazersCount": 0,
+  "updatedAt": "2026-09-28T17:17:31Z"
+ },
+ {
+  "createdAt": "2026-09-24T12:23:12Z",
+  "description": "Reverse-engineering analysis of the Kaggle Gemma 4 Developer Agent evaluation harness, plus a zero-GPU validation toolchain and a declarative baseline submission.",
+  "fullName": "LogosTopos/gemma-4-developer-agent",
+  "license": {
+   "key": "other",
+   "name": "Other",
+   "url": ""
+  },
+  "size": 394,
+  "stargazersCount": 0,
+  "updatedAt": "2026-09-28T13:14:24Z"
+ },
+ {
+  "createdAt": "2026-09-27T12:48:29Z",
+  "description": "GENESIS: A Two-Tier Autonomous Software Engineering Framework for Google Gemma 4 (Kaggle Developer Agent Competition)",
+  "fullName": "magician-k2/genesis-gemma4-developer-agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 15,
+  "stargazersCount": 0,
+  "updatedAt": "2026-09-28T11:02:07Z"
+ },
+ {
+  "createdAt": "2026-09-27T18:33:06Z",
+  "description": "",
+  "fullName": "piyushbhargava7/kaggle-gemma-4-developer-agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 8,
+  "stargazersCount": 0,
+  "updatedAt": "2026-09-27T18:41:00Z"
+ },
+ {
+  "createdAt": "2026-09-26T15:44:26Z",
+  "description": "Graph-guided autonomous software engineering agent for the Gemma 4 Developer Agent Competition.",
+  "fullName": "Mubeed8/gemma4-swe-agent",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 0,
+  "stargazersCount": 0,
+  "updatedAt": "2026-09-26T15:49:22Z"
+ },
+ {
+  "createdAt": "2026-09-26T12:21:32Z",
+  "description": "",
+  "fullName": "nicholashui/gemma-4-developer-agent-paper",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 292,
+  "stargazersCount": 1,
+  "updatedAt": "2026-09-26T15:06:20Z"
+ },
+ {
+  "createdAt": "2026-09-26T13:25:03Z",
+  "description": "",
+  "fullName": "newhouse-ss/Google---The-Gemma-4-Developer-Agent-Competition",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 0,
+  "stargazersCount": 0,
+  "updatedAt": "2026-09-26T13:25:04Z"
+ },
+ {
+  "createdAt": "2026-09-25T20:37:43Z",
+  "description": "Experimental software-engineering agents built with Gemma 4. Tracking architecture, prompt, routing, localization, and review experiments for the Gemma 4 Developer Agent Competition.",
+  "fullName": "ahmadalalony/gemma-4-agent-lab",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 0,
+  "stargazersCount": 0,
+  "updatedAt": "2026-09-25T20:37:44Z"
+ },
+ {
+  "createdAt": "2026-09-25T08:49:38Z",
+  "description": "",
+  "fullName": "ZUXXSU/Google---The-Gemma-4-Developer-Agent-Paper-Track",
+  "license": {
+   "key": "",
+   "name": "",
+   "url": ""
+  },
+  "size": 0,
+  "stargazersCount": 0,
+  "updatedAt": "2026-09-25T08:49:39Z"
+ },
+ {
+  "createdAt": "2026-09-24T22:08:48Z",
+  "description": "",
+  "fullName": "ennydev-2026/gemma-4-developer-agent",
+  "license": {
+   "key": "mit",
+   "name": "MIT License",
+   "url": "https://api.github.com/licenses/mit"
+  },
+  "size": 47,
+  "stargazersCount": 0,
+  "updatedAt": "2026-09-24T22:42:20Z"
+ }
+]
