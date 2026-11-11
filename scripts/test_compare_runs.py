@@ -64,8 +64,42 @@ def main() -> int:
     if len(common) >= 10:
         res = cr.compare([runs[rs[0]], runs[rs[1]]], [runs[rs[2]], runs[rs[3]]], band)
         assert "p_value_permutation" in res and 0 < res["p_value_permutation"] <= 1
+        assert "informative_tasks" in res
         print(f"two runs against two runs of one system: difference {100 * res['difference_b_minus_a']:+.1f} points, "
               f"band +/- {100 * res['noise_band_95']:.1f}, inside: {res['within_noise_band']}")
+
+    # The exact test within tasks: with one run each it is the exact McNemar test.
+    pair = [(a, b)]
+    for (x, y) in pair:
+        sh = sorted(set(x) & set(y))
+        p_strat, informative = cr.stratified_exact([x], [y], sh)
+        oa = sum(1 for t in sh if x[t] and not y[t])
+        ob = sum(1 for t in sh if y[t] and not x[t])
+        assert informative == oa + ob
+        assert abs(p_strat - cr.mcnemar_exact(oa, ob)) < 1e-9, (p_strat, cr.mcnemar_exact(oa, ob))
+    # A hand-checked case: one task, agent A solves 0 of 2, agent B 2 of 2 -> P = 2 * (1 / C(4,2)) = 1/3.
+    p_hand, _ = cr.stratified_exact([{"t": 0}, {"t": 0}], [{"t": 1}, {"t": 1}], ["t"])
+    assert abs(p_hand - 1 / 3) < 1e-12, p_hand
+    # Under the null (a system against itself, every split of four of its runs into two and two) the test
+    # must not reject much more often than its level.
+    n_null = rejected = 0
+    for s_, rs_ in by_system.items():
+        if len(rs_) < 4:
+            continue
+        for four in itertools.combinations(rs_, 4):
+            common = sorted(set.intersection(*[set(runs[r]) for r in four]))
+            if len(common) < 20:
+                continue
+            for left in ((0, 1), (0, 2), (0, 3)):
+                right = [i for i in range(4) if i not in left]
+                p_null, _ = cr.stratified_exact([runs[four[i]] for i in left], [runs[four[i]] for i in right], common)
+                n_null += 1
+                rejected += p_null <= 0.05
+    if n_null:
+        print(f"exact test within tasks, a system against itself (two runs against two): rejected {rejected}/{n_null} "
+              f"at the 5% level")
+        assert rejected / n_null <= 0.10
+    print("exact test within tasks: ok (equals McNemar for one run each; hand-checked case)")
 
     # Different systems with a large gap must be flagged.
     model = {}

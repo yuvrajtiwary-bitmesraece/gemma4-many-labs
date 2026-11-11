@@ -3,7 +3,8 @@
 Give it per-task results of agent A and agent B on the development tasks of
 the Gemma 4 Developer Agent competition (one or more runs each). It reports
 
-  - the score difference and, for one run each, the exact McNemar test;
+  - the score difference and an exact test that uses no model: the exact McNemar
+    test for one run each, the exact permutation test within tasks for more runs;
   - the noise band: how far two runs of ONE agent at this score level differ
     on exactly these tasks. The band comes from the pooled results of 14 labs
     (task difficulties and a noise scale in noise_band.json). Leave-one-lab-out,
@@ -22,7 +23,6 @@ from __future__ import annotations
 import argparse
 import csv
 import io
-import itertools
 import json
 import math
 import re
@@ -99,6 +99,37 @@ def mcnemar_exact(b: int, c: int) -> float:
     return min(1.0, 2 * tail)
 
 
+def stratified_exact(runs_a: list, runs_b: list, tasks: list) -> tuple:
+    """Two-sided exact permutation test within tasks. Returns (p-value, number of informative tasks).
+
+    If the two agents were the same, the run labels would be exchangeable within each task. For a task solved
+    in s of the ka + kb runs, the number of those successes that fall on agent B is then hypergeometric; the
+    statistic is the total number of B's successes over the tasks. One run each gives the exact McNemar test.
+    """
+    ka, kb = len(runs_a), len(runs_b)
+    dist = [1.0]
+    obs = informative = 0
+    for t in tasks:
+        xb = sum(r[t] for r in runs_b)
+        s = xb + sum(r[t] for r in runs_a)
+        if s == 0 or s == ka + kb:
+            continue
+        informative += 1
+        obs += xb
+        lo, hi = max(0, s - ka), min(kb, s)
+        den = math.comb(ka + kb, s)
+        pmf = [math.comb(kb, x) * math.comb(ka, s - x) / den if x >= lo else 0.0 for x in range(hi + 1)]
+        new = [0.0] * (len(dist) + hi)
+        for i, d in enumerate(dist):
+            if d:
+                for x in range(lo, hi + 1):
+                    new[i + x] += d * pmf[x]
+        dist = new
+    if not informative:
+        return 1.0, 0
+    return min(1.0, 2 * min(sum(dist[: obs + 1]), sum(dist[obs:]))), informative
+
+
 def normal_two_sided(z: float) -> float:
     return math.erfc(abs(z) / math.sqrt(2))
 
@@ -133,17 +164,12 @@ def compare(runs_a: list, runs_b: list, band: dict) -> dict:
         only_a = sum(1 for t in known if runs_a[0][t] and not runs_b[0][t])
         out.update(solved_only_by_a=only_a, solved_only_by_b=only_b, p_value_exact_mcnemar=mcnemar_exact(only_a, only_b))
     else:
-        # Exact permutation test over the assignment of runs to agents (runs are exchangeable if the agents are the same).
-        all_scores = score_a + score_b
-        k = len(score_a)
-        obs = abs(diff)
-        total = extreme = 0
-        for idx in itertools.combinations(range(len(all_scores)), k):
-            a = [all_scores[i] for i in idx]
-            rest = [all_scores[i] for i in range(len(all_scores)) if i not in idx]
-            total += 1
-            extreme += abs(sum(rest) / len(rest) - sum(a) / len(a)) >= obs - 1e-12
-        out.update(p_value_permutation=extreme / total, permutations=total)
+        # Exact permutation test stratified by task: if the two agents were the same, the run labels would be
+        # exchangeable within each task.  For a task solved in s of the ka + kb runs, the number of those
+        # successes that fall on agent B is then hypergeometric; the test statistic is the total number of
+        # B's successes.  With one run each this is the exact McNemar test.  It uses no noise model.
+        p_perm, informative = stratified_exact(runs_a, runs_b, known)
+        out.update(p_value_permutation=p_perm, informative_tasks=informative)
     if abs(diff) > 0:
         pair_var = 2 * per_run_var                       # variance of the difference of one run each
         out["runs_per_agent_to_detect_this_difference"] = max(1, math.ceil((Z975 + Z80) ** 2 * pair_var / diff ** 2))
@@ -174,15 +200,17 @@ def render(r: dict) -> str:
         lines.append(f"  exact McNemar test (solved only by A: {r['solved_only_by_a']}, only by B: {r['solved_only_by_b']}): "
                      f"p = {r['p_value_exact_mcnemar']:.3f}")
     if "p_value_permutation" in r:
-        lines.append(f"  exact permutation test over runs ({r['permutations']} assignments): p = {r['p_value_permutation']:.3f} "
-                     f"(the smallest value this many runs can give is {2 / r['permutations']:.3f})")
+        lines.append(f"  exact permutation test within tasks, no noise model ({r['informative_tasks']} tasks on which the "
+                     f"runs differ): p = {r['p_value_permutation']:.3f}")
     lines.append("")
     if "runs_per_agent_to_detect_this_difference" in r:
-        lines.append(f"Runs per agent needed to detect a difference of this size with 80% power: "
+        lines.append(f"Runs per agent the noise-band test needs to detect a difference of this size with 80% power: "
                      f"{r['runs_per_agent_to_detect_this_difference']}")
-    lines.append("Runs per agent needed on these tasks for a gain of 3 / 5 / 10 points: "
+    lines.append("Runs per agent it needs on these tasks for a gain of 3 / 5 / 10 points: "
                  f"{r['runs_per_agent_to_detect_3_points']} / {r['runs_per_agent_to_detect_5_points']} / "
                  f"{r['runs_per_agent_to_detect_10_points']}")
+    lines.append("(The exact test, which does not rely on the pooled noise model, needs somewhat more; "
+                 "see 'What repeats buy' in results/RESULTS.md.)")
     return "\n".join(lines)
 
 

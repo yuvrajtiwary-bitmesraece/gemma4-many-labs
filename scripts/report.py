@@ -44,6 +44,32 @@ def read_csv(path: Path):
         return list(csv.DictReader(fh))
 
 
+def worked_example(attempts_path: Path):
+    """Two configurations of one lab that were both run four times on the same tasks, through the tool."""
+    a_name, b_name = "veljjanoski/v11@kaggle", "veljjanoski/v10@kaggle"
+    band_path = ROOT / "tools" / "noise_band.json"
+    if not attempts_path.exists() or not band_path.exists():
+        return None
+    sys.path.insert(0, str(ROOT / "tools"))
+    import compare_runs as cr
+    runs = {a_name: {}, b_name: {}}
+    lab = None
+    with attempts_path.open(encoding="utf-8", newline="") as fh:
+        for r in csv.DictReader(fh):
+            if r["system"] in runs:
+                runs[r["system"]].setdefault(r["run"], {})[r["task"]] = int(r["y"])
+                lab = r["lab"]
+    ra, rb = list(runs[a_name].values()), list(runs[b_name].values())
+    if len(ra) < 4 or len(rb) < 4:
+        return None
+    band = json.loads(band_path.read_text(encoding="utf-8"))
+    labs = {x["lab"]: x["code"] for x in read_csv(ROOT / "results" / "tables" / "labs.csv")}
+    out = {"lab": labs.get(lab, "one lab"), "one": cr.compare(ra[:1], rb[:1], band),
+           "three": cr.compare(ra[:3], rb[:3], band), "four": cr.compare(ra[:4], rb[:4], band)}
+    out["n"] = out["one"]["tasks_compared"]
+    return out
+
+
 def main(argv) -> int:
     results = Path(argv[0]) if argv else ROOT / "results"
     r = json.loads((results / "results.json").read_text(encoding="utf-8"))
@@ -674,9 +700,23 @@ def main(argv) -> int:
                      f"{pts(ex['mean_abs_score_difference_observed'])} observed, {pts(ex['mean_abs_score_difference_predicted'])} "
                      f"predicted.")
         L.append("- `tools/compare_runs.py` applies the band to two sets of result files and says whether their "
-                 "difference is inside it, with the exact McNemar test (one run each) or an exact permutation test "
-                 "(several runs each) beside it, and the number of runs a given gain needs on those tasks. "
-                 "`scripts/test_compare_runs.py` checks it against the pooled repeats.\n")
+                 "difference is inside it. Beside it, it gives an exact test that uses no model (the exact McNemar "
+                 "test for one run each, the exact permutation test within tasks for several runs each) and the "
+                 "number of runs a given gain needs on those tasks. `scripts/test_compare_runs.py` checks it against "
+                 "the pooled repeats.")
+        ex = worked_example(derived / "attempts.csv")
+        if ex:
+            L.append(f"- **A worked example from the pool** (two configurations of one lab, {ex['lab']}, both run four "
+                     f"times on the same {ex['n']} tasks; they differ in the thinking budget). One run each: "
+                     f"{100 * ex['one']['mean_a']:.1f}% against {100 * ex['one']['mean_b']:.1f}%, a difference of "
+                     f"{pts(ex['one']['difference_b_minus_a'])}, inside the band of ±{pts(ex['one']['noise_band_95'])} "
+                     f"(exact McNemar p = {f(ex['one']['p_value_exact_mcnemar'])}). Three runs each: "
+                     f"{pts(ex['three']['difference_b_minus_a'])}, outside the band of ±{pts(ex['three']['noise_band_95'])} "
+                     f"(exact test within tasks p = {f(ex['three']['p_value_permutation'], 3)}). Four runs each: "
+                     f"{pts(ex['four']['difference_b_minus_a'])}, band ±{pts(ex['four']['noise_band_95'])}, "
+                     f"p = {f(ex['four']['p_value_permutation'], 3)}. With three runs the difference is clear; one run of "
+                     f"each could not show it.")
+        L.append("")
     ext_path = results / "external_validation.json"
     if ext_path.exists():
         e = json.loads(ext_path.read_text(encoding="utf-8"))
