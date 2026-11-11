@@ -6,3 +6,4 @@ __pycache__/
 .ipynb_checkpoints/
 results/analyze.log
 paper/BRIEF_FOR_AUTHOR.md
+WORKLOG.md
