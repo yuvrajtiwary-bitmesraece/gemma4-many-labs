@@ -64,6 +64,16 @@ def main(argv) -> int:
         ], ["Stage", "Repositories"]))
         L.append("\nLicences of the sources used: " + ", ".join(f"{k} ({v})" for k, v in sorted(s["licences_of_used"].items())) +
                  ". Every candidate and the stage at which it left the study is listed in `data/derived/screening.csv`.\n")
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import harmonize
+        items = [i for m in harmonize.load_adapters() for i in getattr(m, "CARD", {}).get("reported_numbers", [])]
+        yes = sum(1 for i in items if i.get("match") is True)
+        no = sum(1 for i in items if i.get("match") is False)
+        L.append(f"Adapter check: the adapters' cards record {len(items)} numbers that the sources themselves state "
+                 f"(resolved counts per run, flips between repeats, totals). The adapters' output reproduces {yes} of "
+                 f"them and differs on {no}; each difference is described in the card of its adapter "
+                 f"(`scripts/adapters/`), and `scripts/crosscheck.py` lists them and recomputes the headline numbers "
+                 f"without the analysis library.\n")
 
     L.append("## Pooled data\n")
     L.append(table([
