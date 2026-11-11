@@ -50,3 +50,99 @@ cell with solve probability *p* disagree with probability `2p(1−p)`.
 **1c. Estimators are tested on simulated data first.**
 `scripts/test_stats.py` checks every estimator against simulated data with
 known parameters before it is applied to the pooled data.
+
+## Amendment 2 — 2026-11-11, 06:15 to 08:00 UTC — after outcome data were opened
+
+Everything below was decided while or after reading the sources. The primary
+analyses P1 to P4 and the robustness checks of section 8 were run as written
+in the plan and Amendment 1; none of their definitions changed.
+
+**2a. How many sources had usable data.**
+The plan expected about 60 repositories with result files. 128 repositories
+were returned by the searches, 121 could be fetched, 58 contain
+development-set task identifiers, 35 of those carry a licence, and **14 have
+at least one eligible run**. The other 21 licensed sources hold retrieval or
+localisation metrics, task metadata, totals without per-task rows, other
+benchmarks, or simulated results. `data/derived/screening.csv` lists every
+repository with the stage at which it left the study and the reason.
+
+**2b. Screening went beyond JSON and CSV files.**
+`scripts/triage.py` also searched markdown, notebooks, logs and text files
+for task identifiers. Eight more repositories had at least 10 identifiers in
+such a file; two of them are licensed and were examined (one is used).
+Results that labs keep outside GitHub (Kaggle datasets, Zenodo) were not
+collected.
+
+**2c. Licence rule in practice.**
+A source counts as licensed if GitHub detects a licence, or if a licence file
+or a README statement grants reuse. Three repositories with a licence file
+that GitHub does not classify were accepted after reading it. One repository
+whose README licenses only its writeup was not used. Repositories with no
+licence statement were not opened further.
+
+**2d. Task universe.**
+The plan took the union of identifiers across sources. In the event, six
+labs list the whole development set in one file or run, they agree exactly on
+129 identifiers with the documented composition, and no eligible attempt
+carries an identifier outside that set. The development set is these 129
+identifiers (`data/derived/dev_tasks.txt`; the harmonizer log names the labs).
+
+**2e. Duplicates.**
+Implemented as: byte-identical files within a source are counted once
+(sha256), and within a run the first record per task is kept.
+
+**2f. Adapters.**
+The 36 adapters were written with AI assistance, in parallel batches, after
+the common rules were fixed in `scripts/adapters/README.md`. Each adapter
+records its evidence, its judgement calls and the numbers the source reports
+that it reproduces. Judgement calls that matter for the results:
+
+- *Repeats.* Runs share a system only where the lab identifies them as
+  repeats. Two groups in one lab (L01) rest on pooled reporting and an
+  identical agent commit, not on a sentence that says "repeat". In one lab
+  (L11) four runs are rebuilt from the per-task flip lists the lab publishes
+  against a fully published run. The same configuration on different
+  hardware counts as different systems (L02).
+- *Attempts a lab marks as unscorable.* Section 4 of the plan drops attempts
+  that a source marks as invalid for infrastructure reasons. Labs that
+  checked their sandbox mark tasks whose reference patch fails there, and
+  those attempts are dropped (L07 23 attempts, L10 54, L14 9; L01 61 rows
+  with server errors). Labs that did not check kept such tasks in their runs
+  as failures. This follows the plan, and it means the pooled failures are
+  not all of one kind. X1 below measures it.
+- *One lab's scorer.* L04 uses its own scorer, not the competition harness,
+  and eight of its early runs resolve 0 or 1 of 60 tasks. The lab does not
+  call them invalid, so they are kept. The "official harness only" check and
+  the leave-one-lab-out check both remove this lab.
+
+**2g. Small additions to planned analyses.**
+P2: the saturated model is reported on the replicated cells together with the
+additive models on the same cells. P4: a model check (predicted against
+observed resolve rate per run) is reported. E2: the lab-clustered bootstrap
+resamples labs without refitting the Rasch model. E4: replicate disagreement
+per task is twice the unbiased within-cell variance, averaged in the levels of
+section 6. The figure for P1 shows the middle half of the labs' solve rates.
+
+**2h. E1 is a description, not an analysis.**
+Leaderboard scores appear only in the prose of some labs' documents. The
+pairs were compiled by hand into `data/sources/leaderboard_pairs.csv`, with
+the file and wording for each, and are summarised descriptively. Five of the
+seven labs in that table contribute agent attempts; the other two contribute
+only these statements.
+
+**2i. New exploratory analysis X1: task validity.**
+Not in the plan. Added after the sources showed that eight labs had published
+per-task control runs: the reference patch, or no patch, applied to the tasks
+in their environment. `scripts/controls.py` collects them and
+`scripts/validity.py` compares them with each other and with the agents'
+outcomes. Three of the eight labs contribute no agent attempts. X1 is
+reported as exploratory, and the status of a task in it comes from one
+reference audit, chosen because it is the only one that ran both controls on
+all 129 tasks with the competition harness.
+
+**2j. Order of work.**
+The analysis code was committed before the pooled table existed and was first
+run on synthetic data. It was then run on partial pooled tables (10 and 12
+labs) while the last adapters were being written, to find bugs. Between those
+runs and the final run the only changes to analysis code were X1, the E1
+summary, and figure layout.

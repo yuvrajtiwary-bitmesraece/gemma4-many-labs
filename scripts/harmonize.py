@@ -37,6 +37,15 @@ MODELS = {"E2B", "E4B", "12B", "26B-A4B", "31B"}
 HARNESS = {"official", "local"}
 DEV_COMPOSITION = {"fastapi": 67, "rich": 48, "requests": 13, "httpx": 1}
 MIN_TASKS_PER_RUN = 10
+# Files in licensed sources that list every development-set task (see build()).
+DEV_INVENTORIES = [
+    ("TechNaom/gemma4-agentic-swe", "experiments/audit-2026-10-15/gold_runs.jsonl"),
+    ("HIAPPtitude-owner/gemma-eval-kit", "labels/dev129_labels.csv"),
+    ("Haresh276/where-the-fix-lives", "data/features_gemma_own129.csv"),
+    ("GrandMastaShake/blast-radius", "data/ripple_129.csv"),
+    ("SebAustin/gemma4-developer-agent", "experiments/oracle_kaggle.json"),
+]
+INVENTORY_ID = re.compile(r"(?<![A-Za-z0-9])(fastapi|requests|rich|httpx)_(\d{1,6})(?!\d)", re.I)
 
 ATTEMPT_COLUMNS = ["lab", "source", "system", "run", "task", "y", "model", "harness", "err", "status", "file"]
 
@@ -232,16 +241,33 @@ def build() -> int:
         tasks_by_run[r["run"]].add(r["task"])
         lab_by_run[r["run"]] = r["lab"]
     labs_by_set = defaultdict(set)
-    for run, tasks in tasks_by_run.items():
+
+    def vote(tasks, lab):
         if len(tasks) == sum(DEV_COMPOSITION.values()) and \
                 dict(Counter(t.split("_")[0] for t in tasks)) == DEV_COMPOSITION:
-            labs_by_set[tuple(sorted(tasks))].add(lab_by_run[run])
+            labs_by_set[tuple(sorted(tasks))].add(lab)
+            return True
+        return False
+
+    for run, tasks in tasks_by_run.items():
+        vote(tasks, lab_by_run[run])
+    # Task inventories: files in licensed sources that list the whole set
+    # (audits and label tables, not agent runs).
+    inventory_votes = {}
+    for repo, path in DEV_INVENTORIES:
+        try:
+            text = srcio.Source(repo).text(path)
+        except (KeyError, FileNotFoundError):
+            inventory_votes[f"{repo}:{path}"] = "missing"
+            continue
+        ids = {f"{a.lower()}_{int(b)}" for a, b in INVENTORY_ID.findall(text)}
+        inventory_votes[f"{repo}:{path}"] = len(ids) if vote(ids, repo.split("/", 1)[0]) else f"no vote ({len(ids)} ids)"
     if not labs_by_set:
-        print("no run covers a 129-task set with the documented composition")
+        print("no run or inventory covers a 129-task set with the documented composition")
         return 1
     dev_tasks = max(labs_by_set, key=lambda s: len(labs_by_set[s]))
-    log["dev_set"] = {"n_tasks": len(dev_tasks), "labs_listing_exactly_this_set": len(labs_by_set[dev_tasks]),
-                      "other_full_composition_sets": len(labs_by_set) - 1}
+    log["dev_set"] = {"n_tasks": len(dev_tasks), "labs_listing_exactly_this_set": sorted(labs_by_set[dev_tasks]),
+                      "other_full_composition_sets": len(labs_by_set) - 1, "inventories": inventory_votes}
     dev = set(dev_tasks)
     task_universe = Counter(r["task"] for r in all_rows)
     log["dev_set"]["distinct_dev_style_ids_before_filter"] = len(task_universe)

@@ -70,21 +70,33 @@ def fig_task_difficulty(res, tables: Path, out: Path) -> None:
     t = pd.read_csv(tables / "tasks.csv")
     mat = pd.read_csv(tables / "lab_task_matrix.csv", index_col=0)
     t = t[t["n_labs"] >= 5].sort_values(["d", "task"]).reset_index(drop=True)
-    lo = mat[t["task"]].min(axis=0).to_numpy()
-    hi = mat[t["task"]].max(axis=0).to_numpy()
+    lo = mat[t["task"]].quantile(0.25, axis=0).to_numpy()
+    hi = mat[t["task"]].quantile(0.75, axis=0).to_numpy()
     x = np.arange(1, len(t) + 1)
-    disc = (t["d"] > 0.10) & (t["d"] < 0.90)
-    fig, ax = plt.subplots(figsize=(9.2, 4.6))
-    ax.vlines(x, lo, hi, color=GREY, linewidth=1.2, zorder=1, label="Range across labs")
-    ax.scatter(x[~disc], t.loc[~disc, "d"], s=30, color=MUTED, edgecolor=SURFACE, linewidth=1.2, zorder=3,
-               label="Consensus: floor or ceiling task")
-    ax.scatter(x[disc], t.loc[disc, "d"], s=30, color=BLUE, edgecolor=SURFACE, linewidth=1.2, zorder=4,
-               label="Consensus: discriminating task")
+    p1 = res["P1"]
+    fig, ax = plt.subplots(figsize=(9.2, 4.8))
+    ax.vlines(x, lo, hi, color=GREY, linewidth=1.2, zorder=1, label="Middle half of the labs' solve rates")
+    if "audit_status" in t.columns and t["audit_status"].notna().any():
+        groups = [("Valid in the sandbox audit", t["audit_status"] == "valid", BLUE),
+                  ("Reference patch fails in the audit", t["audit_status"].astype(str).str.startswith("reference_patch_fails"), ORANGE),
+                  ("Passes with no patch in the audit", t["audit_status"] == "passes_without_patch", AQUA)]
+        for label, mask, color in groups:
+            ax.scatter(x[mask], t.loc[mask, "d"], s=30, color=color, edgecolor=SURFACE, linewidth=1.2, zorder=3,
+                       label=f"{label} ({int(mask.sum())})")
+        x1 = res.get("X1_validity", {})
+        sub = (f"{p1['floor_tasks']} of {len(t)} tasks have a consensus solve rate of 10% or less; "
+               f"{x1.get('floor_tasks_that_are_valid_in_reference_audit', '?')} of those are valid in the sandbox audit")
+    else:
+        disc = (t["d"] > 0.10) & (t["d"] < 0.90)
+        ax.scatter(x[~disc], t.loc[~disc, "d"], s=30, color=MUTED, edgecolor=SURFACE, linewidth=1.2, zorder=3,
+                   label="Consensus: floor or ceiling task")
+        ax.scatter(x[disc], t.loc[disc, "d"], s=30, color=BLUE, edgecolor=SURFACE, linewidth=1.2, zorder=4,
+                   label="Consensus: discriminating task")
+        sub = (f"{p1['floor_tasks']} tasks at the floor (consensus at most 10%), {p1['discriminating_tasks']} in "
+               f"between, {p1['ceiling_tasks']} at the ceiling (at least 90%)")
     for y in (0.10, 0.90):
         ax.axhline(y, color=BASELINE, linewidth=1.0, zorder=0)
-    p1 = res["P1"]
-    ax.text(len(t) + 1.5, 0.10, "10%", va="center", ha="left", fontsize=8.5, color=MUTED)
-    ax.text(len(t) + 1.5, 0.90, "90%", va="center", ha="left", fontsize=8.5, color=MUTED)
+        ax.text(len(t) + 1.5, y, f"{100 * y:.0f}%", va="center", ha="left", fontsize=8.5, color=MUTED)
     ax.set_xlim(0, len(t) + 1)
     ax.set_ylim(-0.03, 1.03)
     ax.set_xlabel(f"Development-set tasks attempted by at least 5 labs, ordered by consensus solve rate (n = {len(t)})")
@@ -92,13 +104,44 @@ def fig_task_difficulty(res, tables: Path, out: Path) -> None:
     pct(ax)
     ax.grid(axis="x", visible=False)
     ax.set_title("Task difficulty across labs")
-    subtitle(ax, f"{p1['floor_tasks']} tasks at the floor (consensus at most 10%), "
-                 f"{p1['discriminating_tasks']} in between, {p1['ceiling_tasks']} at the ceiling (at least 90%)")
-    ax.legend(loc="upper left", bbox_to_anchor=(0.0, 0.97), ncol=1, handletextpad=0.6)
+    subtitle(ax, sub)
+    ax.legend(loc="upper left", bbox_to_anchor=(0.0, -0.16), ncol=2, handletextpad=0.6, columnspacing=2.0)
     save(fig, out / "fig1_task_difficulty.png")
 
 
-# -- Figure 2: variance components per lab (table twin: tables/g_study.csv)
+# -- Figure 2: attempts on tasks that cannot pass (table twin: tables/validity_by_lab.csv)
+def fig_unpassable(res, tables: Path, out: Path) -> None:
+    path = tables / "validity_by_lab.csv"
+    if not path.exists():
+        return
+    v = pd.read_csv(path)
+    v["bad"] = v["audit_status"].astype(str).str.startswith("reference_patch_fails")
+    tot = v.groupby("lab")["attempts"].sum()
+    bad = v[v["bad"]].groupby("lab")[["attempts", "resolved"]].sum().reindex(tot.index).fillna(0)
+    d = pd.DataFrame({"share": bad["attempts"] / tot, "attempts": bad["attempts"].astype(int),
+                      "resolved": bad["resolved"].astype(int)}).sort_values("share")
+    fig, ax = plt.subplots(figsize=(9.2, 0.36 * len(d) + 1.9))
+    y = np.arange(len(d))
+    ax.barh(y, d["share"], height=0.5, color=BLUE, zorder=2)
+    for yi, (share, n, k) in enumerate(zip(d["share"], d["attempts"], d["resolved"])):
+        text = "none attempted" if n == 0 else f"{100 * share:.0f}% of attempts  ·  {k} of {n} resolved"
+        ax.text(share + 0.008, yi, text, va="center", ha="left", fontsize=8.5, color=INK2, zorder=3)
+    ax.set_yticks(y, d.index)
+    ax.set_xlim(0, max(0.1, float(d["share"].max()) * 1.55))
+    pct(ax, "x")
+    ax.set_xlabel("Share of the lab's attempts")
+    ax.grid(axis="y", visible=False)
+    ax.tick_params(axis="y", length=0)
+    ax.spines["left"].set_visible(False)
+    x1 = res["X1_validity"]
+    n_bad = x1["status_counts"].get("reference_patch_fails", 0)
+    ax.set_title("Attempts spent on tasks whose reference patch fails in the standard sandbox")
+    subtitle(ax, f"{n_bad} of 129 tasks fail with their own reference patch in the sandbox audit; "
+                 f"{100 * x1['share_of_attempts_on_tasks_where_reference_patch_fails']:.0f}% of all pooled attempts were made on them")
+    save(fig, out / "fig2_unpassable_attempts.png")
+
+
+# -- Figure 3: variance components per lab (table twin: tables/g_study.csv)
 def fig_variance(res, tables: Path, out: Path) -> None:
     g = pd.read_csv(tables / "g_study.csv")
     if g.empty:
@@ -130,10 +173,10 @@ def fig_variance(res, tables: Path, out: Path) -> None:
     subtitle(ax, "Two-way random-effects decomposition on each lab's balanced systems × tasks × repeats block")
     ax.legend(loc="lower left", bbox_to_anchor=(0.0, -0.36 if len(g) < 6 else -0.2 - 0.4 / len(g)), ncol=4,
               columnspacing=1.6, handlelength=1.2)
-    save(fig, out / "fig2_variance_components.png")
+    save(fig, out / "fig3_variance_components.png")
 
 
-# -- Figure 3: churn against net change (table twin: tables/replicate_pairs.csv)
+# -- Figure 4: churn against net change (table twin: tables/replicate_pairs.csv)
 def fig_replicates(res, tables: Path, out: Path) -> None:
     pairs = pd.read_csv(tables / "replicate_pairs.csv")
     if pairs.empty:
@@ -150,7 +193,8 @@ def fig_replicates(res, tables: Path, out: Path) -> None:
     ax.scatter(per_lab["flip_rate"], y, s=58, color=BLUE_DARK, edgecolor=SURFACE, linewidth=1.5, zorder=3,
                label="Share of tasks whose outcome flipped")
     ax.set_yticks(y, [f"{lab}  ({n_pairs[lab]} pair{'s' if n_pairs[lab] != 1 else ''})" for lab in per_lab["lab"]])
-    ax.set_xlim(0, max(0.05, float(per_lab["flip_rate"].max()) * 1.12))
+    ax.set_xlim(-0.005, max(0.05, float(per_lab["flip_rate"].max()) * 1.12))
+    ax.xaxis.set_major_locator(matplotlib.ticker.MultipleLocator(0.05))
     pct(ax, "x")
     ax.set_xlabel("Mean over the lab's pairs of repeated runs")
     ax.grid(axis="y", visible=False)
@@ -161,7 +205,7 @@ def fig_replicates(res, tables: Path, out: Path) -> None:
     subtitle(ax, f"{fr['n_pairs']} pairs of repeated runs from {fr['n_labs']} labs; "
                  f"pooled flip rate {100 * fr['pooled']:.1f}%")
     ax.legend(loc="lower right", ncol=1, handletextpad=0.5)
-    save(fig, out / "fig3_replicate_noise.png")
+    save(fig, out / "fig4_replicate_noise.png")
 
 
 def mdd_bisect(n: int, flip: float, power: float = 0.80, tol: float = 0.0025) -> float:
@@ -178,7 +222,7 @@ def mdd_bisect(n: int, flip: float, power: float = 0.80, tol: float = 0.0025) ->
     return hi
 
 
-# -- Figure 4: detectable difference against benchmark size (table twin: tables/mdd_curve.csv)
+# -- Figure 5: detectable difference against benchmark size (table twin: tables/mdd_curve.csv)
 def fig_mdd(res, tables: Path, out: Path) -> None:
     fr = res["P3"]["flip_rate"]
     if not fr.get("pooled"):
@@ -201,10 +245,10 @@ def fig_mdd(res, tables: Path, out: Path) -> None:
     ax.set_ylabel("Smallest detectable improvement")
     ax.set_title("What one paired comparison of two agents can detect")
     subtitle(ax, f"Exact two-sided McNemar test, α = 0.05, power 0.80, at the pooled flip rate of {100 * flip:.1f}%")
-    save(fig, out / "fig4_detectable_difference.png")
+    save(fig, out / "fig5_detectable_difference.png")
 
 
-# -- Figure 5: one agent on the task subsets labs used (table twin: tables/subset_predictions.csv)
+# -- Figure 6: one agent on the task subsets labs used (table twin: tables/subset_predictions.csv)
 def fig_subsets(res, tables: Path, out: Path) -> None:
     s = pd.read_csv(tables / "subset_predictions.csv")
     if s.empty:
@@ -215,7 +259,8 @@ def fig_subsets(res, tables: Path, out: Path) -> None:
     ax.axhline(full, color=BASELINE, linewidth=1.2, zorder=1)
     ax.scatter(s["n_tasks"], s["predicted_rate"], s=46, color=BLUE, edgecolor=SURFACE, linewidth=1.5, zorder=3,
                alpha=0.9)
-    ax.text(2, full, f"all {p4['n_tasks']} tasks: {100 * full:.1f}%", va="bottom", ha="left", fontsize=9, color=INK2)
+    ax.annotate(f"all {p4['n_tasks']} tasks: {100 * full:.0f}%", (float(s["n_tasks"].max()), full), xytext=(4, 9),
+                textcoords="offset points", ha="right", fontsize=9, color=INK2)
     lo, hi = s.loc[s["predicted_rate"].idxmin()], s.loc[s["predicted_rate"].idxmax()]
     ax.annotate(f"{100 * hi['predicted_rate']:.0f}% on {int(hi['n_tasks'])} tasks", (hi["n_tasks"], hi["predicted_rate"]),
                 xytext=(9, 2), textcoords="offset points", fontsize=9, color=INK2)
@@ -227,8 +272,9 @@ def fig_subsets(res, tables: Path, out: Path) -> None:
     ax.set_xlabel("Tasks in the subset")
     ax.set_ylabel("Predicted resolve rate")
     ax.set_title("The same agent, scored on each task subset that a lab used")
-    subtitle(ax, f"Rasch-model prediction for a median 31B system on {p4['n_distinct_subsets']} distinct subsets")
-    save(fig, out / "fig5_subset_comparability.png")
+    subtitle(ax, f"Rasch-model prediction for a median 31B system on the {p4['n_distinct_subsets']} distinct subsets "
+                 f"of at least 10 tasks")
+    save(fig, out / "fig6_subset_comparability.png")
 
 
 def main(argv) -> int:
@@ -237,6 +283,8 @@ def main(argv) -> int:
     res = json.loads((results / "results.json").read_text(encoding="utf-8"))
     tables = results / "tables"
     fig_task_difficulty(res, tables, out)
+    if res.get('X1_validity'):
+        fig_unpassable(res, tables, out)
     fig_variance(res, tables, out)
     fig_replicates(res, tables, out)
     fig_mdd(res, tables, out)

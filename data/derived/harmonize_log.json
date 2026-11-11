@@ -1,0 +1,99 @@
+{
+ "sources": {
+  "aridiosilva/Gemma4_Google_Deepmind_S1": {
+   "yielded": 1,
+   "dropped_run_too_small": 1
+  },
+  "diego-escobar-git/mostaza-harness": {
+   "yielded": 12,
+   "dropped_run_too_small": 12
+  },
+  "emamira02/gemma4-swe-agent": {
+   "yielded": 303
+  },
+  "emiliodavola/kaggle-gemma-agent": {
+   "yielded": 65,
+   "dropped_run_too_small": 17
+  },
+  "Haresh276/where-the-fix-lives": {
+   "yielded": 204
+  },
+  "HivemindEnt/hivemind-gemma4-dev-agent-pub": {
+   "yielded": 697
+  },
+  "KarandeepSinghSodhi/gemma-sfd-agent": {
+   "yielded": 112,
+   "dropped_run_too_small": 16
+  },
+  "lmassaron/gemma-4-developer-agent": {
+   "yielded": 1727,
+   "dropped_run_too_small": 68
+  },
+  "lspecian/gemma4-moving-failures": {
+   "yielded": 5422,
+   "dropped_run_too_small": 102
+  },
+  "matisdsp/gemma-4-developer-agent": {
+   "yielded": 2336,
+   "dropped_run_too_small": 6
+  },
+  "nishanthrjn/gemma4-agent-ablations": {
+   "yielded": 192
+  },
+  "PhilipAsiala/moepa-gemma4-agent": {
+   "yielded": 3,
+   "dropped_run_too_small": 3
+  },
+  "sigongjoa/gemma4-e2b-edit-failure": {
+   "yielded": 240,
+   "dropped_run_too_small": 4
+  },
+  "sujith-kamme/gemma-swe-agent": {
+   "yielded": 1,
+   "dropped_run_too_small": 1
+  },
+  "sumitmehta1025/given-a-map": {
+   "yielded": 312
+  },
+  "TechNaom/gemma4-agentic-swe": {
+   "yielded": 367,
+   "dropped_identical_file": 67,
+   "dropped_run_too_small": 2
+  },
+  "veljjanoski/gemma4-developer-agent": {
+   "yielded": 3235
+  },
+  "yosh95/g4-developer-agent-paper": {
+   "yielded": 182
+  }
+ },
+ "totals": {
+  "attempts": 15112,
+  "runs": 346,
+  "systems": 260,
+  "labs": 14,
+  "sources_with_adapter": 36,
+  "sources_used": 14,
+  "tasks": 129
+ },
+ "dev_set": {
+  "n_tasks": 129,
+  "labs_listing_exactly_this_set": [
+   "GrandMastaShake",
+   "HIAPPtitude-owner",
+   "Haresh276",
+   "SebAustin",
+   "TechNaom",
+   "lmassaron"
+  ],
+  "other_full_composition_sets": 0,
+  "inventories": {
+   "TechNaom/gemma4-agentic-swe:experiments/audit-2026-10-15/gold_runs.jsonl": 129,
+   "HIAPPtitude-owner/gemma-eval-kit:labels/dev129_labels.csv": 129,
+   "Haresh276/where-the-fix-lives:data/features_gemma_own129.csv": 129,
+   "GrandMastaShake/blast-radius:data/ripple_129.csv": 129,
+   "SebAustin/gemma4-developer-agent:experiments/oracle_kaggle.json": 129
+  },
+  "distinct_dev_style_ids_before_filter": 129
+ }
+}

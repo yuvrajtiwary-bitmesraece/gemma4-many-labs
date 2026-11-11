@@ -6,8 +6,9 @@ competition published on GitHub. Each team sees only its own runs on the 129
 public development tasks. Pooling the public record answers questions no single
 team can: is task difficulty a stable property across independent labs, how
 much of an outcome is run-to-run noise, what difference between two agents can
-a comparison detect, and how far apart are scores that teams report on
-different task subsets.
+a comparison detect, how far apart are scores that teams report on different
+task subsets, and which tasks can be passed at all in the environment teams
+actually used.
 
 Entry for the [Paper Track](https://www.kaggle.com/competitions/gemma-4-developer-agent-paper).
 
@@ -23,12 +24,14 @@ Entry for the [Paper Track](https://www.kaggle.com/competitions/gemma-4-develope
 | `DEVIATIONS.md` | Every amendment to the plan, with the time, the reason and whether outcome data had been seen. |
 | `data/sources/search_results.json`, `manifest.json` | The candidate repositories returned by the searches and the commit each one is pinned to, with the tarball checksum. |
 | `scripts/adapters/` | One adapter per examined source: where its per-task outcomes are, how systems, runs and repeats were identified, the evidence for each decision, and the numbers the source itself reports that the adapter reproduces. `README.md` there states the rules. |
-| `data/derived/attempts.csv` | The pooled table: `lab, source, system, run, task, y, model, harness, err, status, file`. |
+| `data/derived/attempts.csv` | The pooled table: `lab, source, system, run, task, y, model, harness, err, status, file`. 15,112 attempts, 14 labs, 260 agent configurations, 346 runs, 129 tasks. |
 | `data/derived/runs.csv`, `sources.csv`, `screening.csv` | One row per run, per source with an adapter, and per candidate repository (with the stage at which it left the study). |
+| `data/derived/controls.csv` | Control runs that eight labs published per task: the reference patch, or no patch, applied in their environment. Not agent attempts; used only in the validity analysis. |
+| `data/sources/leaderboard_pairs.csv` | Development-set rates and public-leaderboard scores that labs state for the same system, compiled by hand with the file and wording for each. |
 | `scripts/mlstats.py`, `test_stats.py` | The estimators and their checks against simulated data with known parameters. |
-| `scripts/analyze.py`, `report.py`, `figures.py` | Analyses, the generated results report and the figures. |
+| `scripts/analyze.py`, `validity.py`, `report.py`, `figures.py` | Analyses, the generated results report and the figures. |
 | `results/` | `results.json`, `RESULTS.md` and the tables behind every figure. |
-| `paper/figures/` | Figures. |
+| `paper/figures/` | Six figures. |
 
 ## Reproducing
 
@@ -47,6 +50,7 @@ From the sources (needs the GitHub CLI `gh`, logged in; downloads about 130 MB):
     python scripts/discover.py        # structure report per source
     python scripts/triage.py          # licence evidence, task ids outside JSON/CSV
     python scripts/harmonize.py       # run the adapters, write data/derived/
+    python scripts/controls.py        # data/derived/controls.csv
     python scripts/screening.py       # data/derived/screening.csv
 
 Third-party snapshots go to `data/raw/`, which is not committed. Sources are

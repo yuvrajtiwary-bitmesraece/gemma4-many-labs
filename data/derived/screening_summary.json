@@ -1,0 +1,24 @@
+{
+ "candidates": 128,
+ "fetched": 121,
+ "not_fetched": {
+  "empty repository": 6,
+  "larger than 60 MB": 1
+ },
+ "with_dev_task_ids": 58,
+ "of_those_licensed": 35,
+ "used": 14,
+ "stages": {
+  "no development-set task identifiers": 63,
+  "not fetched": 7,
+  "no licence": 23,
+  "no eligible records": 21,
+  "used": 14
+ },
+ "licences_of_used": {
+  "Apache-2.0": 9,
+  "MIT": 4,
+  "MIT-0": 1
+ },
+ "labs_used": 14
+}

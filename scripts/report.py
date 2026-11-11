@@ -23,6 +23,11 @@ def f(x, d=2):
     return "n/a" if x is None else f"{x:.{d}f}"
 
 
+def pts(x, d=1):
+    """A difference between two rates, in percentage points."""
+    return "n/a" if x is None else f"{100 * x:.{d}f} points"
+
+
 def table(rows, header):
     out = ["| " + " | ".join(header) + " |", "|" + "|".join(["---"] * len(header)) + "|"]
     out += ["| " + " | ".join(str(c) for c in r) + " |" for r in rows]
@@ -123,14 +128,14 @@ def main(argv) -> int:
         g = read_csv(tables / "g_study.csv")
         L.append(table([[x["code"], x["n_systems"], x["n_tasks"], x["n_replicates"], p(float(x["share_task"])),
                          p(float(x["share_system"])), p(float(x["share_system_x_task"])), p(float(x["share_replicate"])),
-                         f(float(x["g_n129_k1"])), f(float(x["g_n129_k3"])), p(float(x["se_diff_n129"]))] for x in g],
+                         f(float(x["g_n129_k1"])), f(float(x["g_n129_k3"])), pts(float(x["se_diff_n129"]))] for x in g],
                        ["Lab", "Systems", "Tasks", "Repeats", "Task", "System", "System × task", "Run-to-run",
                         "Eρ² (129 tasks, 1 run)", "Eρ² (129 tasks, 3 runs)", "SE of a difference (129 tasks, 1 run)"]))
         rows = []
         for n in (30, 60, 129):
             rows.append([n] + [f"{f(p2b[f'g_n{n}_k{k}']['median'])} ({f(p2b[f'g_n{n}_k{k}']['min'])}-{f(p2b[f'g_n{n}_k{k}']['max'])})"
                                for k in (1, 3, 5)] +
-                        [f"{p(p2b[f'se_diff_n{n}']['median'])} ({p(p2b[f'se_diff_n{n}']['min'])}-{p(p2b[f'se_diff_n{n}']['max'])})"])
+                        [f"{pts(p2b[f'se_diff_n{n}']['median'])} ({100 * p2b[f'se_diff_n{n}']['min']:.1f}-{100 * p2b[f'se_diff_n{n}']['max']:.1f})"])
         L.append(f"\nAcross the {p2b['n_labs']} labs with a balanced block (median, range):\n")
         L.append(table(rows, ["Tasks", "Eρ², 1 run", "Eρ², 3 runs", "Eρ², 5 runs", "SE of the difference of two systems, 1 run each"]))
         L.append(f"\nMedian shares: task {p(p2b['share_task']['median'])}, system {p(p2b['share_system']['median'])}, "
@@ -146,13 +151,13 @@ def main(argv) -> int:
         L.append(f"- **Flip rate** (share of shared tasks whose outcome differs between two repeats): pooled "
                  f"**{p(fr['pooled'])}**; across labs median {p(fr['lab_median'])}, interquartile range "
                  f"{p(fr['lab_q25'])} to {p(fr['lab_q75'])}, range {p(fr['lab_min'])} to {p(fr['lab_max'])}.")
-        L.append(f"- Absolute difference in resolve rate between two repeats: pooled {p(ad['pooled'])}; across labs "
-                 f"median {p(ad['lab_median'])}, range {p(ad['lab_min'])} to {p(ad['lab_max'])}; largest single pair "
-                 f"{p(pl.get('abs_diff_max'))}; {p(pl.get('share_identical_runs'))} of pairs had identical outcomes on every task.")
+        L.append(f"- Absolute difference in resolve rate between two repeats: pooled {pts(ad['pooled'])}; across labs "
+                 f"median {pts(ad['lab_median'])}, range {100 * ad['lab_min']:.1f} to {pts(ad['lab_max'])}; largest single pair "
+                 f"{pts(pl.get('abs_diff_max'))}; {p(pl.get('share_identical_runs'))} of pairs had identical outcomes on every task.")
         mdd = p3.get("mdd_pooled_flip", {})
         L.append("- Minimum detectable improvement for one paired comparison (exact two-sided McNemar test, α = 0.05, "
                  "power 0.80, discordance = flip rate + improvement): " +
-                 ", ".join(f"**{p(mdd.get(str(n)), 1)}** on {n} tasks" for n in (30, 60, 129)) + ".")
+                 ", ".join(f"**{pts(mdd.get(str(n)))}** on {n} tasks" for n in (30, 60, 129)) + ".")
         cc = p3.get("consistency_check", {})
         L.append(f"- Consistency check fixed in advance: pooled flip rate {p(cc.get('pooled_flip_rate'))} against twice "
                  f"the replicate-noise variance {p(cc.get('twice_noise_variance_unweighted'))} (unweighted).\n")
@@ -165,20 +170,20 @@ def main(argv) -> int:
     L.append(f"- Rasch model on {p4['n_systems']} systems and {p4['n_tasks']} tasks (converged: {p4['converged']}). "
              f"Reference system: median ability among the {p4['n_31B_systems']} systems labelled 31B.")
     L.append(f"- Runs used **{p4['n_distinct_subsets']}** distinct task subsets of at least 10 tasks. Predicted resolve "
-             f"rate of the reference system: **{p(pr['min'])} to {p(pr['max'])}** (range {p(pr['range'])} points; "
+             f"rate of the reference system: **{p(pr['min'])} to {p(pr['max'])}** (a spread of {pts(pr['range'])}; "
              f"interquartile range {p(pr['q25'])} to {p(pr['q75'])}); on the full task set {p(p4['predicted_full_task_set'])}.")
     if "predicted_rate_subsets_30plus" in p4:
         s30 = p4["predicted_rate_subsets_30plus"]
         L.append(f"- Restricted to the {s30['n']} subsets of at least 30 tasks: {p(s30['min'])} to {p(s30['max'])}.")
     L.append(f"- Model check (not fixed in advance): predicted against observed resolve rate per run, Pearson "
-             f"{f(mc['run_level_pearson'])}, mean absolute error {p(mc['run_level_mean_abs_error'])}; Brier score "
+             f"{f(mc['run_level_pearson'])}, mean absolute error {pts(mc['run_level_mean_abs_error'])}; Brier score "
              f"{f(mc['attempt_level_brier'], 3)} against {f(mc['attempt_level_brier_base_rate'], 3)} for the base rate.\n")
 
     L.append("## Exploratory analyses\n")
     e2 = r["E2_model_size"]
     L.append("**E2. Model size.** Mean Rasch ability over labs (lab-clustered bootstrap, model not refitted):\n")
     L.append(table([[k, v["n_labs"], v["n_systems"], f(v["mean_theta_over_labs"]),
-                     "n/a" if not v.get("ci95") else f"{f(v['ci95'][0])} to {f(v['ci95'][1])}", p(v["mean_raw_rate_over_labs"])]
+                     "n/a (one lab)" if not v.get("ci95") or v["n_labs"] < 2 else f"{f(v['ci95'][0])} to {f(v['ci95'][1])}", p(v["mean_raw_rate_over_labs"])]
                     for k, v in sorted(e2["by_model"].items())],
                    ["Model", "Labs", "Systems", "Mean ability", "95% interval", "Mean raw resolve rate"]))
     if e2["within_lab_contrasts"]:
@@ -196,8 +201,90 @@ def main(argv) -> int:
                  f"times that expectation. The {e4['n_discriminating']} discriminating tasks carry "
                  f"{p(e4['share_of_total_flip_in_discriminating'])} of all disagreement (mean {p(e4['mean_flip_discriminating'])} "
                  f"per task, against {p(e4['mean_flip_floor'])} for floor tasks).\n")
-    L.append("\n**E1. Development set versus leaderboard** was not carried out: see `DEVIATIONS.md`.\n")
-    for key in sorted(k for k in r if k.startswith("X")):
+    e1 = r.get("E1_leaderboard")
+    if e1:
+        ra = e1["ratio_leaderboard_to_dev"]
+        L.append(f"\n**E1. Development set versus leaderboard.** Compiled by hand from what labs state in their own "
+                 f"documents (`data/sources/leaderboard_pairs.csv`, with file and wording per row); a description, not a "
+                 f"measurement. {e1['n_pairs']} systems from {e1['n_labs']} labs have both a development-set rate and a "
+                 f"public-leaderboard score. The leaderboard score is lower in {e1['pairs_with_leaderboard_below_dev_rate']} "
+                 f"of them; the ratio of leaderboard score to development-set rate has median {f(ra['median'])} "
+                 f"(interquartile range {f(ra['q25'])} to {f(ra['q75'])}, range {f(ra['min'])} to {f(ra['max'])}). "
+                 f"Median development-set rate {p(e1['dev_rate_median'])}, median leaderboard score {p(e1['leaderboard_median'])}.")
+        if e1.get("within_lab_rank_agreement"):
+            L.append("Rank agreement within a lab between development-set rate and leaderboard score (Spearman): " +
+                     "; ".join(f"{k.split(' | ')[0]} on {k.split(' | ')[1]}, {v['n_systems']} systems, {f(v['spearman'])}"
+                               for k, v in e1["within_lab_rank_agreement"].items()) + ".")
+        rs = e1.get("identical_resubmissions")
+        if rs:
+            ad = rs["abs_difference"]
+            L.append(f"Labs also report {rs['n']} cases ({rs['n_labs']} labs) in which an identical submission was scored "
+                     f"twice: " + ", ".join(f"{a:.2f}/{b:.2f}" for a, b in rs["scores"]) +
+                     f". Mean absolute difference {pts(ad['mean'])}, median {pts(ad['median'])}, largest {pts(ad['max'])}. "
+                     f"For comparison, two runs of one system on 58 tasks with the development-set flip rate would differ "
+                     f"by {pts(e1.get('expected_mean_abs_difference_58_tasks_at_dev_flip_rate'))} on average "
+                     f"(standard deviation of the difference {pts(e1.get('expected_sd_of_difference_58_tasks_at_dev_flip_rate'))}).\n")
+    else:
+        L.append("\n**E1. Development set versus leaderboard** was not carried out: see `DEVIATIONS.md`.\n")
+
+    x = r.get("X1_validity")
+    if x:
+        sc = x["status_counts"]
+        L.append("## X1. Task validity (exploratory, added after the data were seen)\n")
+        L.append("Several labs checked the development set itself by applying the reference patch, or no patch, to "
+                 "every task (`data/derived/controls.csv`). These control runs are not agent attempts.\n")
+        names = {"reference_patch": "Reference patch", "empty_patch": "No patch", "flag_missing_dependency": "Static flag"}
+        L.append(table([[a["lab"], a["environment"], names.get(a["kind"], a["kind"]), a["tasks"], a["positive"]]
+                        for a in x["audits"]],
+                       ["Lab", "Environment", "Control", "Tasks", "Resolve (or flagged)"]))
+        fa = x["kaggle_subprocess_full_audits"]
+        L.append(f"\n- The {len(fa['audits'])} reference-patch audits that cover all 129 tasks in the competition "
+                 f"harness's subprocess sandbox on Kaggle agree on **{fa['pass_in_all'] + fa['fail_in_all']}** tasks: "
+                 f"the reference patch passes in all of them on **{fa['pass_in_all']}** tasks and fails in all of them "
+                 f"on **{fa['fail_in_all']}**; {fa['mixed']} tasks differ between audits ({', '.join(fa['mixed_tasks'])}).")
+        for a, v in x["kaggle_subprocess_audits_against_reference"].items():
+            L.append(f"  - {a.split('|')[0]}: same verdict as the reference audit on {v['same_verdict_as_reference_audit']} "
+                     f"of {v['n_tasks']} tasks.")
+        L.append(f"- Reference audit ({x['reference_audit'].split('|')[0]}, both controls on all 129 tasks): "
+                 f"**{sc.get('valid', 0)} valid** (reference patch resolves, no patch does not), "
+                 f"**{sc.get('reference_patch_fails', 0)}** where the reference patch fails, "
+                 f"**{sc.get('passes_without_patch', 0)}** that pass with no patch.")
+        if "docker_audit_against_reference" in x:
+            dk = x["docker_audit_against_reference"]
+            L.append(f"- In Docker with per-task dependencies ({dk['audit'].split('|')[0]}) the reference patch resolves "
+                     f"{dk['resolves']} of 129: {dk['fails_on_kaggle_but_resolves_in_docker']} of the tasks that fail "
+                     f"on Kaggle resolve there, {dk['fails_in_both']} fail in both.")
+        for lab, v in x.get("static_flags", {}).items():
+            L.append(f"- {lab} flags {v['flagged']} tasks whose tests import a missing package; the reference patch "
+                     f"fails in the reference audit on {v['flagged_and_reference_patch_fails']} of them.")
+        L.append("\nAgent attempts in the pooled table by the task's status in these audits:\n")
+        order = ["valid", "reference_patch_fails_on_kaggle_only", "reference_patch_fails_in_both", "passes_without_patch"]
+        ab = x["agent_attempts_by_status_with_docker_audit"]
+        L.append(table([[k.replace("_", " "), ab[k]["tasks"], ab[k]["labs"], f"{ab[k]['attempts']:,}", f"{ab[k]['resolved']:,}",
+                         p(ab[k]["rate"])] for k in order if k in ab],
+                       ["Task status", "Tasks", "Labs attempting", "Attempts", "Resolved", "Resolve rate"]))
+        ls = x["lab_share_of_attempts_on_reference_patch_fail_tasks"]
+        L.append(f"\n- **{p(x['share_of_attempts_on_tasks_where_reference_patch_fails'])}** of all pooled attempts were "
+                 f"made on tasks where the reference patch fails in the reference audit. By lab the share runs from "
+                 f"{p(ls['min'])} to {p(ls['max'])} (median {p(ls['median'])}); it is above 20% in "
+                 f"{ls['n_labs_above_20_percent']} of {ls['n_labs']} labs.")
+        some = x["labs_resolving_some_of_them"]
+        L.append(f"- Of the {x['labs_attempting_reference_patch_fail_tasks']} labs that attempted such tasks, "
+                 f"{x['labs_resolving_none_of_them']} resolved none. The others: " +
+                 ", ".join(f"{k} {v['resolved']}/{v['attempts']}" for k, v in sorted(some.items())) +
+                 ". Per-lab counts by status are in `results/tables/validity_by_lab.csv`.")
+        L.append(f"- {x['reference_patch_fail_tasks_never_resolved_by_any_agent']} of the "
+                 f"{x['reference_patch_fail_tasks_attempted']} attempted tasks of this kind were never resolved by any "
+                 f"agent in any lab.")
+        L.append(f"- Of the {x['floor_tasks']} floor tasks in P1, {x['floor_tasks_that_are_valid_in_reference_audit']} "
+                 f"are valid in the reference audit: they are hard, not broken.")
+        v = x["valid_tasks_only"]
+        if "note" not in v:
+            L.append(f"- Restricted to the valid tasks: split-half reliability {f(v.get('split_half_median'))}, "
+                     f"{v.get('floor_tasks')} floor / {v.get('discriminating_tasks')} discriminating / "
+                     f"{v.get('ceiling_tasks')} ceiling tasks, pooled flip rate {p(v.get('flip_pooled'))}, "
+                     f"noise share {p(v.get('noise_share'))}.\n")
+    for key in sorted(k for k in r if k.startswith("X") and k != "X1_validity"):
         L.append(f"**{key}.** `results.json` -> `{key}`.\n")
 
     L.append("## Robustness checks\n")
@@ -212,7 +299,7 @@ def main(argv) -> int:
             continue
         rows.append([name, c.get("n_labs"), f"{c.get('n_attempts'):,}", f(c.get("split_half_median")),
                      f"{c.get('floor_tasks')} / {c.get('discriminating_tasks')} / {c.get('ceiling_tasks')}",
-                     p(c.get("r2_task")), p(c.get("noise_share")), p(c.get("flip_pooled")), p(c.get("mdd_129"))])
+                     p(c.get("r2_task")), p(c.get("noise_share")), p(c.get("flip_pooled")), pts(c.get("mdd_129"))])
     L.append(table(rows, ["Subset", "Labs", "Attempts", "Split-half ρ", "Floor / discriminating / ceiling", "R² task",
                           "Noise share", "Pooled flip rate", "Detectable on 129 tasks"]))
     lo = rb["leave_one_lab_out"]
@@ -225,7 +312,9 @@ def main(argv) -> int:
              "replicate disagreement.\n- `results/tables/lab_task_matrix.csv`: lab-level solve rate per task.\n"
              "- `results/tables/replicate_pairs.csv`, `g_study.csv`, `subset_predictions.csv`, `systems.csv`, "
              "`pairwise_lab_spearman.csv`, `leave_one_lab_out.csv`, `mdd_curve.csv`.\n"
-             "- `paper/figures/fig1..fig5`: drawn by `scripts/figures.py` from the tables above.\n")
+             "- `results/tables/audits.csv`, `validity_by_lab.csv` and `data/derived/controls.csv`: the control runs "
+             "behind X1.\n"
+             "- `paper/figures/fig1` to `fig6`: drawn by `scripts/figures.py` from the tables above.\n")
     (results / "RESULTS.md").write_text("\n".join(L) + "\n", encoding="utf-8")
     print("wrote", results / "RESULTS.md")
     return 0

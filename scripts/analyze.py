@@ -21,6 +21,7 @@ from scipy.special import expit
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import mlstats as ml  # noqa: E402
+import validity  # noqa: E402
 
 ROOT = HERE.parent
 DERIVED = ROOT / "data" / "derived"
@@ -486,6 +487,23 @@ def main(argv=()) -> int:
     if inst is not None and len(inst):
         t = t.merge(inst[["task", "flip", "n_labs_rep"]].rename(columns={"flip": "replicate_disagreement"}),
                     on="task", how="left")
+    controls = (Path(argv[0]).parent if argv else DERIVED) / "controls.csv"
+    x1, audit, lab_tab = validity.x1_validity(att, cons, codes, controls, core, TABLES)
+    if x1 is not None:
+        res["X1_validity"] = x1
+        t = t.merge(audit, on="task", how="left")
+        lab_tab.to_csv(TABLES / "validity_by_lab.csv", index=False, lineterminator="\n")
+        print("X1:", json.dumps(rnd(x1)), flush=True)
+    e1 = validity.e1_leaderboard(ROOT / "data" / "sources" / "leaderboard_pairs.csv") if not argv else None
+    if e1 is not None:
+        res["E1_leaderboard"] = e1
+        flip = res["P3"]["flip_rate"].get("pooled")
+        if flip:
+            # Spread expected between two runs of one system on n tasks if the hidden tasks were as noisy
+            # as the development tasks: sd of the difference = sqrt(flip rate / n).
+            e1["expected_sd_of_difference_58_tasks_at_dev_flip_rate"] = float(np.sqrt(flip / 58))
+            e1["expected_mean_abs_difference_58_tasks_at_dev_flip_rate"] = float(np.sqrt(flip / 58) * np.sqrt(2 / np.pi))
+        print("E1:", json.dumps(rnd(e1)), flush=True)
     t.sort_values("d").to_csv(TABLES / "tasks.csv", index=False, lineterminator="\n")
     mat.rename(index=codes).sort_index().to_csv(TABLES / "lab_task_matrix.csv", lineterminator="\n")
 
