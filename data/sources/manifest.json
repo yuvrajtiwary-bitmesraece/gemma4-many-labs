@@ -42,6 +42,14 @@
   "status": "fetched"
  },
  {
+  "repo": "ahmadalalony/gemma-4-agent-lab",
+  "description": "Experimental software-engineering agents built with Gemma 4. Tracking architecture, prompt, routing, localization, and review experiments for the Gemma 4 Developer Agent Competition.",
+  "created_at": "2026-09-25T20:37:43Z",
+  "size_kb": 0,
+  "status": "no_commit",
+  "error": "gh: Git Repository is empty. (HTTP 409)"
+ },
+ {
   "repo": "Alphine/gemma4",
   "description": "Google - The Gemma 4 Developer Agent Paper Track",
   "created_at": "2026-11-06T11:09:09Z",
@@ -425,6 +433,20 @@
   "fetched_at": "2026-11-11T05:32:05Z",
   "tarball_sha256": "35980bdc7ba52487d0cf96291ad9896f6ecc3e7541e2a62fe02b604404aa5c43",
   "tarball_bytes": 653345,
+  "status": "fetched"
+ },
+ {
+  "repo": "ennydev-2026/gemma-4-developer-agent",
+  "description": "",
+  "created_at": "2026-09-24T22:08:48Z",
+  "size_kb": 47,
+  "commit": "55595b69bc5cdc69305c7fd5ab32b28bf7037819",
+  "commit_date": "2026-09-24T22:41:55Z",
+  "license_spdx": "MIT",
+  "license_path": "LICENSE",
+  "fetched_at": "2026-11-11T05:37:17Z",
+  "tarball_sha256": "5a2cc64bb7a985a34209f8f960d441f24cedad5be80cf077d330a0e345106ad8",
+  "tarball_bytes": 8714,
   "status": "fetched"
  },
  {
@@ -1052,6 +1074,20 @@
   "status": "fetched"
  },
  {
+  "repo": "Mubeed8/gemma4-swe-agent",
+  "description": "Graph-guided autonomous software engineering agent for the Gemma 4 Developer Agent Competition.",
+  "created_at": "2026-09-26T15:44:26Z",
+  "size_kb": 0,
+  "commit": "eb0929429c76e674b7455a1a7aa8a012bfb38c34",
+  "commit_date": "2026-09-26T15:49:18Z",
+  "license_spdx": null,
+  "license_path": null,
+  "fetched_at": "2026-11-11T05:37:09Z",
+  "tarball_sha256": "41f091bcccef3c530048610b67701e0ba1b2a0279dc12bd12ccb85e115b27f35",
+  "tarball_bytes": 339,
+  "status": "fetched"
+ },
+ {
   "repo": "Muhammad-Dabeer-23/gemma4-agent-paper",
   "description": "Code and agent configs for our Gemma 4 Developer Agent Paper Track writeup (Apache-2.0)",
   "created_at": "2026-11-07T17:57:47Z",
@@ -1091,6 +1127,28 @@
   "fetched_at": "2026-11-11T05:36:41Z",
   "tarball_sha256": "ffb8af48925ab2e4a8674e0043160f1a23097c73230d3b59cc1bd69e392416d5",
   "tarball_bytes": 831701,
+  "status": "fetched"
+ },
+ {
+  "repo": "newhouse-ss/Google---The-Gemma-4-Developer-Agent-Competition",
+  "description": "",
+  "created_at": "2026-09-26T13:25:03Z",
+  "size_kb": 0,
+  "status": "no_commit",
+  "error": "gh: Git Repository is empty. (HTTP 409)"
+ },
+ {
+  "repo": "nicholashui/gemma-4-developer-agent-paper",
+  "description": "",
+  "created_at": "2026-09-26T12:21:32Z",
+  "size_kb": 292,
+  "commit": "0ab0340281f4bed3e81667c5b601a572c82f9f79",
+  "commit_date": "2026-09-26T12:23:53Z",
+  "license_spdx": null,
+  "license_path": null,
+  "fetched_at": "2026-11-11T05:37:13Z",
+  "tarball_sha256": "5de5f33c8a6e1aa8673e0ad387a4c3c28469177f2e064b9c13cfeac94e285961",
+  "tarball_bytes": 293088,
   "status": "fetched"
  },
  {
@@ -1671,6 +1729,14 @@
   "tarball_sha256": "b9388fa0895c493605e1b5a45000cae10e078f07e6c6adbd5dcda29c6d22531f",
   "tarball_bytes": 114701,
   "status": "fetched"
+ },
+ {
+  "repo": "ZUXXSU/Google---The-Gemma-4-Developer-Agent-Paper-Track",
+  "description": "",
+  "created_at": "2026-09-25T08:49:38Z",
+  "size_kb": 0,
+  "status": "no_commit",
+  "error": "gh: Git Repository is empty. (HTTP 409)"
  },
  {
   "repo": "zysbnd1/task-or-trajectory",
