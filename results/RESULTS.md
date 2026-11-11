@@ -202,6 +202,28 @@ Agent attempts in the pooled table by the task's status in these audits:
 
 Leave-one-lab-out: split-half reliability 0.76 to 0.88; pooled flip rate 9.9% to 11.7%; floor tasks 28 to 49. Per-lab values are in `results/tables/leave_one_lab_out.csv`.
 
+## Sensitivity and uncertainty (added after the first results; not in the plan)
+
+Each line changes one decision or definition and recomputes the affected quantity (`scripts/sensitivity.py`, `results/sensitivity.json`).
+
+- **Uncertainty of the flip rate.** Pooled 11.2%; 95% interval 8.6% to 12.3% resampling the 9 labs, 8.9% to 12.5% resampling the 49 systems. Mean of the lab-level flip rates 10.9% (7.6% to 13.5%). At the interval's ends the detectable improvement on 129 tasks is 11.5 points and 13.0 points.
+- **Repeats only where a lab says "repeat".** Splitting the two groups in L01 that rest on pooled reporting (8 runs): 110 pairs, pooled flip rate 10.3%, lab median 10.6%.
+- **Without the 4 runs of L11 rebuilt from published flip lists:** 121 pairs in 8 labs, pooled flip rate 11.1%.
+- **Only pairs of runs on exactly the same task set:** 115 pairs in 6 labs, pooled flip rate 11.1%, mean absolute score difference 4.7 points.
+- **By model size:** 31B 12.3% (102 pairs, 8 labs); E2B 0.0% (7 pairs, 1 lab); E4B 6.6% (14 pairs, 1 lab). Systems that almost never succeed cannot flip.
+- **Without the 8 early runs of L04 that resolve 0 or 1 of 60 tasks** (480 attempts): split-half reliability 0.80, floor / discriminating / ceiling 40 / 58 / 3, R² task 45.3%, pooled flip rate 11.2%.
+- **Floor thresholds.** Share of tasks at the floor: 40% of 101 tasks (at least 5 labs, solve rate at most 10%); 32% of 101 tasks (at least 5 labs, solve rate at most 5%); 59% of 101 tasks (at least 5 labs, solve rate at most 20%); 42% of 125 tasks (at least 3 labs, solve rate at most 10%); 36% of 66 tasks (at least 8 labs, solve rate at most 10%).
+- **Validity from the agreement of the four full audits** instead of one reference audit: 51 tasks fail with the reference patch in all four and 69 pass in all four. 24.6% of pooled attempts were made on the former (by lab 0.0% to 42.3%, median 17.0%); 5 of the 9 labs that attempted them resolved none, and 25 of the 51 were never resolved by any agent. Of the 40 floor tasks, 23 pass the reference patch in all four audits and 13 fail it in all four.
+
+**What repeats buy.** Smallest improvement detected with 80% power when each of two agents is run k times on the same tasks, and the number of runs per agent needed for a given improvement (normal approximation; tasks fixed; discordance = flip rate + improvement, as in P3):
+
+| Tasks | Flip rate | k = 1 | k = 3 | k = 5 | k = 10 | Runs for 3 points | Runs for 5 points | Runs for 10 points |
+|---|---|---|---|---|---|---|---|---|
+| All 129 tasks | 11.2% | 11.8 points | 5.9 points | 4.3 points | 2.9 points | 10 | 4 | 2 |
+| Valid 68 tasks | 11.8% | 18.8 points | 8.9 points | 6.5 points | 4.3 points | 20 | 8 | 3 |
+| 60 tasks | 11.2% | 20.3 points | 9.5 points | 6.9 points | 4.5 points | 21 | 9 | 3 |
+| 30 tasks | 11.2% | 34.6 points | 15.1 points | 10.7 points | 6.9 points | 42 | 17 | 6 |
+
 ## Tables and figures
 
 - `results/tables/tasks.csv`: per task, consensus solve rate, number of labs, class, Rasch difficulty, replicate disagreement.

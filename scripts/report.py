@@ -317,6 +317,79 @@ def main(argv) -> int:
              f"{f(lo['split_half_median']['max'])}; pooled flip rate {p(lo['flip_pooled']['min'])} to "
              f"{p(lo['flip_pooled']['max'])}; floor tasks {lo['floor_tasks']['min']} to {lo['floor_tasks']['max']}. "
              f"Per-lab values are in `results/tables/leave_one_lab_out.csv`.\n")
+    sens_path = results / "sensitivity.json"
+    if sens_path.exists():
+        s = json.loads(sens_path.read_text(encoding="utf-8"))
+        L.append("## Sensitivity and uncertainty (added after the first results; not in the plan)\n")
+        L.append("Each line changes one decision or definition and recomputes the affected quantity "
+                 "(`scripts/sensitivity.py`, `results/sensitivity.json`).\n")
+        b = s["S1_flip_rate_uncertainty"]["bootstrap"]
+        dd = s["S1_flip_rate_uncertainty"]["detectable_on_129_tasks_at_ci_bounds"]
+        L.append(f"- **Uncertainty of the flip rate.** Pooled {p(s['S1_flip_rate_uncertainty']['estimate']['pooled'])}; "
+                 f"95% interval {p(b['lab_clustered']['ci95'][0])} to {p(b['lab_clustered']['ci95'][1])} resampling the "
+                 f"{b['lab_clustered']['n_units']} labs, {p(b['system_clustered']['ci95'][0])} to "
+                 f"{p(b['system_clustered']['ci95'][1])} resampling the {b['system_clustered']['n_units']} systems. Mean of "
+                 f"the lab-level flip rates {p(b['lab_mean']['estimate'])} ({p(b['lab_mean']['ci95'][0])} to "
+                 f"{p(b['lab_mean']['ci95'][1])}). At the interval's ends the detectable improvement on 129 tasks is "
+                 f"{pts(dd[0])} and {pts(dd[1])}.")
+        v = s["S2_strict_repeats_L01"]
+        L.append(f"- **Repeats only where a lab says \"repeat\".** Splitting the two groups in L01 that rest on pooled "
+                 f"reporting ({v['runs_reassigned']} runs): {v['n_pairs']} pairs, pooled flip rate {p(v['pooled'])}, lab "
+                 f"median {p(v['lab_median'])}.")
+        v = s["S4_without_rebuilt_runs_L11"]
+        L.append(f"- **Without the {v['runs_removed']} runs of L11 rebuilt from published flip lists:** {v['n_pairs']} "
+                 f"pairs in {v['n_labs']} labs, pooled flip rate {p(v['pooled'])}.")
+        v = s["S5_pairs_on_identical_task_sets"]
+        L.append(f"- **Only pairs of runs on exactly the same task set:** {v['n_pairs']} pairs in {v['n_labs']} labs, "
+                 f"pooled flip rate {p(v['pooled'])}, mean absolute score difference {pts(v['mean_abs_score_difference'])}.")
+        L.append("- **By model size:** " + "; ".join(
+            f"{m} {p(x['pooled'])} ({x['n_pairs']} pairs, {x['n_labs']} lab{'s' if x['n_labs'] != 1 else ''})"
+            for m, x in sorted(s["S6_flip_rate_by_model"].items())) + ". Systems that almost never succeed cannot flip.")
+        if "S10_temperature" in s:
+            L.append("- **By sampling temperature within one lab:** " + "; ".join(
+                f"temperature {k}: {p(x['pooled'])} ({x['n_pairs']} pairs, {x['n_systems']} systems)"
+                for k, x in sorted(s["S10_temperature"]["groups"].items())) + ".")
+        v = s["S3_without_L04_early_runs"]
+        L.append(f"- **Without the {v['runs_removed']} early runs of L04 that resolve 0 or 1 of 60 tasks** "
+                 f"({v['attempts_removed']} attempts): split-half reliability {f(v.get('split_half_median'))}, floor / "
+                 f"discriminating / ceiling {v.get('floor_tasks')} / {v.get('discriminating_tasks')} / "
+                 f"{v.get('ceiling_tasks')}, R² task {p(v.get('r2_task'))}, pooled flip rate {p(v.get('flip_pooled'))}.")
+        g = s["S7_floor_thresholds"]
+        L.append("- **Floor thresholds.** Share of tasks at the floor: " + "; ".join(
+            f"{p(g[f'min_labs_{m}_floor_{c}']['share_floor'], 0)} of {g[f'min_labs_{m}_floor_{c}']['tasks']} tasks "
+            f"(at least {m} labs, solve rate at most {c}%)" for m, c in ((5, 10), (5, 5), (5, 20), (3, 10), (8, 10))) + ".")
+        v = s["S8_validity_by_four_audits"]
+        L.append(f"- **Validity from the agreement of the four full audits** instead of one reference audit: "
+                 f"{v['tasks_failing_in_all']} tasks fail with the reference patch in all four and "
+                 f"{v['tasks_passing_in_all']} pass in all four. {p(v['share_of_attempts_on_tasks_failing_in_all'])} of "
+                 f"pooled attempts were made on the former (by lab {p(v['lab_share']['min'])} to "
+                 f"{p(v['lab_share']['max'])}, median {p(v['lab_share']['median'])}); {v['labs_resolving_none']} of the "
+                 f"{v['labs_attempting']} labs that attempted them resolved none, and "
+                 f"{v['tasks_never_resolved_by_any_agent']} of the {v['tasks_attempted']} were never resolved by any agent. "
+                 f"Of the {v['floor_tasks']} floor tasks, {v['floor_tasks_passing_in_all_audits']} pass the reference patch "
+                 f"in all four audits and {v['floor_tasks_failing_in_all_audits']} fail it in all four.\n")
+        r9 = s["S9_repeats"]
+        names = {"all_129_tasks": "All 129 tasks", "60_tasks": "60 tasks", "30_tasks": "30 tasks"}
+        rows = []
+        for key in r9["detectable_gain"]:
+            label = names.get(key, key.replace("_", " ").capitalize())
+            dg, rn = r9["detectable_gain"][key], r9["runs_per_arm_needed"][key]
+            rows.append([label, p(r9["flip_rate_used"][key]), pts(dg["k1"]), pts(dg["k3"]), pts(dg["k5"]), pts(dg["k10"]),
+                         rn["gain_3pt"], rn["gain_5pt"], rn["gain_10pt"]])
+        L.append("**What repeats buy.** Smallest improvement detected with 80% power when each of two agents is run "
+                 "k times on the same tasks, and the number of runs per agent needed for a given improvement (normal "
+                 "approximation; tasks fixed; discordance = flip rate + improvement, as in P3):\n")
+        L.append(table(rows, ["Tasks", "Flip rate", "k = 1", "k = 3", "k = 5", "k = 10", "Runs for 3 points",
+                              "Runs for 5 points", "Runs for 10 points"]))
+        L.append("")
+    ext_path = results / "external_validation.json"
+    if ext_path.exists():
+        e = json.loads(ext_path.read_text(encoding="utf-8"))
+        L.append("## External validation (a dataset outside the source frame; not pooled)\n")
+        L.append(e.get("summary", "") + "\n")
+        if e.get("rows"):
+            L.append(table(e["rows"], e["header"]))
+            L.append("")
     L.append("## Tables and figures\n")
     L.append("- `results/tables/tasks.csv`: per task, consensus solve rate, number of labs, class, Rasch difficulty, "
              "replicate disagreement.\n- `results/tables/lab_task_matrix.csv`: lab-level solve rate per task.\n"
