@@ -326,7 +326,7 @@ Zenodo record 23834104 (doi:10.5281/zenodo.23834104, Apache-2.0) holds the run r
 
 After the results were known, 25 further repository searches and 29 code searches (for task identifiers and for strings that only participants' repositories contain) returned 265 repositories, 114 of them already in the registered frame. Of the 127 new candidates, 125 were fetched, 51 contain development-set task identifiers and 33 of those are licensed. **16** of the licensed candidates were examined before the deadline, in an order fixed from the structure of their files before any of their outcomes was read; 16 were not examined and 1 is the repository of the external validation dataset, which stays out of the pool. **9** of those examined have at least one eligible run (`data/derived/screening_extended.csv` lists every candidate). They were processed by the same rules and are kept out of every number above. This is a partial check, not a second census.
 
-The cards of these adapters record 84 numbers that the sources state about themselves; the adapters reproduce 80 and differ on 4 (explained in the cards). Unlike the four largest registered sources, these adapters have not had a second, independent reading.
+The cards of these adapters record 84 numbers that the sources state about themselves; the adapters reproduce 80 and differ on 4 (explained in the cards). The largest of these sources (2,950 rows, 30% of the added attempts) was recounted from its raw files with separately written code, with no disagreement in outcome or error flag; the other eight have not had a second reading.
 
 | Quantity | Registered frame | Extended sources alone | Registered + extended |
 |---|---|---|---|

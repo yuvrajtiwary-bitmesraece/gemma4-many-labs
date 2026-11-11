@@ -303,7 +303,10 @@ deadline (the order was set from the structure of their files, before any of
 their outcomes was read), 16 were not, and one is the repository of the
 external validation dataset. Nine have eligible runs. They are processed by
 the same adapters and rules, kept out of every registered number, and reported
-in their own section beside the registered frame.
+in their own section beside the registered frame. The largest of the nine
+(2,950 rows, 30% of the added attempts) was recounted from its raw files with
+separately written code, with no disagreement; the other eight adapters were
+checked only against the numbers their sources report (80 of 84 reproduced).
 
 **4f. Not changed.** The eight early runs of L04 and the three-file group of
 L01 stay in the pool (S3 and S2 remove them). Attempts that ended in a

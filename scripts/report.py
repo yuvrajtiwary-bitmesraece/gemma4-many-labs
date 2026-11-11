@@ -754,8 +754,9 @@ def main(argv) -> int:
             L.append(f"The cards of these adapters record {len(ext_items)} numbers that the sources state about "
                      f"themselves; the adapters reproduce {sum(1 for i in ext_items if i.get('match') is True)} and "
                      f"differ on {sum(1 for i in ext_items if i.get('match') is False)} (explained in the cards). "
-                     f"Unlike the four largest registered sources, these adapters have not had a second, independent "
-                     f"reading.\n")
+                     f"The largest of these sources (2,950 rows, 30% of the added attempts) was recounted from its raw "
+                     f"files with separately written code, with no disagreement in outcome or error flag; the other "
+                     f"eight have not had a second reading.\n")
         a, b = xp["registered"], xp["registered_plus_extended"]
         rows = []
         for label, k, fmt in (("Labs", "labs", str), ("Attempts", "attempts", lambda v: f"{v:,}"), ("Systems", "systems", str),
