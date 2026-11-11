@@ -30,6 +30,9 @@ Entry for the [Paper Track](https://www.kaggle.com/competitions/gemma-4-develope
 | `data/sources/leaderboard_pairs.csv` | Development-set rates and public-leaderboard scores that labs state for the same system, compiled by hand with the file and wording for each. |
 | `scripts/mlstats.py`, `test_stats.py` | The estimators and their checks against simulated data with known parameters. |
 | `scripts/analyze.py`, `validity.py`, `report.py`, `figures.py` | Analyses, the generated results report and the figures. |
+| `scripts/sensitivity.py` | One decision changed at a time, a bootstrap interval for the flip rate, and what repeated runs buy. |
+| `scripts/external_zenodo.py`, `external_validation.py`, `data/derived/external_zenodo_attempts.csv` | An external validation set that is not pooled: run records from Zenodo record 23834104 (T. Toeda, doi:10.5281/zenodo.23834104, Apache-2.0), converted to the same columns. |
+| `scripts/crosscheck.py` | Recomputes the headline numbers without the analysis library. |
 | `results/` | `results.json`, `RESULTS.md` and the tables behind every figure. |
 | `paper/figures/` | Six figures. |
 

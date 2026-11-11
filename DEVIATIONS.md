@@ -146,3 +146,31 @@ run on synthetic data. It was then run on partial pooled tables (10 and 12
 labs) while the last adapters were being written, to find bugs. Between those
 runs and the final run the only changes to analysis code were X1, the E1
 summary, and figure layout.
+
+## Amendment 3 — 2026-11-11, 08:00 to 09:00 UTC — after the results were known
+
+Additions made after the first complete results. None changes a planned
+analysis; all are reported in `results/RESULTS.md` under their own headings.
+
+**3a. Sensitivity and uncertainty** (`scripts/sensitivity.py`). One decision
+or definition is changed at a time: repeats only where a lab says "repeat",
+runs rebuilt from flip lists removed, one lab's early runs removed, pairs on
+identical task sets only, other floor thresholds, task validity from the
+agreement of four audits, sampling temperature within one lab. A
+cluster-bootstrap interval for the flip rate, and a table of what repeated
+runs buy (a normal-approximation extension of the planned McNemar
+calculation), are added.
+
+**3b. External validation** (`scripts/external_zenodo.py`,
+`scripts/external_validation.py`). A dataset outside the source frame of
+section 3 (Zenodo record 23834104, Apache-2.0, from a participant whose
+repository the searches did not return) is used to test the pooled estimates.
+It is not pooled and no estimate uses it.
+
+**3c. Second reading of the extraction.** The three largest sources (72% of
+the attempts) were re-counted from the raw files by a second reader with
+separately written code: every pooled row equals its source row (10,859 rows,
+no disagreement). Every row of `data/sources/leaderboard_pairs.csv` was
+re-checked against the cited file; three rows were corrected and seven added,
+and the E1 summary changed accordingly (git history shows the before and
+after).
