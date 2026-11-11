@@ -50,14 +50,33 @@ INVENTORY_ID = re.compile(r"(?<![A-Za-z0-9])(fastapi|requests|rich|httpx)_(\d{1,
 ATTEMPT_COLUMNS = ["lab", "source", "system", "run", "task", "y", "model", "harness", "err", "status", "file"]
 
 
+SKIPPED_ADAPTERS = {}   # file name -> reason; only adapters of the extended frame may be skipped
+
+
 def load_adapters(wanted=None):
+    """Import every adapter.  An adapter of the registered frame that fails to import stops the build;
+    one of the extended frame (still being written, or broken) is skipped and reported."""
     mods = []
+    manifest = srcio.manifest()
+    # Adapter files are named <owner>__<repo>.py with every character outside [A-Za-z0-9_] replaced by "_".
+    by_stem = {"__".join(re.sub(r"[^A-Za-z0-9_]", "_", part) for part in repo.split("/", 1)).lower(): repo
+               for repo in manifest}
     for path in sorted(ADAPTERS.glob("*.py"), key=lambda p: p.name.lower()):
         if path.name.startswith("_"):
             continue
+        guess = by_stem.get(path.stem.lower())
         spec = importlib.util.spec_from_file_location("adapter_" + re.sub(r"\W", "_", path.stem), path)
         mod = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(mod)
+        try:
+            spec.loader.exec_module(mod)
+            repo = mod.REPO
+            if repo not in manifest:
+                raise KeyError(f"REPO {repo!r} is not in the manifest")
+        except Exception as exc:  # noqa: BLE001
+            if guess is not None and manifest[guess].get("frame", "registered") == "registered":
+                raise
+            SKIPPED_ADAPTERS[path.name] = f"{type(exc).__name__}: {exc}"[:200]
+            continue
         if wanted and mod.REPO not in wanted:
             continue
         mods.append(mod)
@@ -148,6 +167,8 @@ def check(repo: str, show_runs: bool) -> int:
     mods = load_adapters({repo})
     if not mods:
         print(f"no adapter declares REPO = {repo!r}")
+        for name, why in SKIPPED_ADAPTERS.items():
+            print(f"  adapter file {name} failed to import: {why}")
         return 2
     mod = mods[0]
     card = getattr(mod, "CARD", {})
@@ -190,13 +211,24 @@ def frame_of(repo: str) -> str:
 def write_extended(mods, registered_dev_tasks) -> dict:
     """Pooled table of the registered AND the extended frame, for the robustness analysis only."""
     rows_all = []
+    skipped = dict(SKIPPED_ADAPTERS)
     for mod in mods:
         card = getattr(mod, "CARD", {})
         if not card.get("eligible"):
             continue
-        rows, problems, _ = collect(mod)
+        if frame_of(mod.REPO) == "registered":
+            rows, problems, _ = collect(mod)
+        else:
+            try:
+                rows, problems, _ = collect(mod)
+            except Exception as exc:  # noqa: BLE001  an unfinished adapter must not stop the build
+                skipped[mod.REPO] = f"{type(exc).__name__}: {exc}"[:200]
+                continue
         if problems:
-            raise SystemExit(f"{mod.REPO}: {problems[0]}")
+            if frame_of(mod.REPO) == "registered":
+                raise SystemExit(f"{mod.REPO}: {problems[0]}")
+            skipped[mod.REPO] = f"{len(problems)} problems, e.g. {problems[0]}"[:200]
+            continue
         hashes = file_hashes(mod.REPO, {r["file"] for r in rows})
         first = {}
         for path in sorted(hashes):
@@ -233,7 +265,7 @@ def write_extended(mods, registered_dev_tasks) -> dict:
             "labs_extended_only": len({r["lab"] for r in final if r["frame"] == "extended"} -
                                       {r["lab"] for r in final if r["frame"] == "registered"}),
             "attempts_from_extended_frame": sum(r["frame"] == "extended" for r in final),
-            "identical_runs_across_labs": twins}
+            "identical_runs_across_labs": twins, "adapters_skipped": skipped}
 
 
 def build() -> int:
@@ -375,8 +407,11 @@ def build() -> int:
     (DERIVED / "harmonize_log.json").write_text(json.dumps(log, indent=1) + "\n", encoding="utf-8")
     print(json.dumps(log["totals"]), json.dumps(log["dev_set"]))
     if "extended_pool" in log:
-        print("extended pool:", json.dumps({k: v for k, v in log["extended_pool"].items() if k != "identical_runs_across_labs"}),
+        print("extended pool:", json.dumps({k: v for k, v in log["extended_pool"].items()
+                                            if k not in ("identical_runs_across_labs", "adapters_skipped")}),
               "identical runs across labs:", len(log["extended_pool"]["identical_runs_across_labs"]))
+        for name, why in log["extended_pool"]["adapters_skipped"].items():
+            print("  SKIPPED (extended frame):", name, "-", why)
     return 0
 
 

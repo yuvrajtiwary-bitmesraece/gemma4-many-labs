@@ -40,6 +40,26 @@ def load(path: Path | None = None) -> pd.DataFrame:
     return att
 
 
+def outcome_selected_runs(att: pd.DataFrame) -> set:
+    """Runs on task subsets that the lab chose from the outcomes of its own earlier runs.
+
+    Such a subset is picked for failed, for unstable or for previously solved tasks, so a score on it,
+    and the disagreement between repeats on it, are not typical of the benchmark.  Each entry is
+    documented in the card of its adapter (scripts/adapters/):
+      veljjanoski  swing bench: 'chosen after the fact from the runs it now judges' (17 swing + 6 always solved)
+      lmassaron    calibration_48: 17 tasks resolved by v21 plus 31 near misses; hill-climb suites climb_*:
+                   'Regression Guard tasks (solved by v16) + High-Signal Target Failure tasks'
+      lspecian     E092-E094: 23 tasks 'solved by some DeepSeek run and by none of four Gemma runs'
+      emamira02    S13: 14 tasks selected from S12 outcomes (11 failures + 3 resolved controls)
+    """
+    run, lab = att["run"], att["lab"]
+    sel = ((lab == "veljjanoski") & run.str.contains("swing")) | \
+          ((lab == "lmassaron") & run.str.contains(r"@(?:calibration_48|climb_)")) | \
+          ((lab == "lspecian") & run.str.contains(r"E09[234]_")) | \
+          ((lab == "emamira02") & run.str.endswith("/S13"))
+    return set(run[sel])
+
+
 def rnd(x, n=4):
     """Round floats inside nested containers for readable JSON."""
     if isinstance(x, dict):
@@ -66,7 +86,8 @@ def lab_codes(att: pd.DataFrame) -> dict:
 def describe(att: pd.DataFrame, codes: dict):
     runs = att.groupby("run").agg(lab=("lab", "first"), system=("system", "first"), n=("y", "size"),
                                   rate=("y", "mean"), model=("model", "first"), harness=("harness", "first"))
-    sys_rate = att.groupby(["lab", "system"])["y"].mean()
+    # Plan, section 6: repeats are averaged within a system, systems within a lab, then labs.
+    sys_rate = runs.groupby(["lab", "system"])["rate"].mean()
     rows = []
     for lab, g in att.groupby("lab"):
         r = runs[runs["lab"] == lab]
@@ -124,6 +145,7 @@ def p1(att: pd.DataFrame, n_iter: int = N_SPLIT, with_pairs: bool = True):
         "floor_tasks": int((c5["d"] <= 0.10).sum()), "ceiling_tasks": int((c5["d"] >= 0.90).sum()),
         "discriminating_tasks": int(((c5["d"] > 0.10) & (c5["d"] < 0.90)).sum()),
         "zero_everywhere_tasks": int((c5["d"] == 0).sum()),
+        "tasks_within_one_point_of_the_floor_line": int(((c5["d"] > 0.09) & (c5["d"] <= 0.11)).sum()),
         "d_quantiles": {q: float(c5["d"].quantile(q)) for q in (0.1, 0.25, 0.5, 0.75, 0.9)} if len(c5) else {},
         "d_mean": float(c5["d"].mean()) if len(c5) else float("nan"),
     }
@@ -144,14 +166,17 @@ def p1(att: pd.DataFrame, n_iter: int = N_SPLIT, with_pairs: bool = True):
 # --------------------------------------------------------------------------
 # P2  Variance decomposition
 # --------------------------------------------------------------------------
-def saturated_r2(att: pd.DataFrame, w: np.ndarray) -> dict:
-    """In-sample R^2 of the system x task cell-mean model on replicated cells."""
-    df = att[["system", "task", "y"]].copy()
-    df["w"] = w
+def saturated_r2(att: pd.DataFrame, lab_balanced: bool) -> dict:
+    """In-sample R^2 of the system x task cell-mean model on replicated cells.
+
+    With lab_balanced the weights give every lab the same total weight on the replicated cells.
+    """
+    df = att[["lab", "system", "task", "y"]].copy()
     n = df.groupby(["system", "task"])["y"].transform("size")
-    sub = df[n >= 2]
+    sub = df[n >= 2].copy()
     if sub.empty:
         return {"n_attempts": 0}
+    sub["w"] = 1.0 / sub.groupby("lab")["y"].transform("size").to_numpy(float) if lab_balanced else 1.0
     y, ww = sub["y"].to_numpy(float), sub["w"].to_numpy(float)
     mean = np.sum(ww * y) / np.sum(ww)
     sst = np.sum(ww * (y - mean) ** 2)
@@ -170,11 +195,27 @@ def p2(att: pd.DataFrame):
     out = {
         "lab_balanced": ml.r2_models(att, w),
         "unweighted": ml.r2_models(att),
-        "replicate_noise_lab_balanced": ml.replicate_noise(att, w),
+        "replicate_noise_lab_balanced": ml.replicate_noise(att, lab_balanced=True),
         "replicate_noise_unweighted": ml.replicate_noise(att),
-        "saturated_lab_balanced": saturated_r2(att, w),
-        "saturated_unweighted": saturated_r2(att, np.ones(len(att))),
+        # Before Amendment 4 the weights were taken from the whole table, which does not balance the labs
+        # on the replicated cells; kept so that the change can be seen.
+        "replicate_noise_whole_table_weights": ml.replicate_noise(att, w),
+        "saturated_lab_balanced": saturated_r2(att, True),
+        "saturated_unweighted": saturated_r2(att, False),
     }
+    rep = att[att.groupby(["system", "task"])["y"].transform("size") >= 2]
+    share = rep.groupby("lab").size() / len(rep)
+    per_lab = {}
+    for lab, g in rep.groupby("lab"):
+        nz = ml.replicate_noise(g)
+        per_lab[lab] = {"attempts": int(len(g)), "noise_share": nz.get("noise_share"),
+                        "noise_variance": nz.get("noise_variance"), "resolve_rate": float(g["y"].mean())}
+    out["replicated_cells"] = {
+        "n_labs": int(rep["lab"].nunique()), "n_systems": int(rep["system"].nunique()),
+        "share_of_all_attempts": float(len(rep) / len(att)),
+        "resolve_rate_on_replicated_cells": float(rep["y"].mean()),
+        "resolve_rate_elsewhere": float(att.drop(rep.index)["y"].mean()),
+        "largest_lab_share_of_replicated_attempts": float(share.max()), "by_lab": per_lab}
     return out
 
 
@@ -199,11 +240,18 @@ def p2b(att: pd.DataFrame, codes: dict):
             for k in (1, 3, 5):
                 row[f"g_n{n}_k{k}"] = ml.g_coefficient(comp, n, k)
             row[f"se_diff_n{n}"] = ml.se_difference(comp, n, 1)
+        # Added after an independent review (Amendment 4): how well the system component is estimated, and
+        # the smallest difference between two systems that can be detected when the claim is meant to hold
+        # for new tasks (tasks random).  More runs shrink only the run-to-run term.
+        row["df_system"] = gs["n_systems"] - 1
+        for n in (58, 129):
+            for k, name in ((1, "1"), (3, "3"), (5, "5"), (10, "10"), (np.inf, "inf")):
+                row[f"detect_n{n}_k{name}"] = ml.detectable_random_tasks(comp, n, k)
         rows.append(row)
     tab = pd.DataFrame(rows)
     out = {"n_labs": int(len(tab))}
     if len(tab):
-        for col in [c for c in tab.columns if c.startswith(("share_", "g_", "se_diff_"))]:
+        for col in [c for c in tab.columns if c.startswith(("share_", "g_", "se_diff_", "detect_"))]:
             v = tab[col].dropna()
             out[col] = {"median": float(v.median()) if len(v) else float("nan"),
                         "min": float(v.min()) if len(v) else float("nan"),
@@ -236,7 +284,90 @@ def p3(att: pd.DataFrame, with_mdd: bool = True):
             out["mdd_pooled_flip"] = {str(n): ml.minimum_detectable_difference(n, pi) for n in (30, 60, 129)}
             pi_med = out["flip_rate"]["lab_median"]
             out["mdd_lab_median_flip"] = {str(n): ml.minimum_detectable_difference(n, pi_med) for n in (30, 60, 129)}
+            out["mdd_pooled_flip_fine_grid"] = {str(n): ml.minimum_detectable_difference(n, pi, step=0.0005)
+                                                for n in (30, 60, 129)}
     return out, pairs
+
+
+def p3_extras(att: pd.DataFrame, pairs: pd.DataFrame, flip: float):
+    """Additions to P3 made after an independent review (Amendment 4); none replaces a planned number."""
+    out = {}
+    # (a) Other ways of averaging the same pairs.
+    sysw = pairs.assign(flips=pairs["flip_rate"] * pairs["n_shared"]).groupby(["lab", "system"]).agg(
+        flips=("flips", "sum"), shared=("n_shared", "sum"), n_pairs=("flip_rate", "size"),
+        mean_shared=("n_shared", "mean"))
+    sys_rate = sysw["flips"] / sysw["shared"]
+    first = pairs.groupby(["lab", "system"], sort=False).head(1)
+    w_lab = pairs.groupby("lab")["n_shared"].sum() / pairs["n_shared"].sum()
+    w_sys = sysw["shared"] / sysw["shared"].sum()
+    att1 = ml.first_attempt_per_run(att)
+    cell = att1.groupby(["system", "task"])["y"].agg(s="sum", n="size").reset_index()
+    cell = cell[cell["n"] >= 2]
+    cell["pairs"] = cell["n"] * (cell["n"] - 1) / 2
+    cell["discordant"] = cell["s"] * (cell["n"] - cell["s"])
+    per_task = cell.groupby("task")[["discordant", "pairs"]].sum()
+    out["aggregation"] = {
+        "pooled_pairs_weighted_by_shared_tasks": flip,
+        "each_system_weighted_by_its_tasks_once": float(np.average(sys_rate, weights=sysw["mean_shared"])),
+        "first_pair_of_each_system": float(np.average(first["flip_rate"], weights=first["n_shared"])),
+        "mean_over_systems": float(sys_rate.mean()),
+        "each_task_once": float((per_task["discordant"] / per_task["pairs"]).mean()),
+        "tasks_with_repeats": int(len(per_task)),
+        "largest_lab_share_of_pooled_weight": float(w_lab.max()),
+        "two_largest_labs_share_of_pooled_weight": float(w_lab.sort_values().tail(2).sum()),
+        "largest_system_share_of_pooled_weight": float(w_sys.max()),
+        "effective_number_of_labs": float(1 / np.sum(w_lab ** 2)),
+        "effective_number_of_systems": float(1 / np.sum(w_sys ** 2)),
+        "pairs_with_100_or_more_shared_tasks": int((pairs["n_shared"] >= 100).sum()),
+        "labs_with_such_pairs": int(pairs.loc[pairs["n_shared"] >= 100, "lab"].nunique()),
+        "max_shared_tasks_in_a_pair": int(pairs["n_shared"].max()),
+        "runs_of_the_largest_system": int(att1.loc[att1["system"] == w_sys.idxmax()[1], "run"].nunique()),
+    }
+    # (b) Error flags: how many flips have an attempt that ended in a timeout or another flagged error.
+    n_flips = n_flag = n_clean_pairs = n_clean_flips = 0
+    att1 = att1.assign(e=(att1["err"] == "1").astype(int))
+    for _, g in att1.groupby("system", sort=False):
+        if g["run"].nunique() < 2:
+            continue
+        wy = g.pivot(index="task", columns="run", values="y")
+        we = g.pivot(index="task", columns="run", values="e")
+        cols = list(wy.columns)
+        for i in range(len(cols)):
+            for j in range(i + 1, len(cols)):
+                ok = wy[cols[i]].notna() & wy[cols[j]].notna()
+                if int(ok.sum()) < 10:
+                    continue
+                ya, yb = wy.loc[ok, cols[i]].to_numpy(), wy.loc[ok, cols[j]].to_numpy()
+                ea, eb = we.loc[ok, cols[i]].to_numpy(), we.loc[ok, cols[j]].to_numpy()
+                flipm = ya != yb
+                fail_flag = np.where(ya < yb, ea, eb)          # flag of the failing attempt
+                n_flips += int(flipm.sum())
+                n_flag += int((flipm & (fail_flag == 1)).sum())
+                clean = (ea == 0) & (eb == 0)
+                n_clean_pairs += int(clean.sum())
+                n_clean_flips += int((flipm & clean).sum())
+    out["error_flags"] = {"flips": n_flips, "flips_with_error_flag_on_the_failing_attempt": n_flag,
+                          "share": n_flag / n_flips if n_flips else None,
+                          "task_pairs_with_no_flag": n_clean_pairs, "flips_among_them": n_clean_flips,
+                          "flip_rate_with_no_flag": n_clean_flips / n_clean_pairs if n_clean_pairs else None}
+    # (c) How much do two DIFFERENT systems disagree, against the size of their difference?
+    cross = ml.cross_system_discordance(att, min_shared=30)
+    fit = ml.excess_discordance_fit(cross)
+    if len(cross):
+        fit["max_abs_delta"] = float(cross["delta"].abs().max())
+    out["cross_system_discordance"] = fit
+    # (d) The planned detectable difference under three assumptions about that disagreement.
+    alt = {}
+    for n in (30, 60, 129):
+        row = {"planned_all_or_nothing": ml.mdd_with_discordance(n, flip, 0.0, 1.0),
+               "no_added_disagreement": ml.mdd_with_discordance(n, flip, 0.0, 0.0)}
+        if fit.get("mean_excess") is not None:
+            # The systems compared here differ by a few points only, so the extra disagreement is taken as the
+            # constant that was observed, not as a function of the gain (the fitted slope is kept in the output).
+            row["as_observed_between_systems"] = ml.mdd_with_discordance(n, flip, max(fit["mean_excess"], 0.0), 0.0)
+        alt[str(n)] = row
+    out["mdd_alternatives"] = alt
+    return out, cross
 
 
 # --------------------------------------------------------------------------
@@ -252,6 +383,7 @@ def p4(att: pd.DataFrame, runs: pd.DataFrame):
     ref_pool = sys_meta[sys_meta["model"] == "31B"]["theta"]
     theta_ref = float(ref_pool.median()) if len(ref_pool) else float(sys_meta["theta"].median())
     sets = att.groupby("run")["task"].apply(frozenset)
+    selected_runs = outcome_selected_runs(att)
     distinct = {}
     for run, s in sets.items():
         if len(s) >= 10:
@@ -262,14 +394,17 @@ def p4(att: pd.DataFrame, runs: pd.DataFrame):
         rows.append({"n_tasks": len(s), "n_runs": len(rs), "n_labs": len(labs),
                      "predicted_rate": ml.predict_subset(theta_ref, b, s),
                      "share_fastapi": float(np.mean([t.startswith("fastapi_") for t in s])),
-                     "labs": ";".join(labs)})
+                     "chosen_from_earlier_outcomes": bool(all(r in selected_runs for r in rs)),
+                     "labs": ";".join(labs), "_tasks": s})
     tab = pd.DataFrame(rows).sort_values("predicted_rate").reset_index(drop=True)
+    subset_list = list(tab.pop("_tasks"))
     pred = tab["predicted_rate"]
     full = ml.predict_subset(theta_ref, b, b.index)
-    # Model check: predicted against observed resolve rate per run.
-    eta = theta.reindex(att["system"]).to_numpy() - b.reindex(att["task"]).to_numpy()
-    p_hat = expit(eta)
-    chk = pd.DataFrame({"run": att["run"].to_numpy(), "y": att["y"].to_numpy(), "p": p_hat}).groupby("run").mean()
+
+    def span(v):
+        return {"n": int(len(v)), "min": float(v.min()), "max": float(v.max()),
+                "q25": float(v.quantile(0.25)), "q75": float(v.quantile(0.75))} if len(v) else {"n": 0}
+
     out = {
         "converged": fit["converged"], "n_systems": int(len(theta)), "n_tasks": int(len(b)),
         "theta_ref_31B_median": theta_ref, "n_31B_systems": int(len(ref_pool)),
@@ -278,19 +413,28 @@ def p4(att: pd.DataFrame, runs: pd.DataFrame):
                            "q25": float(pred.quantile(0.25)), "median": float(pred.median()),
                            "q75": float(pred.quantile(0.75)), "iqr": float(pred.quantile(0.75) - pred.quantile(0.25))},
         "ratio_max_min": float(pred.max() / pred.min()) if pred.min() > 0 else float("nan"),
-        "model_check": {"run_level_pearson": float(np.corrcoef(chk["y"], chk["p"])[0, 1]),
-                        "run_level_mean_abs_error": float(np.mean(np.abs(chk["y"] - chk["p"]))),
-                        "attempt_level_brier": float(np.mean((att["y"].to_numpy() - p_hat) ** 2)),
-                        "attempt_level_brier_base_rate": float(att["y"].var(ddof=0))},
         "theta_range_31B": {"min": float(ref_pool.min()), "max": float(ref_pool.max()),
                             "q25": float(ref_pool.quantile(0.25)), "q75": float(ref_pool.quantile(0.75))} if len(ref_pool) else {},
+        # Qualifiers added after an independent review (Amendment 4).
+        "subsets_used_by_more_than_one_lab": int((tab["n_labs"] > 1).sum()),
+        "subsets_chosen_from_earlier_outcomes": int(tab["chosen_from_earlier_outcomes"].sum()),
+        "lowest_subset_chosen_from_earlier_outcomes": bool(tab["chosen_from_earlier_outcomes"].iloc[0]),
+        "highest_subset_chosen_from_earlier_outcomes": bool(tab["chosen_from_earlier_outcomes"].iloc[-1]),
+        "predicted_rate_not_chosen_from_outcomes": span(tab.loc[~tab["chosen_from_earlier_outcomes"], "predicted_rate"]),
+        "predicted_rate_not_chosen_30plus": span(tab.loc[~tab["chosen_from_earlier_outcomes"] & (tab["n_tasks"] >= 30),
+                                                         "predicted_rate"]),
+        "predicted_rate_subsets_50plus": span(tab.loc[tab["n_tasks"] >= 50, "predicted_rate"]),
     }
     by_size = tab[tab["n_tasks"] >= 30]["predicted_rate"]
     if len(by_size):
         out["predicted_rate_subsets_30plus"] = {"n": int(len(by_size)), "min": float(by_size.min()),
                                                 "max": float(by_size.max()),
                                                 "iqr": float(by_size.quantile(0.75) - by_size.quantile(0.25))}
-    return out, tab, sys_meta.reset_index(), b
+    # Out-of-sample checks.  (The in-sample check reported before Amendment 4 was empty: the score
+    # equations of the model force predicted and observed totals per system to agree.)
+    out["cross_validation"] = ml.rasch_cv(att, n_folds=5, seed=SEED)
+    out["subset_effect_out_of_sample"], subset_pairs = ml.rasch_subset_check(att, subset_list)
+    return out, tab, sys_meta.reset_index(), b, subset_pairs
 
 
 # --------------------------------------------------------------------------
@@ -310,9 +454,14 @@ def e2_model_size(sys_meta: pd.DataFrame, att: pd.DataFrame):
             vals = [lab_means[l] for l in pick if l in lab_means.index]
             if vals:
                 boots.append(np.mean(vals))
+        nl = len(lab_means)
+        half = float(stats.t.ppf(0.975, nl - 1) * lab_means.std(ddof=1) / np.sqrt(nl)) if nl >= 3 else None
         by[model] = {"n_systems": int(len(g)), "n_labs": int(g["lab"].nunique()),
                      "mean_theta_over_labs": float(lab_means.mean()),
                      "ci95": [float(np.percentile(boots, 2.5)), float(np.percentile(boots, 97.5))] if boots else None,
+                     # t interval on the lab means: wider and more honest with so few labs (Amendment 4)
+                     "t_interval95": None if half is None else [float(lab_means.mean() - half), float(lab_means.mean() + half)],
+                     "lab_mean_min": float(lab_means.min()), "lab_mean_max": float(lab_means.max()),
                      "mean_raw_rate_over_labs": float(g.groupby("lab")["rate"].mean().mean())}
     out["by_model"] = by
     # Within-lab contrasts on shared tasks.
@@ -370,14 +519,14 @@ def e4_instability(att: pd.DataFrame, cons: pd.DataFrame):
 # --------------------------------------------------------------------------
 # Robustness
 # --------------------------------------------------------------------------
-def core(att: pd.DataFrame, n_iter: int = 500) -> dict:
+def core(att: pd.DataFrame, n_iter: int = N_SPLIT) -> dict:
     """The headline quantities on a subset of the data."""
     if att["lab"].nunique() < 4:
         return {"n_labs": int(att["lab"].nunique()), "n_attempts": int(len(att)), "note": "too few labs"}
     a, _, _, _ = p1(att, n_iter=n_iter, with_pairs=False)
     w = ml.lab_balanced_weights(att)
     r2 = ml.r2_models(att, w)
-    noise = ml.replicate_noise(att, w)
+    noise = ml.replicate_noise(att, lab_balanced=True)
     c, pairs = p3(att, with_mdd=False)
     out = {"n_attempts": int(len(att)), "n_labs": int(att["lab"].nunique()),
            "n_systems": int(att["system"].nunique()), "n_runs": int(att["run"].nunique()),
@@ -398,14 +547,27 @@ def robustness(att: pd.DataFrame, codes: dict) -> dict:
     out = {"all": core(att)}
     out["model_31B_only"] = core(att[att["model"] == "31B"])
     out["official_harness_only"] = core(att[att["harness"] == "official"])
-    out["drop_error_flagged"] = core(att[att["err"] != "1"])
+    no_err = att[att["err"] != "1"]          # attempts whose flag is unknown ('') are kept
+    out["drop_error_flagged"] = core(no_err)
+    # The same after re-applying the 10-task minimum of plan section 5 to what is left of each run.
+    left = no_err.groupby("run")["task"].transform("size")
+    out["drop_error_flagged_min10"] = core(no_err[left >= 10])
+    flagged = att["err"] == "1"
+    fails = att["y"] == 0
+    out["error_flags"] = {
+        "share_of_attempts_flagged": float(flagged.mean()),
+        "attempts_with_unknown_flag": int((att["err"] == "").sum()),
+        "share_of_failures_flagged": float((flagged & fails).sum() / max(int(fails.sum()), 1)),
+        "runs_left_with_fewer_than_10_tasks": int((no_err.groupby("run").size() < 10).sum()
+                                                  + (att["run"].nunique() - no_err["run"].nunique())),
+        "resolve_rate_after_dropping": float(no_err["y"].mean())}
     # Unweighted variants of the weighted quantities.
     out["unweighted"] = {"r2": ml.r2_models(att), "noise": ml.replicate_noise(att)}
     # Leave one lab out.
     loo = []
     for lab in sorted(att["lab"].unique(), key=lambda l: codes[l]):
         sub = att[att["lab"] != lab]
-        a, _, _, _ = p1(sub, n_iter=300, with_pairs=False)
+        a, _, _, _ = p1(sub, n_iter=N_SPLIT, with_pairs=False)
         pairs = ml.replicate_pairs(sub, min_shared=10)
         s = ml.summarise_pairs(pairs, "flip_rate")
         loo.append({"left_out": codes[lab], "split_half_median": a["split_half"].get("median"),
@@ -443,6 +605,8 @@ def main(argv=()) -> int:
     print("P1:", json.dumps(rnd(res["P1"])), flush=True)
 
     res["P2"] = p2(att)
+    res["P2"]["replicated_cells"]["by_lab"] = {codes[k]: v for k, v in sorted(
+        res["P2"]["replicated_cells"]["by_lab"].items(), key=lambda kv: codes[kv[0]])}
     print("P2:", json.dumps(rnd(res["P2"])), flush=True)
 
     res["P2b"], gtab = p2b(att, codes)
@@ -458,11 +622,18 @@ def main(argv=()) -> int:
         "twice_noise_variance_unweighted": None if noise_u is None else 2 * noise_u,
         "lab_mean_flip_rate": res["P3"]["flip_rate"].get("lab_mean"),
         "twice_noise_variance_lab_balanced": None if noise_w is None else 2 * noise_w}
+    if len(pairs):
+        res["P3"]["extras"], cross = p3_extras(att, pairs, res["P3"]["flip_rate"]["pooled"])
+        cross.assign(lab=cross["lab"].map(codes)).to_csv(TABLES / "cross_system_discordance.csv", index=False,
+                                                         lineterminator="\n")
     print("P3:", json.dumps(rnd(res["P3"])), flush=True)
 
-    res["P4"], subsets, sys_meta, b = p4(att, runs)
+    res["P4"], subsets, sys_meta, b, subset_pairs = p4(att, runs)
     subsets.assign(labs=subsets["labs"].map(lambda s: ";".join(codes[l] for l in s.split(";"))))\
         .to_csv(TABLES / "subset_predictions.csv", index=False, lineterminator="\n")
+    if len(subset_pairs):
+        subset_pairs.assign(lab=subset_pairs["lab"].map(codes)).to_csv(
+            TABLES / "subset_effect_out_of_sample.csv", index=False, lineterminator="\n")
     sys_meta.assign(lab=sys_meta["lab"].map(codes)).to_csv(TABLES / "systems.csv", index=False, lineterminator="\n")
     print("P4:", json.dumps(rnd(res["P4"])), flush=True)
 
@@ -506,16 +677,20 @@ def main(argv=()) -> int:
         print("E1:", json.dumps(rnd(e1)), flush=True)
     t.sort_values("d").to_csv(TABLES / "tasks.csv", index=False, lineterminator="\n")
     if "audit_status" in t.columns:
-        # Task lists a team can use directly.
-        all_pass = (t["kaggle_audits_passing"] == t["kaggle_audits"]) & (t["empty_patch_resolves"] == 0)
+        # Task lists a team can use directly.  "Valid" = the reference patch resolves in every full audit of
+        # the stock sandbox and the task does not resolve with no patch (Amendment 4).
+        st = t["audit_status"].astype(str)
         lists = {
-            "valid_in_reference_audit": sorted(t.loc[t["audit_status"] == "valid", "task"]),
-            "reference_patch_passes_in_all_full_audits_and_empty_patch_fails": sorted(t.loc[all_pass, "task"]),
-            "reference_patch_fails_in_all_full_audits": sorted(t.loc[t["kaggle_audits_passing"] == 0, "task"]),
-            "passes_without_patch_in_reference_audit": sorted(t.loc[t["empty_patch_resolves"] == 1, "task"]),
+            "valid_in_the_stock_sandbox": sorted(t.loc[st == "valid", "task"]),
+            "reference_patch_fails_in_every_full_audit": sorted(t.loc[st.str.startswith("reference_patch_fails"), "task"]),
+            "reference_patch_fails_in_every_full_audit_and_in_docker": sorted(
+                t.loc[st == "reference_patch_fails_in_both", "task"]),
+            "audits_disagree": sorted(t.loc[st == "audits_disagree", "task"]),
+            "passes_without_patch": sorted(t.loc[st == "passes_without_patch", "task"]),
             "informative_core_valid_and_discriminating": sorted(
-                t.loc[(t["audit_status"] == "valid") & (t["class"] == "discriminating"), "task"]),
-            "valid_but_at_the_floor": sorted(t.loc[(t["audit_status"] == "valid") & (t["class"] == "floor"), "task"]),
+                t.loc[(st == "valid") & (t["class"] == "discriminating"), "task"]),
+            "valid_but_at_the_floor": sorted(t.loc[(st == "valid") & (t["class"] == "floor"), "task"]),
+            "valid_in_the_single_audit_used_before_amendment_4": sorted(t.loc[t["single_audit_status"] == "valid", "task"]),
         }
         (TABLES / "task_lists.json").write_text(json.dumps(lists, indent=1) + "\n", encoding="utf-8")
         res["task_lists"] = {k: len(v) for k, v in lists.items()}

@@ -110,9 +110,13 @@ def main() -> int:
                  "scorable": int(((gv["ext_gold"] == 1) & (gv["ext_empty"] == 0)).sum())}
         if "reference_patch_resolves_docker" in a.columns:
             audit["same_verdict_as_pooled_docker_audit"] = int((a["ext_gold"] == a["reference_patch_resolves_docker"]).sum())
-        if "reference_patch_resolves" in a.columns:
-            audit["same_verdict_as_pooled_kaggle_audit"] = int((a["ext_gold"] == a["reference_patch_resolves"]).sum())
-            audit["fails_in_kaggle_audit_but_resolves_here"] = int(((a["reference_patch_resolves"] == 0) & (a["ext_gold"] == 1)).sum())
+        if "stock_sandbox_verdict" in a.columns:
+            # 1 / 0 where the four full audits of the stock sandbox agree, empty where they do not.
+            agreed = a[a["stock_sandbox_verdict"].notna()]
+            audit["tasks_with_unanimous_stock_sandbox_verdict"] = int(len(agreed))
+            audit["same_verdict_as_stock_sandbox_audits"] = int((agreed["ext_gold"] == agreed["stock_sandbox_verdict"]).sum())
+            audit["fails_in_stock_sandbox_audits"] = int((agreed["stock_sandbox_verdict"] == 0).sum())
+            audit["fails_in_kaggle_audit_but_resolves_here"] = int(((agreed["stock_sandbox_verdict"] == 0) & (agreed["ext_gold"] == 1)).sum())
         out["reference_patch_check"] = audit
 
     # Table for the report.
@@ -160,10 +164,11 @@ def main() -> int:
                     f"{a['reference_patch_resolves']} of {a['tasks']} tasks and the empty patch {a['empty_patch_resolves']}"
                     + (f"; the verdict equals that of the pooled Docker audit on {a['same_verdict_as_pooled_docker_audit']} tasks"
                        if "same_verdict_as_pooled_docker_audit" in a else "")
-                    + (f", and {a['fails_in_kaggle_audit_but_resolves_here']} of the tasks that fail in the standard Kaggle "
-                       f"sandbox resolve here" if "fails_in_kaggle_audit_but_resolves_here" in a else "") + ".")
+                    + (f", and {a['fails_in_kaggle_audit_but_resolves_here']} of the {a['fails_in_stock_sandbox_audits']} "
+                       f"tasks that fail in every audit of the stock Kaggle sandbox resolve here"
+                       if "fails_in_kaggle_audit_but_resolves_here" in a else "") + ".")
     if "external_rate_by_audit_status" in out:
-        summary += (" Agents' mean solve rate here by the task's status in the pooled reference audit: " +
+        summary += (" Agents' mean solve rate here by the task's status in the stock sandbox (X1): " +
                     "; ".join(f"{k.replace('_', ' ')} {100 * v['mean_external_solve_rate']:.1f}% ({v['tasks']} tasks)"
                               for k, v in sorted(out["external_rate_by_audit_status"].items())) + ".")
     out["summary"] = summary

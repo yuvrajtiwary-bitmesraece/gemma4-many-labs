@@ -77,15 +77,19 @@ def fig_task_difficulty(res, tables: Path, out: Path) -> None:
     fig, ax = plt.subplots(figsize=(9.2, 4.8))
     ax.vlines(x, lo, hi, color=GREY, linewidth=1.2, zorder=1, label="Middle half of the labs' solve rates")
     if "audit_status" in t.columns and t["audit_status"].notna().any():
-        groups = [("Valid in the sandbox audit", t["audit_status"] == "valid", BLUE),
-                  ("Reference patch fails in the audit", t["audit_status"].astype(str).str.startswith("reference_patch_fails"), ORANGE),
-                  ("Passes with no patch in the audit", t["audit_status"] == "passes_without_patch", AQUA)]
+        st = t["audit_status"].astype(str)
+        groups = [("Valid: reference patch passes in all four sandbox audits", st == "valid", BLUE),
+                  ("Reference patch fails in all four audits", st.str.startswith("reference_patch_fails"), ORANGE),
+                  ("The audits disagree", st == "audits_disagree", YELLOW),
+                  ("Passes with no patch", st == "passes_without_patch", AQUA)]
         for label, mask, color in groups:
+            if not mask.any():
+                continue
             ax.scatter(x[mask], t.loc[mask, "d"], s=30, color=color, edgecolor=SURFACE, linewidth=1.2, zorder=3,
                        label=f"{label} ({int(mask.sum())})")
         x1 = res.get("X1_validity", {})
         sub = (f"{p1['floor_tasks']} of {len(t)} tasks have a consensus solve rate of 10% or less; "
-               f"{x1.get('floor_tasks_that_are_valid_in_reference_audit', '?')} of those are valid in the sandbox audit")
+               f"{x1.get('floor_tasks_that_are_valid', '?')} of those are valid tasks: hard, not broken")
     else:
         disc = (t["d"] > 0.10) & (t["d"] < 0.90)
         ax.scatter(x[~disc], t.loc[~disc, "d"], s=30, color=MUTED, edgecolor=SURFACE, linewidth=1.2, zorder=3,
@@ -120,24 +124,29 @@ def fig_unpassable(res, tables: Path, out: Path) -> None:
     bad = v[v["bad"]].groupby("lab")[["attempts", "resolved"]].sum().reindex(tot.index).fillna(0)
     d = pd.DataFrame({"share": bad["attempts"] / tot, "attempts": bad["attempts"].astype(int),
                       "resolved": bad["resolved"].astype(int)}).sort_values("share")
-    fig, ax = plt.subplots(figsize=(9.2, 0.36 * len(d) + 1.9))
+    fig, ax = plt.subplots(figsize=(9.2, 0.36 * len(d) + 2.3))
     y = np.arange(len(d))
-    ax.barh(y, d["share"], height=0.5, color=BLUE, zorder=2)
+    some = (d["resolved"] > 0).to_numpy()
+    ax.barh(y[some], d["share"][some], height=0.5, color=BLUE, zorder=2,
+            label="Lab resolved some of these tasks: its test environment differs from the stock sandbox")
+    ax.barh(y[~some], d["share"][~some], height=0.5, color=GREY, zorder=2,
+            label="Lab resolved none of them")
     for yi, (share, n, k) in enumerate(zip(d["share"], d["attempts"], d["resolved"])):
-        text = "none attempted" if n == 0 else f"{100 * share:.0f}% of attempts  ·  {k} of {n} resolved"
+        text = "no such attempt in the pool" if n == 0 else f"{100 * share:.0f}% of attempts  ·  {k} of {n} resolved"
         ax.text(share + 0.008, yi, text, va="center", ha="left", fontsize=8.5, color=INK2, zorder=3)
     ax.set_yticks(y, d.index)
     ax.set_xlim(0, max(0.1, float(d["share"].max()) * 1.55))
     pct(ax, "x")
-    ax.set_xlabel("Share of the lab's attempts")
+    ax.set_xlabel("Share of the lab's attempts made on tasks whose reference patch fails in the stock sandbox")
     ax.grid(axis="y", visible=False)
     ax.tick_params(axis="y", length=0)
     ax.spines["left"].set_visible(False)
     x1 = res["X1_validity"]
     n_bad = x1["status_counts"].get("reference_patch_fails", 0)
-    ax.set_title("Attempts spent on tasks whose reference patch fails in the standard sandbox")
-    subtitle(ax, f"{n_bad} of 129 tasks fail with their own reference patch in the sandbox audit; "
-                 f"{100 * x1['share_of_attempts_on_tasks_where_reference_patch_fails']:.0f}% of all pooled attempts were made on them")
+    ax.set_title("Labs were not running the same benchmark")
+    subtitle(ax, f"{n_bad} of 129 tasks fail with their own reference patch in all four audits of the stock sandbox; "
+                 f"{100 * x1['share_of_attempts_on_tasks_where_reference_patch_fails']:.0f}% of pooled attempts were made on them")
+    ax.legend(loc="upper left", bbox_to_anchor=(0.0, -0.06 - 0.9 / len(d)), ncol=1, handlelength=1.2)
     save(fig, out / "fig2_unpassable_attempts.png")
 
 
@@ -229,15 +238,23 @@ def fig_mdd(res, tables: Path, out: Path) -> None:
         return
     flip = fr["pooled"]
     ns = [20, 30, 40, 50, 60, 80, 100, 129, 160, 200, 250, 300, 400, 500]
-    curve = pd.DataFrame({"n_tasks": ns, "mdd": [mdd_bisect(n, flip) for n in ns]})
+    # Upper curve: the planned alternative (a gain adds its whole size to the disagreement between the two
+    # agents).  Lower curve: a gain that adds no disagreement.  Real improvements lie in between.
+    curve = pd.DataFrame({"n_tasks": ns, "mdd": [mdd_bisect(n, flip) for n in ns],
+                          "mdd_no_added_disagreement": [ml.mdd_with_discordance(n, flip, 0.0, 0.0) for n in ns]})
     curve.to_csv(tables / "mdd_curve.csv", index=False, lineterminator="\n")
     fig, ax = plt.subplots(figsize=(7.4, 4.3))
-    ax.plot(curve["n_tasks"], curve["mdd"], color=BLUE, zorder=2)
+    ax.fill_between(curve["n_tasks"], curve["mdd_no_added_disagreement"], curve["mdd"], color=BLUE_LIGHT, alpha=0.35,
+                    linewidth=0, zorder=1, label="Range, by how the improvement is spread over tasks")
+    ax.plot(curve["n_tasks"], curve["mdd"], color=BLUE, zorder=2,
+            label="Planned case: gained tasks go from never solved to always solved")
+    ax.plot(curve["n_tasks"], curve["mdd_no_added_disagreement"], color=BLUE_DARK, linewidth=1.4, linestyle=(0, (4, 3)),
+            zorder=2, label="An improvement that adds no disagreement")
     mark = curve[curve["n_tasks"].isin([30, 60, 129])]
     ax.scatter(mark["n_tasks"], mark["mdd"], s=62, color=BLUE, edgecolor=SURFACE, linewidth=1.8, zorder=3)
-    for n, v in zip(mark["n_tasks"], mark["mdd"]):
-        ax.annotate(f"{n} tasks: {100 * v:.0f} points", (n, v), xytext=(9, 7), textcoords="offset points",
-                    fontsize=9, color=INK2)
+    for n, lo, v in zip(mark["n_tasks"], mark["mdd_no_added_disagreement"], mark["mdd"]):
+        ax.annotate(f"{n} tasks: {100 * lo:.0f} to {100 * v:.0f} points", (n, v), xytext=(9, 7),
+                    textcoords="offset points", fontsize=9, color=INK2)
     ax.set_xlim(0, 520)
     ax.set_ylim(0, float(np.nanmax(curve["mdd"])) * 1.1)
     pct(ax)
@@ -245,6 +262,7 @@ def fig_mdd(res, tables: Path, out: Path) -> None:
     ax.set_ylabel("Smallest detectable improvement")
     ax.set_title("What one paired comparison of two agents can detect")
     subtitle(ax, f"Exact two-sided McNemar test, α = 0.05, power 0.80, at the pooled flip rate of {100 * flip:.1f}%")
+    ax.legend(loc="upper right", ncol=1, handlelength=1.6)
     save(fig, out / "fig5_detectable_difference.png")
 
 
@@ -257,8 +275,16 @@ def fig_subsets(res, tables: Path, out: Path) -> None:
     full = p4["predicted_full_task_set"]
     fig, ax = plt.subplots(figsize=(7.4, 4.3))
     ax.axhline(full, color=BASELINE, linewidth=1.2, zorder=1)
-    ax.scatter(s["n_tasks"], s["predicted_rate"], s=46, color=BLUE, edgecolor=SURFACE, linewidth=1.5, zorder=3,
-               alpha=0.9)
+    if "chosen_from_earlier_outcomes" in s.columns and s["chosen_from_earlier_outcomes"].any():
+        sel = s["chosen_from_earlier_outcomes"].astype(bool)
+        ax.scatter(s.loc[~sel, "n_tasks"], s.loc[~sel, "predicted_rate"], s=46, color=BLUE, edgecolor=SURFACE,
+                   linewidth=1.5, zorder=3, alpha=0.9, label=f"Task subset used by a lab ({int((~sel).sum())})")
+        ax.scatter(s.loc[sel, "n_tasks"], s.loc[sel, "predicted_rate"], s=46, color=ORANGE, edgecolor=SURFACE,
+                   linewidth=1.5, zorder=4, label=f"Subset the lab chose from its earlier outcomes ({int(sel.sum())})")
+        ax.legend(loc="lower right", ncol=1, handletextpad=0.4)
+    else:
+        ax.scatter(s["n_tasks"], s["predicted_rate"], s=46, color=BLUE, edgecolor=SURFACE, linewidth=1.5, zorder=3,
+                   alpha=0.9)
     ax.annotate(f"all {p4['n_tasks']} tasks: {100 * full:.0f}%", (float(s["n_tasks"].max()), full), xytext=(4, 9),
                 textcoords="offset points", ha="right", fontsize=9, color=INK2)
     lo, hi = s.loc[s["predicted_rate"].idxmin()], s.loc[s["predicted_rate"].idxmax()]

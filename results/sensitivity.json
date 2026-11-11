@@ -1,61 +1,105 @@
 {
  "S1_flip_rate_uncertainty": {
   "estimate": {
-   "n_pairs": 123,
+   "n_pairs": 127,
    "n_systems": 49,
    "n_labs": 9,
-   "pooled": 0.11153,
-   "lab_median": 0.10442,
-   "lab_mean": 0.10865
+   "pooled": 0.10895,
+   "lab_median": 0.10432,
+   "lab_mean": 0.10437
+  },
+  "jackknife": {
+   "n_labs": 9,
+   "jackknife_se": 0.01582,
+   "t_quantile": 2.306,
+   "jackknife_ci95": [
+    0.07248,
+    0.14543
+   ],
+   "lab_level_mean": 0.10437,
+   "lab_level_t_ci95": [
+    0.0696,
+    0.13914
+   ],
+   "effective_number_of_labs": 2.60531,
+   "share_of_weight_two_largest_labs": 0.86053,
+   "leave_one_lab_out_range": [
+    0.09447,
+    0.11724
+   ]
   },
   "bootstrap": {
    "lab_clustered": {
     "n_units": 9,
     "ci95": [
-     0.0861,
-     0.12255
+     0.08445,
+     0.12269
     ],
-    "se": 0.0103
+    "se": 0.01115
    },
    "system_clustered": {
     "n_units": 49,
     "ci95": [
-     0.08936,
-     0.12531
+     0.08505,
+     0.12466
     ],
-    "se": 0.00955
+    "se": 0.01048
    },
    "lab_mean": {
-    "estimate": 0.10865,
+    "estimate": 0.10437,
     "ci95": [
-     0.07644,
-     0.13498
+     0.07354,
+     0.12909
     ]
    }
   },
+  "coverage_simulation": {
+   "between_lab_sd_2pt": {
+    "pooled_percentile_bootstrap": 0.859,
+    "pooled_jackknife_t": 0.8385,
+    "lab_level_mean_t": 0.9555
+   },
+   "between_lab_sd_4pt": {
+    "pooled_percentile_bootstrap": 0.835,
+    "pooled_jackknife_t": 0.827,
+    "lab_level_mean_t": 0.9445
+   }
+  },
   "detectable_on_129_tasks_at_ci_bounds": [
-   0.115,
-   0.13
+   0.1075,
+   0.135
   ]
  },
  "S2_strict_repeats_L01": {
-  "runs_reassigned": 8,
+  "runs_reassigned": 13,
   "n_pairs": 110,
   "n_systems": 50,
   "n_labs": 9,
-  "pooled": 0.10306,
+  "pooled": 0.10227,
   "lab_median": 0.10613,
-  "lab_mean": 0.10884
+  "lab_mean": 0.10464
+ },
+ "S2b_without_outcome_selected_subsets": {
+  "runs_flagged": 18,
+  "pairs_removed": 3,
+  "n_pairs": 124,
+  "n_labs": 9,
+  "pooled": 0.10617,
+  "lab_median": 0.1,
+  "lab_q25": 0.09155,
+  "lab_q75": 0.10432,
+  "lab_max": 0.16667,
+  "pooled_on_the_removed_pairs": 0.26596
  },
  "S3_without_L04_early_runs": {
   "runs_removed": 8,
   "attempts_removed": 480,
   "n_attempts": 14632,
   "n_labs": 14,
-  "n_systems": 252,
+  "n_systems": 251,
   "n_runs": 338,
-  "split_half_median": 0.79747,
-  "split_half_sb": 0.88732,
+  "split_half_median": 0.79822,
+  "split_half_sb": 0.88779,
   "n_tasks_5_labs": 101,
   "floor_tasks": 40,
   "ceiling_tasks": 3,
@@ -63,36 +107,36 @@
   "r2_task": 0.45305,
   "r2_lab": 0.14036,
   "r2_system": 0.17823,
-  "r2_task_plus_system": 0.58444,
-  "noise_share": 0.22763,
-  "noise_variance": 0.04916,
-  "flip_pooled": 0.11153,
-  "flip_lab_median": 0.10442,
+  "r2_task_plus_system": 0.58426,
+  "noise_share": 0.22807,
+  "noise_variance": 0.05289,
+  "flip_pooled": 0.10895,
+  "flip_lab_median": 0.10432,
   "flip_n_labs": 9,
-  "flip_n_pairs": 123,
+  "flip_n_pairs": 127,
   "mdd_129": 0.125
  },
  "S4_without_rebuilt_runs_L11": {
   "runs_removed": 4,
-  "n_pairs": 121,
+  "n_pairs": 125,
   "n_systems": 47,
   "n_labs": 8,
-  "pooled": 0.11145,
-  "lab_median": 0.10349,
-  "lab_mean": 0.10661
+  "pooled": 0.10886,
+  "lab_median": 0.10344,
+  "lab_mean": 0.10179
  },
  "S5_pairs_on_identical_task_sets": {
-  "n_pairs": 115,
+  "n_pairs": 118,
   "n_labs": 6,
-  "pooled": 0.11098,
-  "lab_median": 0.10349,
-  "mean_abs_score_difference": 0.04719
+  "pooled": 0.1086,
+  "lab_median": 0.10344,
+  "mean_abs_score_difference": 0.04695
  },
  "S6_flip_rate_by_model": {
   "31B": {
    "n_pairs": 102,
    "n_labs": 8,
-   "pooled": 0.12297
+   "pooled": 0.12307
   },
   "E2B": {
    "n_pairs": 7,
@@ -100,9 +144,9 @@
    "pooled": 0.0
   },
   "E4B": {
-   "n_pairs": 14,
+   "n_pairs": 18,
    "n_labs": 1,
-   "pooled": 0.06557
+   "pooled": 0.06375
   }
  },
  "S7_floor_thresholds": {
@@ -114,14 +158,14 @@
   },
   "min_labs_3_floor_10": {
    "tasks": 125,
-   "floor": 53,
-   "share_floor": 0.424,
+   "floor": 54,
+   "share_floor": 0.432,
    "ceiling": 3
   },
   "min_labs_3_floor_20": {
    "tasks": 125,
-   "floor": 75,
-   "share_floor": 0.6,
+   "floor": 74,
+   "share_floor": 0.592,
    "ceiling": 4
   },
   "min_labs_5_floor_5": {
@@ -132,14 +176,14 @@
   },
   "min_labs_5_floor_10": {
    "tasks": 101,
-   "floor": 40,
-   "share_floor": 0.39604,
+   "floor": 41,
+   "share_floor": 0.40594,
    "ceiling": 3
   },
   "min_labs_5_floor_20": {
    "tasks": 101,
-   "floor": 60,
-   "share_floor": 0.59406,
+   "floor": 59,
+   "share_floor": 0.58416,
    "ceiling": 4
   },
   "min_labs_8_floor_5": {
@@ -161,91 +205,322 @@
    "ceiling": 4
   }
  },
- "S8_validity_by_four_audits": {
-  "audits": [
-   "SebAustin",
-   "TechNaom",
-   "matisdsp",
-   "sujith-kamme"
-  ],
-  "tasks_failing_in_all": 51,
-  "tasks_passing_in_all": 69,
-  "share_of_attempts_on_tasks_failing_in_all": 0.2461,
+ "S8_validity_from_one_audit": {
+  "status_counts": {
+   "valid": 68,
+   "reference_patch_fails": 56,
+   "passes_without_patch": 5
+  },
+  "tasks_with_a_different_status": 6,
+  "share_of_attempts_on_tasks_where_reference_patch_fails": 0.27673,
   "lab_share": {
    "min": 0.0,
-   "median": 0.16973,
-   "max": 0.42324
+   "median": 0.23591,
+   "max": 0.46628
   },
-  "labs_attempting": 9,
-  "labs_resolving_none": 5,
-  "tasks_never_resolved_by_any_agent": 25,
-  "tasks_attempted": 51,
-  "floor_tasks": 40,
-  "floor_tasks_passing_in_all_audits": 23,
-  "floor_tasks_failing_in_all_audits": 13
+  "labs_attempting": 13,
+  "labs_resolving_none": 6,
+  "tasks_never_resolved_by_any_agent": 27,
+  "tasks_attempted": 56,
+  "floor_tasks": 41,
+  "floor_tasks_valid": 24,
+  "valid_tasks_only": {
+   "n_attempts": 10524,
+   "n_labs": 14,
+   "n_systems": 259,
+   "n_runs": 346,
+   "split_half_median": 0.8545,
+   "split_half_sb": 0.92154,
+   "n_tasks_5_labs": 68,
+   "floor_tasks": 24,
+   "ceiling_tasks": 3,
+   "discriminating_tasks": 41,
+   "r2_task": 0.45431,
+   "r2_lab": 0.16907,
+   "r2_system": 0.21107,
+   "r2_task_plus_system": 0.61976,
+   "noise_share": 0.23797,
+   "noise_variance": 0.05542,
+   "flip_pooled": 0.11655,
+   "flip_lab_median": 0.12263,
+   "flip_n_labs": 8,
+   "flip_n_pairs": 123,
+   "mdd_129": 0.1275
+  }
  },
  "S9_repeats": {
-  "note": "normal approximation; tasks fixed; discordance = flip rate + gain, as in the planned McNemar calculation",
+  "note": "fixed tasks: exact stratified permutation test, alternative = tasks that go from never to always solved; k = 1 is the exact McNemar value of P3, k >= 2 by simulation (3,000 draws). new tasks: 2.80 x sqrt(2 (var_system_x_task + var_run / k) / n) from the variance components of P2b",
   "flip_rate_used": {
-   "all_129_tasks": 0.11153,
-   "valid_68_tasks": 0.11829,
-   "60_tasks": 0.11153,
-   "30_tasks": 0.11153
+   "all_129_tasks": 0.10895,
+   "valid_67_tasks": 0.1186,
+   "60_tasks": 0.10895,
+   "30_tasks": 0.10895
   },
-  "detectable_gain": {
+  "detectable_gain_fixed_tasks": {
    "all_129_tasks": {
-    "k1": 0.11824,
-    "k3": 0.05877,
-    "k5": 0.04342,
-    "k10": 0.02927
+    "k1": 0.125,
+    "k2": 0.06871,
+    "k3": 0.05347,
+    "k5": 0.04084,
+    "k10": 0.02838
    },
-   "valid_68_tasks": {
-    "k1": 0.18804,
-    "k3": 0.08939,
-    "k5": 0.06506,
-    "k10": 0.04317
+   "valid_67_tasks": {
+    "k1": 0.1975,
+    "k2": 0.10388,
+    "k3": 0.08323,
+    "k5": 0.06145,
+    "k10": 0.04202
    },
    "60_tasks": {
-    "k1": 0.20277,
-    "k3": 0.09487,
-    "k5": 0.06866,
-    "k10": 0.04529
+    "k1": 0.2075,
+    "k2": 0.10983,
+    "k3": 0.08466,
+    "k5": 0.06332,
+    "k10": 0.04336
    },
    "30_tasks": {
-    "k1": 0.34597,
-    "k3": 0.15144,
-    "k5": 0.10691,
-    "k10": 0.06866
+    "k1": 0.345,
+    "k2": 0.17663,
+    "k3": 0.12982,
+    "k5": 0.09468,
+    "k10": 0.06279
    }
   },
-  "runs_per_arm_needed": {
+  "detectable_gain_fixed_tasks_normal_approximation": {
    "all_129_tasks": {
-    "gain_3pt": 10,
+    "k1": 0.10411,
+    "k2": 0.0649,
+    "k3": 0.05137,
+    "k5": 0.03882,
+    "k10": 0.02688
+   },
+   "valid_67_tasks": {
+    "k1": 0.16232,
+    "k2": 0.0976,
+    "k3": 0.07652,
+    "k5": 0.05737,
+    "k10": 0.03947
+   },
+   "60_tasks": {
+    "k1": 0.16935,
+    "k2": 0.1004,
+    "k3": 0.07841,
+    "k5": 0.05861,
+    "k10": 0.0402
+   },
+   "30_tasks": {
+    "k1": 0.27141,
+    "k2": 0.15187,
+    "k3": 0.11668,
+    "k5": 0.08604,
+    "k10": 0.05833
+   }
+  },
+  "runs_per_arm_needed_fixed_tasks": {
+   "all_129_tasks": {
+    "gain_3pt": 9,
     "gain_5pt": 4,
     "gain_10pt": 2
    },
-   "valid_68_tasks": {
-    "gain_3pt": 20,
-    "gain_5pt": 8,
+   "valid_67_tasks": {
+    "gain_3pt": 17,
+    "gain_5pt": 7,
     "gain_10pt": 3
    },
    "60_tasks": {
-    "gain_3pt": 21,
-    "gain_5pt": 9,
+    "gain_3pt": 18,
+    "gain_5pt": 7,
     "gain_10pt": 3
    },
    "30_tasks": {
-    "gain_3pt": 42,
-    "gain_5pt": 17,
-    "gain_10pt": 6
+    "gain_3pt": 35,
+    "gain_5pt": 14,
+    "gain_10pt": 4
    }
   },
-  "exact_mcnemar_one_run": {
-   "all_129_tasks": 0.125,
-   "valid_68_tasks": 0.195,
-   "60_tasks": 0.2075,
-   "30_tasks": 0.3475
-  }
+  "detectable_gain_new_tasks": {
+   "58_tasks": {
+    "k1": {
+     "median": 0.12894,
+     "min": 0.10968,
+     "max": 0.13902,
+     "by_lab": {
+      "L05": 0.10968,
+      "L01": 0.13193,
+      "L06": 0.12596,
+      "L02": 0.13902
+     }
+    },
+    "k3": {
+     "median": 0.08534,
+     "min": 0.06332,
+     "max": 0.10838,
+     "by_lab": {
+      "L05": 0.06332,
+      "L01": 0.08936,
+      "L06": 0.08131,
+      "L02": 0.10838
+     }
+    },
+    "k5": {
+     "median": 0.07355,
+     "min": 0.04905,
+     "max": 0.10114,
+     "by_lab": {
+      "L05": 0.04905,
+      "L01": 0.0781,
+      "L06": 0.069,
+      "L02": 0.10114
+     }
+    },
+    "k10": {
+     "median": 0.06327,
+     "min": 0.03468,
+     "max": 0.09536,
+     "by_lab": {
+      "L05": 0.03468,
+      "L01": 0.06846,
+      "L06": 0.05808,
+      "L02": 0.09536
+     }
+    },
+    "kinf": {
+     "median": 0.05089,
+     "min": 0.0,
+     "max": 0.0892,
+     "by_lab": {
+      "L05": 0.0,
+      "L01": 0.05722,
+      "L06": 0.04456,
+      "L02": 0.0892
+     }
+    }
+   },
+   "129_tasks": {
+    "k1": {
+     "median": 0.08646,
+     "min": 0.07354,
+     "max": 0.09321,
+     "by_lab": {
+      "L05": 0.07354,
+      "L01": 0.08846,
+      "L06": 0.08446,
+      "L02": 0.09321
+     }
+    },
+    "k3": {
+     "median": 0.05722,
+     "min": 0.04246,
+     "max": 0.07267,
+     "by_lab": {
+      "L05": 0.04246,
+      "L01": 0.05992,
+      "L06": 0.05452,
+      "L02": 0.07267
+     }
+    },
+    "k5": {
+     "median": 0.04932,
+     "min": 0.03289,
+     "max": 0.06782,
+     "by_lab": {
+      "L05": 0.03289,
+      "L01": 0.05237,
+      "L06": 0.04627,
+      "L02": 0.06782
+     }
+    },
+    "k10": {
+     "median": 0.04243,
+     "min": 0.02326,
+     "max": 0.06394,
+     "by_lab": {
+      "L05": 0.02326,
+      "L01": 0.04591,
+      "L06": 0.03895,
+      "L02": 0.06394
+     }
+    },
+    "kinf": {
+     "median": 0.03412,
+     "min": 0.0,
+     "max": 0.05981,
+     "by_lab": {
+      "L05": 0.0,
+      "L01": 0.03837,
+      "L06": 0.02988,
+      "L02": 0.05981
+     }
+    }
+   }
+  },
+  "runs_per_arm_needed_new_tasks": {
+   "58_tasks": {
+    "gain_3pt": {
+     "runs_by_lab": {
+      "L05": 14,
+      "L01": null,
+      "L06": null,
+      "L02": null
+     },
+     "labs_where_no_number_of_runs_is_enough": 3,
+     "n_labs": 4
+    },
+    "gain_5pt": {
+     "runs_by_lab": {
+      "L05": 5,
+      "L01": null,
+      "L06": 27,
+      "L02": null
+     },
+     "labs_where_no_number_of_runs_is_enough": 2,
+     "n_labs": 4
+    },
+    "gain_10pt": {
+     "runs_by_lab": {
+      "L05": 2,
+      "L01": 3,
+      "L06": 2,
+      "L02": 6
+     },
+     "labs_where_no_number_of_runs_is_enough": 0,
+     "n_labs": 4
+    }
+   },
+   "129_tasks": {
+    "gain_3pt": {
+     "runs_by_lab": {
+      "L05": 7,
+      "L01": null,
+      "L06": 858,
+      "L02": null
+     },
+     "labs_where_no_number_of_runs_is_enough": 2,
+     "n_labs": 4
+    },
+    "gain_5pt": {
+     "runs_by_lab": {
+      "L05": 3,
+      "L01": 7,
+      "L06": 4,
+      "L02": null
+     },
+     "labs_where_no_number_of_runs_is_enough": 1,
+     "n_labs": 4
+    },
+    "gain_10pt": {
+     "runs_by_lab": {
+      "L05": 1,
+      "L01": 1,
+      "L06": 1,
+      "L02": 1
+     },
+     "labs_where_no_number_of_runs_is_enough": 0,
+     "n_labs": 4
+    }
+   }
+  },
+  "labs_with_variance_components": 4
  },
  "S10_temperature": {
   "lab": "L02",
@@ -256,9 +531,9 @@
     "pooled": 0.13115
    },
    "0.2 (E4B)": {
-    "n_pairs": 7,
-    "n_systems": 2,
-    "pooled": 0.05855
+    "n_pairs": 12,
+    "n_systems": 3,
+    "pooled": 0.06284
    },
    "0.7 (31B)": {
     "n_pairs": 15,
@@ -271,42 +546,42 @@
     "pooled": 0.06557
    }
   },
-  "pairs_with_unknown_temperature": 1
+  "pairs_with_unknown_temperature": 0
  },
  "S11_wrong_order": {
-  "note": "probability that the better of two agents scores lower when each is run once on the same tasks",
+  "note": "probability that the better of two agents scores lower when each is run once on the same tasks; normal approximation, variance of the difference = flip rate / n",
   "leaderboard_58_tasks": {
    "development_set_flip_rate": {
-    "flip_rate": 0.11153,
-    "gain_2pt": 0.33725,
-    "gain_3pt": 0.27182,
-    "gain_5pt": 0.17171,
-    "gain_10pt": 0.04887
+    "flip_rate": 0.10895,
+    "gain_2pt": 0.32224,
+    "gain_3pt": 0.24441,
+    "gain_5pt": 0.12433,
+    "gain_10pt": 0.01052
    },
    "implied_by_identical_resubmissions": {
     "flip_rate": 0.06775,
-    "gain_2pt": 0.30356,
-    "gain_3pt": 0.23246,
-    "gain_5pt": 0.13357,
-    "gain_10pt": 0.03148
+    "gain_2pt": 0.27922,
+    "gain_3pt": 0.19004,
+    "gain_5pt": 0.07174,
+    "gain_10pt": 0.00172
    }
   },
   "development_set_129_tasks": {
-   "gain_2pt": 0.26555,
-   "gain_3pt": 0.18255,
-   "gain_5pt": 0.07883,
-   "gain_10pt": 0.00677
+   "gain_2pt": 0.24567,
+   "gain_3pt": 0.15097,
+   "gain_5pt": 0.04267,
+   "gain_10pt": 0.00029
   }
  },
  "S12_best_of_n": {
   "note": "expected gain in the best score from submitting the same agent N times to a 58-task leaderboard",
   "development_set_flip_rate": {
-   "sd_of_one_score": 0.03101,
-   "n2": 0.01749,
-   "n3": 0.02624,
-   "n5": 0.03606,
-   "n10": 0.04771,
-   "n20": 0.05791
+   "sd_of_one_score": 0.03065,
+   "n2": 0.01729,
+   "n3": 0.02594,
+   "n5": 0.03564,
+   "n10": 0.04716,
+   "n20": 0.05723
   },
   "implied_by_identical_resubmissions": {
    "sd_of_one_score": 0.02417,

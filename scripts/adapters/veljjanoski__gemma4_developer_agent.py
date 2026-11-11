@@ -8,7 +8,8 @@ CARD = {
     "licence": {"spdx": "MIT", "evidence": "LICENSE: 'MIT License Copyright (c) 2026 Daniel Veljjanoski'; README.md '## License': 'MIT, see `LICENSE`.'"},
     "models": ["31B", "E4B"],
     "harness": "official",
-    "summary": ("60 runs of single-agent ADK submissions (own versions v3-v15 plus three public third-party configurations) "
+    "summary": ("60 runs of ADK submissions (own versions v3-v15 plus three public third-party configurations; single-agent "
+                "except v15, e4b_bf_seq and e4b_loc, which add a locator sub-agent) "
                 "on three rigs: a local llama.cpp rig (31B, 40-task dev set and a 23-task swing bench), Kaggle notebooks in "
                 "the scorer's stack (31B and E4B, 61 gold-checked held-out tasks) and a local vLLM rig (E4B, the same 61 tasks)."),
     "evidence": {
@@ -23,7 +24,8 @@ CARD = {
                     "'runs/{run}/task_results.jsonl' of the 'swegemma harness'"),
         "systems": ("README.md Results table (one row per version v3..v15); APPENDIX.md F 'Run index' (run -> version, task list, "
                     "minutes); APPENDIX.md G and I tables 'Configurations (first = reference)' per run; scorer_stack/build_ab.py and "
-                    "build_small.py RUNS give the exact text replacements of every arm"),
+                    "build_small.py RUNS give the exact text replacements of the arms of runs ab1-ab5 and small1-small2; ab6, "
+                    "small3 (build_ab_lora.py VERSIONS) and the local E4B arms are described in README / APPENDIX prose only"),
         "replicates": ("v11@kaggle x4 and v10@kaggle x4: scorer_stack/ab_stats.py \"RUNS = {'v11': ['eval_base', 'ab1_base', 'ab2_base', "
                        "'ab3_base'], 'v10': ['ab2_think2048', 'ab3_think2048', 'ab4_v10', 'ab5_v10']}\" and 'flips per pair of identical "
                        "runs'; README.md 'v11 averages 18.25 of 61 in four runs, v10 22.00 in four (ab2 to ab5)'. "
@@ -35,7 +37,8 @@ CARD = {
                        "v11@local-swing x2, v15@local-swing x2: APPENDIX.md C 'each candidate runs twice on the bench, unseeded, "
                        "alternating (v15, v11, v15, v11), local 6.0 minutes'. "
                        "e4b_v10@local-vllm x3: APPENDIX.md I 'e4b_local1, e4b_local2, e4b_local3 | v10 (`submissions/e4b_v10`), three "
-                       "draws'. e4b_bf@local-vllm x4: README.md '(6, 6, 4 and 5, 4, 5 of 61 against 6 and 5 for the unchanged files)', "
+                       "draws'. e4b_bf@vllm x5 (Kaggle small3_e4b_bf and local ab1..ab4_e4b_bf, pooled by the lab in "
+                       "analysis/bestofn_oracle2.py, see decisions): README.md '(6, 6, 4 and 5, 4, 5 of 61 against 6 and 5 for the unchanged files)', "
                        "'solved 10 and 7 of 61 in two paired runs against 7 and 6 for the unchanged files'; APPENDIX.md I 'the two "
                        "Budget-Fit draws [differ] on 3'. e4b_bf_seq@local-vllm x2: APPENDIX.md I 'a read-only locator sub-agent ... "
                        "before the same fixer, two draws'. e4b_loc@local-vllm x2: APPENDIX.md I 'ab4_e4b_bf, ab4_e4b_loc | the same "
@@ -48,10 +51,14 @@ CARD = {
     "decisions": [
         "system = '<configuration>@<rig>'; rigs: 'local' = llama.cpp Q4_0 GGUF 31B on one RTX 3090 (results/*.csv), 'kaggle' = "
         "scorer's stack on 4x L4, vLLM W4A16 (results/scorer_stack), 'local-vllm' = E4B W4A16 on vLLM on one RTX 3090 "
-        "(results/local_e4b). The same agent files on two rigs are different systems (other weights format, hardware, sandbox and "
-        "harness version). The lab itself sometimes pools across rigs (analysis/bestofn_oracle2.py: 'E4B bf x3 (same files)' = "
-        "Kaggle small3 e4b_bf + local ab1_e4b_bf + ab2_e4b_bf; APPENDIX.md I compares e4b_v10 local draws with small1-3); to "
-        "follow that, strip the '@rig' suffix",
+        "(results/local_e4b). The same agent files on two rigs are different systems (hardware, sandbox image and harness "
+        "version differ; the llama.cpp rig also uses another weights format, time budget and task set), with one exception "
+        "made after an independent audit on 2026-11-11: Budget-Fit's unchanged files on E4B are one system 'e4b_bf@vllm' "
+        "across the Kaggle run small3_e4b_bf and the local vLLM runs ab1..ab4_e4b_bf, because the lab itself pools them as "
+        "repeats (analysis/bestofn_oracle2.py:8 and analysis/bestofn_selector.py:107: 'E4B bf x3 (same files)' = Kaggle "
+        "small3 e4b_bf + local ab1_e4b_bf + ab2_e4b_bf; APPENDIX.md:180 reports 'E4B Budget-Fit 6.3 of 61 per run', which only "
+        "that cross-rig group reproduces). e4b_v10 stays split by rig: the lab contrasts the rigs for it (APPENDIX.md:192, "
+        "rig/export_local_e4b.py:3 'rig validation') and never pools those six runs",
         "harness = official for all three rigs: every attempt is run and verified by the competition's swegemma Evaluator; the "
         "local rigs add environment patches (rig/local_env.py, rig/local_pin.py) and scale minutes by 0.75 on the llama.cpp rig",
         "the four reference arms 'base' of eval/ab1/ab2/ab3 are one system (v11@kaggle) and think2048 of ab2/ab3 plus v10 of "
@@ -68,7 +75,11 @@ CARD = {
         "v6_redo14964.csv (one task re-run after a Docker error) is a shard of run v6_dev40_s3; the original row with "
         "end=docker_error_local is dropped as an infrastructure failure",
         "end=cutoff_tool_call_local (7 rows; 'local-only failures', a tool call cut off at the output limit ended the task on the "
-        "llama.cpp rig) is kept as y=0 with err=True because the lab counts these tasks as unsolved in its totals of 40",
+        "llama.cpp rig) is kept as y=0 with err=True because the lab counts these tasks as unsolved in its totals of 40 and "
+        "does not re-run them, although rig/local_env.py describes the cut-off as a property of the local rig ('a "
+        "non-retryable model error that ends the task')",
+        "the two swing-bench systems (v11@local-swing, v15@local-swing) are repeats on a task subset chosen for unstable "
+        "outcomes; their flip rates (30% and 35%) are not typical, and the sensitivity analysis S2b removes them",
         "end=unknown_tool (ab3_e4b_loc, ab4_e4b_loc: 'One task per draw was lost to the locator calling an edit tool outside its "
         "list') is an agent error: y=0, err=True",
         "third-party public configurations measured by this lab (davis0178's v19, Hanh Tran's Gemma 4 Baseline v4, Wilmer E. "
@@ -169,7 +180,7 @@ KAGGLE = {  # results/scorer_stack/<stem>.csv: scorer's stack, vLLM W4A16
     "small2_e4b_v10_verify": ("e4b_v10_verify@kaggle", "E4B"),
     "small2_e4b_v10_think8k": ("e4b_v10_think8k@kaggle", "E4B"),
     "small3_e4b_v10": ("e4b_v10@kaggle", "E4B"),
-    "small3_e4b_bf": ("e4b_bf@kaggle", "E4B"),
+    "small3_e4b_bf": ("e4b_bf@vllm", "E4B"),
     "small3_e4b_bf_ep1": ("e4b_bf+lora-ep1@kaggle", "E4B"),
     "small3_e4b_bf_final": ("e4b_bf+lora-final@kaggle", "E4B"),
 }
@@ -177,15 +188,15 @@ LOCAL_E4B = {  # results/local_e4b/<stem>.csv: vLLM W4A16 E4B on one RTX 3090
     "e4b_local1": "e4b_v10@local-vllm",
     "e4b_local2": "e4b_v10@local-vllm",
     "e4b_local3": "e4b_v10@local-vllm",
-    "ab1_e4b_bf": "e4b_bf@local-vllm",
+    "ab1_e4b_bf": "e4b_bf@vllm",
     "ab1_e4b_bf_locate": "e4b_bf_locate@local-vllm",
     "ab1_e4b_bf_grepfix": "e4b_bf_grepfix@local-vllm",
-    "ab2_e4b_bf": "e4b_bf@local-vllm",
+    "ab2_e4b_bf": "e4b_bf@vllm",
     "ab2_e4b_bf_seq_r1": "e4b_bf_seq@local-vllm",
     "ab2_e4b_bf_seq_r2": "e4b_bf_seq@local-vllm",
-    "ab3_e4b_bf": "e4b_bf@local-vllm",
+    "ab3_e4b_bf": "e4b_bf@vllm",
     "ab3_e4b_loc": "e4b_loc@local-vllm",
-    "ab4_e4b_bf": "e4b_bf@local-vllm",
+    "ab4_e4b_bf": "e4b_bf@vllm",
     "ab4_e4b_loc": "e4b_loc@local-vllm",
 }
 CONTROLS = {"eval_gold", "eval_empty"}

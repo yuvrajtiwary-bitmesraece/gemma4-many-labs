@@ -55,7 +55,12 @@ CARD = {
                       "'**v17_hill_climbed** | `climb_12_expanded` | **50.0%** | 6/12 | 225.4s' are the winner iter2 of "
                       "hill_climb_v16_to_v17_results.json (7/11, mean_duration_sec 158.69) and the baseline 'v17_baseline' of "
                       "hill_climb_v17_to_v18_results.json (6/12, 225.37); both climb scripts run 360 s / 22 turns. "
-                      "In all four pairs no per-task record is shared between the two runs (separate executions).",
+                      "v20_loopbreaker: " + PAPER + " table row '`v20_loopbreaker` | Community LoRA (Robin Amir Bahar) "
+                      "| 217 KB | ... | 1 / 12 (8.3%) | 11 / 129 (8.53%)'; scripts/evaluate_loopbreaker_lora.py '(Robin Amir "
+                      "Bahar - Loop Breaker) on core_12' (bundle_v20, 240 s / 20 turns) and "
+                      "scripts/run_community_loras_full129_queue.py 'v20_loopbreaker' (bundle_v20) attach the same "
+                      "community adapter from two local directory names (lora_robinamirbahar, lora_loopbreaker). "
+                      "In all five pairs no per-task record is shared between the two runs (separate executions).",
         "task_sets": "LEADERBOARD.md: '`smoke_3`: 3 representative tasks ... for rapid timeout verification and regression "
                      "testing', '`core_12`: 12 balanced tasks (4 Requests, 4 FastAPI, 4 Rich)'; " + B + "test_tasks_core_60.json; "
                      + PAPER + ": 'We constructed a 48-task calibration suite composed of 17 Guard Tasks (previously resolved in "
@@ -68,13 +73,40 @@ CARD = {
         "model = 31B for every run; runs up to v19 load google/gemma-4-31B-it (bfloat16 in the scripts), runs from v20 the "
         "competition QAT build gemma-4-31b-it-qat-w4a16-ct",
         "y = the `resolved` flag; statuses TIMEOUT, NO_PATCH and FAILED are failures; err = status is TIMEOUT",
+        "exception: a record marked RESOLVED with an empty patch (patch size 0) is y = 0. There are three, all "
+        "rich_3468 (flexonafft_v2, v14_heredoc_synthesis and v15_surgical_triage on core_60). The lab calls this an "
+        "'Environmental False Positive' (state_of_the_art/14_SOTA_30B_QUANTIZED_SWE_BENCH_RESEARCH.md: 'Pytest suite "
+        "has early returns ... that exit 0 on unedited workspaces. Empty-Diff Guard: Never evaluate or mark resolved "
+        "if `git diff HEAD` is 0 bytes') and its later scorer has that guard (run_local_benchmark_leaderboard.py: "
+        "`resolved = passed and has_patch`). No other resolved record in the source has an empty patch (found by an "
+        "independent audit; DEVIATIONS.md, Amendment 4)",
+        "the eight early core_60 runs (v10, v11, v12, v13_non_empty_patch, v13_claude_clean, flexonafft_v2, v14, v15; "
+        "480 attempts, 0 or 1 of 60 resolved) are KEPT because the lab presents them as valid results and the plan "
+        "drops attempts only where the source marks them invalid. An independent audit of the result files shows "
+        "what they measure: every test session on a fastapi task in these runs ends in 'ModuleNotFoundError: No "
+        "module named 'starlette'' (115 of 115 sessions) and every one on a requests task in an import error for "
+        "urllib3 (22 of 22), so 37 of the 60 tasks could not be scored as resolved whatever the patch; the "
+        "simulator's tool layer lost most edits (26 of 29 edit calls of v15 arrived without a path; non-empty "
+        "patches in 2, 4, 0, 0, 1, 0, 2 of 60 attempts of the seven JSON-recorded runs against 34 of 60 in v16). "
+        "One correct fix is scored as failed five times (fastapi_14786, the same 406-byte patch that is RESOLVED "
+        "in all 18 executions from v16 on). From v16 on the import errors are gone. The sensitivity analysis S3 "
+        "removes the eight runs",
+        "scorer (the lab's own, scripts/run_local_benchmark_leaderboard.py): only the test functions that the "
+        "task's test patch adds are run (no check of previously passing tests), in the lab's own Python "
+        "environment with a 45 s pytest limit (rich_4006, rich_3772 and rich_4070 always time out there and are "
+        "never resolved); an attempt that runs out of time is recorded as TIMEOUT without being tested (229 pooled "
+        "attempts are TIMEOUT with a non-empty patch)",
         "system = the lab's label / candidate key with the suite suffix (_core12, _full129) removed; "
         "'v20_lora_scottweeden' (core_12 file) and 'v20_scottweeden_full129' are the same system v20_scottweeden",
-        "four systems have two runs of 10 or more tasks: v22_fastpaced_lora (calibration_48, full_129), v24_rank4_svd (core_12, "
-        "full_129), v20_scottweeden (core_12, full_129), v17_hill_climbed (climb_11, climb_12_expanded); see evidence.replicates",
-        "the two Loop-Breaker runs are kept as two systems (v20_lora_loopbreaker on core_12, v20_loopbreaker on full_129): the "
-        "core_12 log attaches /home/lmassaron/models/kaggle/lora_robinamirbahar, the full_129 queue "
-        "/home/lmassaron/models/kaggle/lora_loopbreaker, although the paper table gives one row for both",
+        "five systems have two runs of 10 or more tasks: v22_fastpaced_lora (calibration_48, full_129), v24_rank4_svd (core_12, "
+        "full_129), v20_scottweeden (core_12, full_129), v20_loopbreaker (core_12, full_129), v17_hill_climbed (climb_11, "
+        "climb_12_expanded); see evidence.replicates. None is a designed repeat: the second run is the same "
+        "configuration on a larger or another suite",
+        "the two Loop-Breaker runs ('v20_lora_loopbreaker' on core_12, 'v20_loopbreaker' on full_129) are one system, "
+        "like the two Scott Weeden runs: the paper table gives one row for both and both scripts attach the same "
+        "community adapter with bundle_v20; only the local directory name differs (lora_robinamirbahar, "
+        "lora_loopbreaker). The first version of this adapter kept them apart on the directory name (changed after "
+        "an independent audit; DEVIATIONS.md, Amendment 4)",
         "v21_finetuned_lora is one run of 129 tasks: the full_129 file was resumed from the 12 core_12 results ('[Resumption] "
         "Found 12 already completed tasks in benchmark_v21_finetuned_lora_full129_results.json'); the core_12 file is a copy of "
         "those 12 records and yields nothing",
@@ -99,7 +131,9 @@ CARD = {
         "takes the budget from each bundle's eval_config (default 300 s / 30 turns)",
         "'+hints' in a system label: the prompt holds task-specific fixes (07_...md 1.2: 'In `v11`, `v12`, and `v13`, the system "
         "prompt contained the exact answer for `requests_7205` ... and `rich_2725`'; SUBMISSIONS_LOG.md v19: 'prompt full of "
-        "task-specific gold-fix hints learned on 12 local tasks')",
+        "task-specific gold-fix hints learned on 12 local tasks'). The label marks the prompt, not the outcome: the two "
+        "hinted tasks of v11-v13 are not among the 60 tasks of their core_60 runs. The v18 climb iterations are not "
+        "labelled although bundle_v18 carries rules derived from two climb tasks (rich_3486, fastapi_14372)",
         "'+lora' is appended to LoRA systems whose label does not say so; '+partial' marks the hill-climb iteration stopped after "
         "1 of 11 tasks",
         "SymPy tasks inside the v18-to-v19 climb suite are skipped (SWE-bench tasks, not the dev set); those runs keep 7 dev tasks",
@@ -114,7 +148,11 @@ CARD = {
         "benchmark_v10_v11_v12.json, benchmark_v10_v11_v12_v13.json, " + B + "benchmark_5way_v10_to_v13_claude.json: merged "
         "tables that repeat the v10/v11/v12/v13 smoke runs of earlier files; only the candidate new in each file is yielded",
         B + "benchmark_v21_finetuned_lora_core12_results.json: its 12 records are the first 12 records of the full_129 file",
-        B + "*.log: console output of runs already yielded from their JSON result files (except the two log-only runs)",
+        B + "*.log: console output of runs already yielded from their JSON result files, except the two log-only runs "
+            "(yielded) and four interrupted first attempts that the lab re-ran from scratch and that exist only in a log: "
+            "hill_climb_v17.log iter4 (6 tasks, crashed with CUDA out of memory), hill_climb_v18.log v18_iter2 (10 tasks, "
+            "process restarted), hill_climb_v19_and_core60.log v19_iter2 (11 and 1 tasks, interrupted twice). They are "
+            "superseded by the complete re-runs, which are yielded",
         B + "bench_flexonafft_vs_v14.log, candidate v14_heredoc_synthesis: interrupted first run (5 tasks, all NO_PATCH, 138 "
             "'[NO TOOL PARSED]' turns), replaced by the lab's re-run benchmark_v14_clean_60_results.json",
         B + "benchmark_v20_vs_lora_core12.log, 'Run 2: LoRA Model': crashed while attaching the adapter ('ValueError: Target "
@@ -125,19 +163,26 @@ CARD = {
         "evaluation_results.json: control, not an agent run - reference (gold) patch check of requests_7205 by "
         "scripts/evaluate_local.py, resolved (1 of 1 task checked)",
         "evaluation_sft_comparison.json: validation loss / perplexity of LoRA adapters for E2B, 12B and 31B, no task outcomes",
-        "LEADERBOARD.md row 'gemma-4-12b-sft-v6 smoke_3 0/3' and paper table 'v20_base ... ~12 / 129': no per-task rows",
-        "leaderboard.json, submissions_archive/SUBMISSIONS_LOG.md LB scores: Kaggle hidden-test leaderboard",
+        "paper table 'v20_base ... ~12 / 129': no per-task rows",
+        "leaderboard.json: the lab's LOCAL leaderboard (LEADERBOARD.md: 'Local Benchmark Leaderboard'), 15 runs with "
+        "per-task rows; 8 are copies of result files read above and 7 are further 3-task smoke executions (one with "
+        "gemma-4-12b-sft-v6, one v10, five v16), all below the 10-task minimum, so nothing is read from it",
+        "submissions_archive/SUBMISSIONS_LOG.md LB scores: Kaggle hidden-test leaderboard, aggregates",
         B + "test_tasks_*.json(l), documents/, state_of_the_art/flexonafft_v2/, matterhorn3838/: task lists and third-party notebooks",
     ],
     "dropped": {"interrupted first v14 run in bench_flexonafft_vs_v14.log (tool calls not parsed; re-run by the lab)": 5},
+    "recoded": {"RESOLVED with an empty patch (rich_3468 in flexonafft_v2, v14, v15) -> y = 0": 3},
     "flags": ["fine_tuned", "oracle_hints", "partial_runs", "local_simulator_bugs_documented", "log_parsed_runs",
-              "replicate_tasks_selected_on_outcomes"],
+              "replicate_tasks_selected_on_outcomes", "early_runs_scored_in_a_broken_test_environment",
+              "timed_out_attempts_not_tested"],
     "reported_numbers": [
         {"what": "v19_hill_climbed on core_60", "value": "14/60", "where": "LEADERBOARD.md", "adapter": "14/60", "match": True},
         {"what": "v16_phased_edit_enforcement on core_60", "value": "12/60", "where": "LEADERBOARD.md", "adapter": "12/60",
          "match": True},
         {"what": "flexonafft_v2, v14_heredoc_synthesis, v15_surgical_triage on core_60", "value": "1/60 each",
-         "where": "state_of_the_art/13_V15_BENCHMARK_VERIFICATION_REPORT.md", "adapter": "1/60 each", "match": True},
+         "where": "state_of_the_art/13_V15_BENCHMARK_VERIFICATION_REPORT.md",
+         "adapter": "0/60 each: the one 'resolved' task of each run, rich_3468, has an empty patch and is recoded to "
+                    "y = 0 (see decisions)", "match": False},
         {"what": "v12_native_discipline on the 60 tasks", "value": "0.00 (60-Task)",
          "where": "state_of_the_art/04_EMPIRICAL_BENCHMARK_RESULTS.md", "adapter": "0/60", "match": True},
         {"what": "v17_hill_climbed on climb_11 (= iteration iter2)", "value": "7/11", "where": "LEADERBOARD.md",
@@ -212,6 +257,7 @@ ORDER = [
 
 ALIAS = {
     "v20_lora_scottweeden": "v20_scottweeden",
+    "v20_lora_loopbreaker": "v20_loopbreaker",      # the same community adapter on core_12 and on full_129
     # the winner of a hill climb is the next version, and the baseline of the next climb is that version again
     "hill_climb_v16_to_v17/iter2_compound_locate_and_zero_result_pytest_escape": "v17_hill_climbed",
     "hill_climb_v17_to_v18/v17_baseline": "v17_hill_climbed",
@@ -337,6 +383,10 @@ def attempts(src):
                 seen.add(row)
                 if "__" in task:           # SWE-bench style id (sympy__sympy-...), not a dev task
                     continue
+                status = status or ("RESOLVED" if resolved else "FAILED")
+                if resolved and row[5] == 0:
+                    # scored as resolved with an empty patch: the lab's "Environmental False Positive"
+                    resolved, status = False, "NO_PATCH (scored RESOLVED with an empty patch)"
                 yield {
                     "file": path,
                     "system": system,
@@ -346,5 +396,5 @@ def attempts(src):
                     "model": "31B",
                     "harness": "local",
                     "err": status == "TIMEOUT",
-                    "status": status or ("RESOLVED" if resolved else "FAILED"),
+                    "status": status,
                 }

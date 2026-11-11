@@ -36,6 +36,14 @@ def gh_json(path: str):
     return json.loads(p.stdout.decode("utf-8", "replace")), None
 
 
+def save(manifest) -> None:
+    """Write the manifest atomically, so that a concurrent reader never sees half a file."""
+    tmp = MANIFEST.with_suffix(".json.part")
+    tmp.write_text(json.dumps(sorted(manifest.values(), key=lambda m: m["repo"].lower()), indent=1) + "\n",
+                   encoding="utf-8")
+    tmp.replace(MANIFEST)
+
+
 def main() -> int:
     # Without arguments: the registered frame (the six searches of the plan). With a search file as
     # argument (data/sources/search_results_extended.json): the extended frame, added after the results.
@@ -106,15 +114,9 @@ def main() -> int:
         print(f"[{i}/{len(repos)}] {full}: {entry['commit'][:10]} "
               f"{entry['tarball_bytes'] // 1024} KB licence={entry['license_spdx']}", flush=True)
 
-        MANIFEST.write_text(
-            json.dumps(sorted(manifest.values(), key=lambda m: m["repo"].lower()), indent=1) + "\n",
-            encoding="utf-8",
-        )
+        save(manifest)
 
-    MANIFEST.write_text(
-        json.dumps(sorted(manifest.values(), key=lambda m: m["repo"].lower()), indent=1) + "\n",
-        encoding="utf-8",
-    )
+    save(manifest)
     by = {}
     for m in manifest.values():
         by[m.get("status")] = by.get(m.get("status"), 0) + 1

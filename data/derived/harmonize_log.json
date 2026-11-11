@@ -70,7 +70,7 @@
  "totals": {
   "attempts": 15112,
   "runs": 346,
-  "systems": 260,
+  "systems": 259,
   "labs": 14,
   "sources_with_adapter": 36,
   "sources_used": 14,
@@ -95,5 +95,19 @@
    "SebAustin/gemma4-developer-agent:experiments/oracle_kaggle.json": 129
   },
   "distinct_dev_style_ids_before_filter": 129
+ },
+ "extended_pool": {
+  "attempts": 22586,
+  "runs": 477,
+  "labs": 19,
+  "labs_extended_only": 5,
+  "attempts_from_extended_frame": 7474,
+  "identical_runs_across_labs": [
+   [
+    "matisdsp/screening/s26/rep0",
+    "sundarshahi/e4b-s1"
+   ]
+  ],
+  "adapters_skipped": {}
  }
 }

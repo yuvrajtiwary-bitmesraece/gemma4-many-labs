@@ -172,21 +172,28 @@ def r2_models(att: pd.DataFrame, weights: np.ndarray | None = None) -> dict:
     return out
 
 
-def replicate_noise(att: pd.DataFrame, weights: np.ndarray | None = None) -> dict:
+def replicate_noise(att: pd.DataFrame, weights: np.ndarray | None = None, lab_balanced: bool = False) -> dict:
     """Unbiased within-cell variance on cells with at least two attempts.
 
     Returns the weighted mean within-cell variance, the total outcome variance
     on the same attempts, and their ratio (the replicate-noise share).
+
+    lab_balanced=True gives every lab the same total weight ON THE REPLICATED
+    CELLS (weights computed on the whole table do not: a lab with few repeats
+    would count for little).  `weights` is then ignored.
     """
     w = np.ones(len(att)) if weights is None else np.asarray(weights, dtype=float)
-    df = att[["system", "task", "y"]].copy()
+    cols = ["system", "task", "y"] + (["lab"] if lab_balanced else [])
+    df = att[cols].copy()
     df["w"] = w
     g = df.groupby(["system", "task"], sort=False)
     n = g["y"].transform("size").to_numpy()
     keep = n >= 2
     if not keep.any():
         return {"n_cells": 0}
-    sub = df.loc[keep]
+    sub = df.loc[keep].copy()
+    if lab_balanced:
+        sub["w"] = 1.0 / sub.groupby("lab")["y"].transform("size").to_numpy(dtype=float)
     cell = sub.groupby(["system", "task"], sort=False).agg(p=("y", "mean"), n=("y", "size"), w=("w", "sum"))
     s2 = cell["n"] / (cell["n"] - 1) * cell["p"] * (1 - cell["p"])
     noise = float(np.sum(cell["w"] * s2) / np.sum(cell["w"]))
@@ -272,9 +279,22 @@ def g_coefficient(comp: dict, n_tasks: int, n_runs: int) -> float:
     return comp["system"] / den if den > 0 else float("nan")
 
 
-def se_difference(comp: dict, n_tasks: int, n_runs: int = 1) -> float:
-    """Standard error of the score difference of two systems on shared tasks."""
+def se_difference(comp: dict, n_tasks: int, n_runs: int | float = 1) -> float:
+    """Standard error of the score difference of two systems on shared tasks.
+
+    Tasks are treated as a random sample (the system x task term stays however
+    many runs are made); n_runs may be math.inf.
+    """
     return math.sqrt(2 * (comp["system_x_task"] + comp["replicate"] / n_runs) / n_tasks)
+
+
+Z_80 = 1.959964 + 0.841621      # two-sided 5% test, 80% power (normal approximation)
+
+
+def detectable_random_tasks(comp: dict, n_tasks: int, n_runs: int | float = 1) -> float:
+    """Smallest true difference between two systems detected with 80% power when the
+    conclusion is meant to hold for new tasks of the same kind (tasks random)."""
+    return Z_80 * se_difference(comp, n_tasks, n_runs)
 
 
 # --------------------------------------------------------------------------
@@ -345,6 +365,209 @@ def minimum_detectable_difference(n: int, flip_rate: float, alpha: float = 0.05,
     return float("nan")
 
 
+def mdd_with_discordance(n: int, flip_rate: float, base: float = 0.0, slope: float = 1.0, alpha: float = 0.05,
+                         power: float = 0.80, step: float = 0.0025) -> float:
+    """Smallest improvement delta detected by the exact McNemar test when two different systems
+    disagree on a share  flip_rate + base + slope * delta  of the tasks.
+
+    slope = 1, base = 0 is the planned alternative (every gained task is an all-or-nothing change,
+    so the gain adds its whole size to the disagreement); slope = 0 is the other extreme (the gain
+    is spread thinly over many tasks and adds nothing).  The disagreement is never below delta.
+    """
+    delta = step
+    while delta < 1:
+        disc = max(flip_rate + base + slope * delta, delta)
+        if disc > 1:
+            break
+        if mcnemar_power(n, (disc + delta) / 2, (disc - delta) / 2, alpha) >= power:
+            return float(delta)
+        delta += step
+    return float("nan")
+
+
+# --------------------------------------------------------------------------
+# Repeated runs of two systems on the same tasks
+# --------------------------------------------------------------------------
+def detectable_fixed_tasks(flip_rate: float, n_tasks: int, k: int, base: float = 0.0, slope: float = 1.0,
+                           alpha_z: float = 1.959964, power_z: float = 0.841621) -> float:
+    """Smallest gain detected with 80% power by a test stratified by task, k runs per system.
+
+    Tasks are fixed (the question is about these tasks).  With per-task success probabilities
+    p (old system) and q (new system), v = p(1-p) + q(1-q) averaged over tasks is the flip rate
+    and e = (p-q)^2 averaged over tasks is the extra disagreement between the two systems,
+    taken as  base + slope * delta  (slope = 1, base = 0: the planned all-or-nothing alternative).
+
+    The mean score difference has sampling variance  v / (k n).  The test that permutes run
+    labels within a task (Cochran-Mantel-Haenszel; exact McNemar when k = 1) has null variance
+    (v / k + e / (2k - 1)) / n.  The detectable gain solves
+        delta = z_alpha * sd_null(delta) + z_power * sd_sampling.
+    """
+    sd1 = math.sqrt(flip_rate / (k * n_tasks))
+    delta = 0.0
+    for _ in range(200):
+        e = max(base + slope * delta, delta * delta)
+        new = alpha_z * math.sqrt((flip_rate / k + e / (2 * k - 1)) / n_tasks) + power_z * sd1
+        if abs(new - delta) < 1e-10:
+            break
+        delta = new
+    return float(delta)
+
+
+def runs_needed_fixed_tasks(flip_rate: float, n_tasks: int, gain: float, base: float = 0.0, slope: float = 1.0,
+                            k_max: int = 500) -> int | None:
+    """Runs per system so that `gain` is detected with 80% power (tasks fixed); None if more than k_max."""
+    for k in range(1, k_max + 1):
+        if detectable_fixed_tasks(flip_rate, n_tasks, k, base, slope) <= gain:
+            return k
+    return None
+
+
+def cmh_power_simulation(p: np.ndarray, q: np.ndarray, k: int, n_sim: int = 4000, seed: int = 20261111,
+                         alpha_z: float = 1.959964) -> float:
+    """Simulated power of the task-stratified (Cochran-Mantel-Haenszel) test, two-sided, no continuity
+    correction, for per-task success probabilities p and q and k runs per system."""
+    rng = np.random.default_rng(seed)
+    p, q = np.asarray(p, float), np.asarray(q, float)
+    sa = rng.binomial(k, p, size=(n_sim, p.size))
+    sb = rng.binomial(k, q, size=(n_sim, q.size))
+    s = sa + sb
+    num = (sb - s / 2.0).sum(1)                                   # observed minus expected successes of the new system
+    var = (s * (2 * k - s) / (4.0 * (2 * k - 1))).sum(1)          # hypergeometric variance per task
+    z = np.divide(num, np.sqrt(var), out=np.zeros_like(num, dtype=float), where=var > 0)
+    return float(np.mean(np.abs(z) > alpha_z))
+
+
+def exact_stratified_power(p: np.ndarray, q: np.ndarray, k: int, n_sim: int = 4000, seed: int = 20261111,
+                           alpha: float = 0.05) -> float:
+    """Simulated power of the EXACT permutation test stratified by task (run labels are permuted within
+    each task; with k = 1 this is the exact McNemar test), two-sided as in mcnemar_power."""
+    rng = np.random.default_rng(seed)
+    p, q = np.asarray(p, float), np.asarray(q, float)
+    sa = rng.binomial(k, p, size=(n_sim, p.size))
+    sb = rng.binomial(k, q, size=(n_sim, q.size))
+    s = sa + sb
+    pmfs = {t: stats.hypergeom.pmf(np.arange(0, k + 1), 2 * k, t, k) for t in range(1, 2 * k)}
+    cache = {}
+    rejected = 0
+    for i in range(n_sim):
+        counts = tuple(np.bincount(s[i], minlength=2 * k + 1)[1:2 * k])
+        dist = cache.get(counts)
+        if dist is None:
+            dist = np.array([1.0])
+            for t, c in enumerate(counts, start=1):
+                for _ in range(int(c)):
+                    dist = np.convolve(dist, pmfs[t])
+            if len(cache) < 20000:
+                cache[counts] = dist
+        informative = (s[i] > 0) & (s[i] < 2 * k)
+        obs = int(sb[i][informative].sum())
+        pval = min(1.0, 2 * min(dist[: obs + 1].sum(), dist[obs:].sum()))
+        rejected += pval <= alpha
+    return rejected / n_sim
+
+
+def planning_tasks(flip_rate: float, n_tasks: int, share_always_solved: float = 0.2) -> np.ndarray:
+    """Per-task success probabilities with a given mean flip rate, for planning calculations:
+    a few tasks are 'flaky' (all with the same probability), some are always solved, the rest never."""
+    m = int(math.ceil(2 * flip_rate * n_tasks - 1e-9))
+    m = min(max(m, 1), n_tasks)
+    f = min(flip_rate * n_tasks / m, 0.5)                 # flip rate of one flaky task
+    p = np.zeros(n_tasks)
+    p[:m] = (1 - math.sqrt(1 - 2 * f)) / 2
+    solved = min(int(round(share_always_solved * n_tasks)), n_tasks - m)
+    p[m:m + solved] = 1.0
+    return p
+
+
+def detectable_exact_fixed_tasks(flip_rate: float, n_tasks: int, k: int, n_sim: int = 4000,
+                                 seed: int = 20261111) -> float:
+    """Smallest gain detected with 80% power by the exact stratified test with k runs per system, when the
+    gain is g previously never-solved tasks that the new system always solves (the planned alternative).
+    Found by simulation over g and interpolated linearly between the two neighbouring task counts."""
+    p = planning_tasks(flip_rate, n_tasks)
+    free = np.where(p == 0)[0]
+    start = max(1, int(detectable_fixed_tasks(flip_rate, n_tasks, k) * n_tasks) - 2)
+
+    def power(g):
+        q = p.copy()
+        q[free[:g]] = 1.0
+        return exact_stratified_power(p, q, k, n_sim=n_sim, seed=seed + 1000 * k + g)
+
+    g = min(start, len(free))
+    cur = power(g)
+    while cur >= 0.80 and g > 1:                    # started at or above the threshold: step down
+        below = power(g - 1)
+        if below < 0.80:
+            frac = (0.80 - below) / (cur - below) if cur > below else 1.0
+            return float((g - 1 + frac) / n_tasks)
+        g, cur = g - 1, below
+    if cur >= 0.80:
+        return float(1.0 / n_tasks)
+    while g < len(free):                            # step up
+        above = power(g + 1)
+        if above >= 0.80:
+            frac = (0.80 - cur) / (above - cur) if above > cur else 1.0
+            return float((g + frac) / n_tasks)
+        g, cur = g + 1, above
+    return float("nan")
+
+
+# --------------------------------------------------------------------------
+# Disagreement between two DIFFERENT systems against the size of their difference
+# --------------------------------------------------------------------------
+def cross_system_discordance(att: pd.DataFrame, min_shared: int = 30) -> pd.DataFrame:
+    """For every pair of systems of one lab and one model size that both have repeats.
+
+    On each shared task with at least two runs of each system, with p and q the solve rates of
+    the two systems over their k_a and k_b runs:
+        within  = unbiased flip rate of each system, 2 k/(k-1) p(1-p), averaged over the two;
+        cross   = p(1-q) + q(1-p), the chance that one run of each disagree (unbiased);
+        excess  = cross - within, an unbiased estimate of (p_t - q_t)^2.
+    Returns one row per pair with the means over tasks and delta = mean(q - p).
+    """
+    att = first_attempt_per_run(att)
+    cell = att.groupby(["lab", "system", "task"], sort=False)["y"].agg(p="mean", k="size").reset_index()
+    cell = cell[cell["k"] >= 2]
+    model = att.groupby("system")["model"].first() if "model" in att.columns else None
+    rows = []
+    for lab, g in cell.groupby("lab", sort=False):
+        systems = sorted(g["system"].unique())
+        wide_p = g.pivot(index="task", columns="system", values="p")
+        wide_k = g.pivot(index="task", columns="system", values="k")
+        for a, b in itertools.combinations(systems, 2):
+            if model is not None and model[a] != model[b]:
+                continue
+            ok = wide_p[a].notna() & wide_p[b].notna()
+            if int(ok.sum()) < min_shared:
+                continue
+            p, q = wide_p.loc[ok, a].to_numpy(), wide_p.loc[ok, b].to_numpy()
+            ka, kb = wide_k.loc[ok, a].to_numpy(), wide_k.loc[ok, b].to_numpy()
+            within = 0.5 * (2 * ka / (ka - 1) * p * (1 - p) + 2 * kb / (kb - 1) * q * (1 - q))
+            cross = p * (1 - q) + q * (1 - p)
+            rows.append({"lab": lab, "system_a": a, "system_b": b, "n_shared": int(ok.sum()),
+                         "model": "" if model is None else model[a],
+                         "within_flip": float(within.mean()), "cross_discordance": float(cross.mean()),
+                         "excess": float((cross - within).mean()), "delta": float((q - p).mean())})
+    return pd.DataFrame(rows, columns=["lab", "system_a", "system_b", "n_shared", "model", "within_flip",
+                                       "cross_discordance", "excess", "delta"])
+
+
+def excess_discordance_fit(pairs: pd.DataFrame) -> dict:
+    """Weighted least squares of the excess disagreement on |delta| (weights: shared tasks)."""
+    if len(pairs) < 3:
+        return {"n_pairs": int(len(pairs))}
+    x, y, w = pairs["delta"].abs().to_numpy(), pairs["excess"].to_numpy(), pairs["n_shared"].to_numpy(float)
+    xm, ym = np.average(x, weights=w), np.average(y, weights=w)
+    sxx = float(np.sum(w * (x - xm) ** 2))
+    slope = float(np.sum(w * (x - xm) * (y - ym)) / sxx) if sxx > 0 else float("nan")
+    return {"n_pairs": int(len(pairs)), "n_labs": int(pairs["lab"].nunique()),
+            "mean_within_flip": float(np.average(pairs["within_flip"], weights=w)),
+            "mean_cross_discordance": float(np.average(pairs["cross_discordance"], weights=w)),
+            "mean_excess": float(ym), "mean_abs_delta": float(xm),
+            "mean_delta_squared": float(np.average(pairs["delta"] ** 2, weights=w)),
+            "intercept": float(ym - slope * xm), "slope": slope}
+
+
 # --------------------------------------------------------------------------
 # P4  Rasch model and subset comparability
 # --------------------------------------------------------------------------
@@ -376,3 +599,112 @@ def predict_subset(theta: float, b: pd.Series, tasks) -> float:
     """Expected resolve rate of a system with ability theta on a task subset."""
     bb = b.reindex(list(tasks)).dropna().to_numpy()
     return float(np.mean(expit(theta - bb))) if bb.size else float("nan")
+
+
+def rasch_cv(att: pd.DataFrame, n_folds: int = 5, seed: int = 20261111, lam: float = 0.05) -> dict:
+    """Cross-validation of the Rasch model over (system, task) cells.
+
+    Every cell (all attempts of one system on one task) is held out once; the model is fitted on
+    the other cells and predicts the held-out attempts.  In-sample checks are empty for this
+    model: its score equations force predicted and observed totals per system to agree.
+    """
+    att = att.reset_index(drop=True)
+    cell_id = pd.factorize(pd.MultiIndex.from_frame(att[["system", "task"]]))[0]
+    n_cells = int(cell_id.max()) + 1
+    rng = np.random.default_rng(seed)
+    fold_of_cell = rng.permutation(n_cells) % n_folds
+    fold = fold_of_cell[cell_id]
+    y = att["y"].to_numpy(float)
+    p_model, p_task = np.full(len(att), np.nan), np.full(len(att), np.nan)
+    for k in range(n_folds):
+        test = np.where(fold == k)[0]
+        train = att.iloc[np.where(fold != k)[0]]
+        fit = rasch_fit(train, lam)
+        theta = fit["theta"].reindex(att["system"].iloc[test]).fillna(0.0).to_numpy()
+        b = fit["b"].reindex(att["task"].iloc[test]).fillna(0.0).to_numpy()
+        p_model[test] = expit(theta - b)
+        task_mean = train.groupby("task")["y"].mean()
+        p_task[test] = task_mean.reindex(att["task"].iloc[test]).fillna(train["y"].mean()).to_numpy()
+    full = rasch_fit(att, lam)
+    p_in = expit(full["theta"].reindex(att["system"]).to_numpy() - full["b"].reindex(att["task"]).to_numpy())
+    runs = pd.DataFrame({"run": att["run"].to_numpy(), "y": y, "p": p_model}).groupby("run").agg(
+        y=("y", "mean"), p=("p", "mean"), n=("y", "size"))
+    dec = pd.DataFrame({"y": y, "p": p_model})
+    dec["bin"] = pd.qcut(dec["p"], 10, labels=False, duplicates="drop")
+    cal = dec.groupby("bin").agg(predicted=("p", "mean"), observed=("y", "mean"), n=("y", "size"))
+    return {"n_folds": n_folds, "n_cells": n_cells, "n_attempts": int(len(att)),
+            "brier_out_of_sample": float(np.mean((y - p_model) ** 2)),
+            "brier_in_sample": float(np.mean((y - p_in) ** 2)),
+            "brier_task_means_only_out_of_sample": float(np.mean((y - p_task) ** 2)),
+            "brier_base_rate": float(np.var(y)),
+            "run_level_pearson": float(np.corrcoef(runs["y"], runs["p"])[0, 1]),
+            "run_level_mean_abs_error": float(np.mean(np.abs(runs["y"] - runs["p"]))),
+            "calibration_max_abs_gap_by_decile": float(np.max(np.abs(cal["predicted"] - cal["observed"]))),
+            "calibration_by_decile": [[float(a), float(b), int(c)] for a, b, c in
+                                      zip(cal["predicted"], cal["observed"], cal["n"])]}
+
+
+def _ability_given_difficulty(y: np.ndarray, b: np.ndarray, lam: float = 0.05) -> float:
+    """Penalised maximum-likelihood ability of one system for known task difficulties."""
+    theta = 0.0
+    for _ in range(100):
+        pr = expit(theta - b)
+        grad = float(np.sum(y - pr) - lam * theta)
+        hess = float(-np.sum(pr * (1 - pr)) - lam)
+        step = grad / hess
+        theta -= step
+        if abs(step) < 1e-9:
+            break
+    return theta
+
+
+def rasch_subset_check(att: pd.DataFrame, subsets: list, min_tasks_system: int = 85, min_in: int = 10,
+                       min_out: int = 10, lam: float = 0.05) -> tuple[dict, pd.DataFrame]:
+    """Out-of-sample check that the model predicts how a score moves with the task subset.
+
+    For a system s of lab L that attempted at least `min_tasks_system` tasks, and a subset S:
+    task difficulties come from a fit WITHOUT lab L; the ability of s is fitted on its attempts
+    OUTSIDE S; the model then predicts the rate of s on its tasks INSIDE S.  The naive prediction
+    is the rate of s on its other tasks (no subset effect).
+    """
+    n_tasks = att.groupby("system")["task"].nunique()
+    big = n_tasks[n_tasks >= min_tasks_system].index
+    lab_of = att.groupby("system")["lab"].first()
+    rows = []
+    for lab in sorted(set(lab_of[big])):
+        b = rasch_fit(att[att["lab"] != lab], lam)["b"]
+        for system in [s for s in big if lab_of[s] == lab]:
+            g = att[att["system"] == system]
+            g = g[g["task"].isin(b.index)]
+            bt = b.reindex(g["task"]).to_numpy()
+            yy = g["y"].to_numpy(float)
+            tasks = g["task"].to_numpy()
+            for i, s in enumerate(subsets):
+                inside = np.isin(tasks, list(s))
+                if len(set(tasks[inside])) < min_in or len(set(tasks[~inside])) < min_out:
+                    continue
+                theta = _ability_given_difficulty(yy[~inside], bt[~inside], lam)
+                rows.append({"lab": lab, "system": system, "subset": i, "n_tasks_in": len(set(tasks[inside])),
+                             "n_tasks_out": len(set(tasks[~inside])),
+                             "observed_in": float(yy[inside].mean()), "observed_out": float(yy[~inside].mean()),
+                             "predicted_in": float(expit(theta - bt[inside]).mean()),
+                             "predicted_out": float(expit(theta - bt[~inside]).mean())})
+    tab = pd.DataFrame(rows)
+    if tab.empty:
+        return {"n_pairs": 0}, tab
+    eff_obs = tab["observed_in"] - tab["observed_out"]
+    eff_pred = tab["predicted_in"] - tab["predicted_out"]
+    slope = float(np.sum((eff_pred - eff_pred.mean()) * (eff_obs - eff_obs.mean())) /
+                  np.sum((eff_pred - eff_pred.mean()) ** 2))
+    # One number per system first, so that systems with many eligible subsets do not dominate.
+    per_system = tab.assign(err=(tab["observed_in"] - tab["predicted_in"]).abs(),
+                            naive=(tab["observed_in"] - tab["observed_out"]).abs()).groupby("system")[["err", "naive"]].mean()
+    out = {"n_pairs": int(len(tab)), "n_systems": int(tab["system"].nunique()), "n_labs": int(tab["lab"].nunique()),
+           "min_tasks_system": min_tasks_system,
+           "mean_abs_error_model": float((tab["observed_in"] - tab["predicted_in"]).abs().mean()),
+           "mean_abs_error_naive": float((tab["observed_in"] - tab["observed_out"]).abs().mean()),
+           "mean_abs_error_model_by_system": float(per_system["err"].mean()),
+           "mean_abs_error_naive_by_system": float(per_system["naive"].mean()),
+           "correlation_of_subset_effects": float(np.corrcoef(eff_obs, eff_pred)[0, 1]),
+           "slope_observed_on_predicted_effect": slope}
+    return out, tab
