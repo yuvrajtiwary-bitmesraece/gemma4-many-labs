@@ -83,6 +83,8 @@ def main() -> int:
         r = gm.groupby("task")["y"].mean().rename("r")
         mm = m5.merge(r, left_on="task", right_index=True)
         out["difficulty_carries_over"]["by_model"][mod] = float(stats.spearmanr(mm["d"], mm["r"]).statistic)
+    keep = [c for c in ("task", "d", "n_labs", "class", "audit_status", "ext_rate") if c in m5.columns]
+    m5[keep].sort_values("d").to_csv(ROOT / "results" / "tables" / "external_task_rates.csv", index=False, lineterminator="\n")
     cls = m5.groupby("class")["ext_rate"].agg(["size", "mean"])
     out["external_rate_by_pooled_class"] = {k: {"tasks": int(v["size"]), "mean_external_solve_rate": float(v["mean"])}
                                             for k, v in cls.iterrows()}

@@ -277,6 +277,33 @@ def fig_subsets(res, tables: Path, out: Path) -> None:
     save(fig, out / "fig6_subset_comparability.png")
 
 
+# -- Figure 7: external validation (table twin: tables/external_task_rates.csv)
+def fig_external(res, tables: Path, out: Path) -> None:
+    path = tables / "external_task_rates.csv"
+    ext_json = tables.parent / "external_validation.json"
+    if not path.exists() or not ext_json.exists():
+        return
+    t = pd.read_csv(path)
+    e = json.loads(ext_json.read_text(encoding="utf-8"))
+    fig, ax = plt.subplots(figsize=(6.4, 5.6))
+    ax.plot([0, 1], [0, 1], color=BASELINE, linewidth=1.0, zorder=1)
+    ax.scatter(t["d"], t["ext_rate"], s=46, color=BLUE, edgecolor=SURFACE, linewidth=1.5, zorder=3, alpha=0.9)
+    rho = e["difficulty_carries_over"]["spearman_all_systems"]
+    ax.text(0.03, 0.95, f"Spearman {rho:.2f} over {len(t)} tasks", transform=ax.transAxes, ha="left", va="top",
+            fontsize=9.5, color=INK2)
+    ax.text(0.985, 0.955, "equal rates", ha="right", va="top", fontsize=8.5, color=MUTED, rotation=41,
+            transform=ax.transAxes)
+    ax.set_xlim(-0.03, 1.03)
+    ax.set_ylim(-0.03, 1.03)
+    pct(ax)
+    pct(ax, "x")
+    ax.set_xlabel("Consensus solve rate in the pooled table (14 labs)")
+    ax.set_ylabel(f"Solve rate in the external dataset ({e['n_runs']} runs)")
+    ax.set_title("Task difficulty carries over to data that was not used")
+    subtitle(ax, "One dot per task; external data: another participant's Zenodo record, three model sizes")
+    save(fig, out / "fig7_external_validation.png")
+
+
 def main(argv) -> int:
     results = Path(argv[0]) if argv else ROOT / "results"
     out = Path(argv[1]) if len(argv) > 1 else ROOT / "paper" / "figures"
@@ -289,6 +316,7 @@ def main(argv) -> int:
     fig_replicates(res, tables, out)
     fig_mdd(res, tables, out)
     fig_subsets(res, tables, out)
+    fig_external(res, tables, out)
     return 0
 
 
