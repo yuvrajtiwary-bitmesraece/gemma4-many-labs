@@ -19,6 +19,29 @@ Entry for the [Paper Track](https://www.kaggle.com/competitions/gemma-4-develope
 - **A tool for your own runs:** [`tools/compare_runs.py`](tools/compare_runs.py) says whether the difference between two
   agents on these tasks is larger than the difference between two runs of one agent.
 
+## Main findings
+
+1. **Task difficulty is a property of the task.** Task rankings from two random halves of the 14 labs correlate at
+   0.80. Of the 101 tasks attempted by at least five labs, 41 have a consensus solve rate of 10% or less, and 25 were
+   never solved by any lab.
+2. **One task in ten flips between identical runs.** Between two runs of the same configuration, 10.9% of the shared
+   tasks change outcome (mean of labs 10.4%, 95% interval 7.0% to 13.9%).
+3. **One comparison detects little.** A single paired comparison on all 129 tasks detects only improvements of about
+   8 to 12.5 points. About four runs per agent detect 5 points, and a floor of about 3.4 points remains for claims
+   about new tasks, whatever the number of runs.
+4. **Scores on different task subsets are not comparable.** Runs used 52 different subsets, on which one median agent
+   is predicted to score from 5.6% to 66.7%.
+5. **The labs were not running the same benchmark.** Four independent audits of the stock sandbox agree that 51 of
+   the 129 tasks fail with their own reference patch; labs with modified environments resolve them. 67 tasks are
+   valid, and 41 are both valid and discriminating.
+
+An external dataset that was never pooled (task difficulty correlates at 0.84) and nine further labs found later
+(0.89) reproduce the main quantities.
+
+![Task difficulty across labs](paper/figures/fig1_task_difficulty.png)
+
+![Labs were not running the same benchmark](paper/figures/fig2_unpassable_attempts.png)
+
 ## What is here
 
 | Path | What it is |
@@ -41,6 +64,7 @@ Entry for the [Paper Track](https://www.kaggle.com/competitions/gemma-4-develope
 | `results/tables/tasks.csv`, `task_lists.json` | Per task: consensus solve rate, class, status in the sandbox audits, Rasch difficulty; and ready-made lists (valid tasks, tasks whose reference patch fails in every audit, the informative core). |
 | `DATASHEET.md` | What the pooled table is, how it was collected and what a user must know. |
 | `tools/check_numbers.py` | Lists the numbers in a text that do not occur in `results/RESULTS.md`: a check for anyone writing about these results. |
+| `tools/example/` | Eight small result files for trying `compare_runs.py`: the worked example of the report (systems `veljjanoski/v11@kaggle` and `veljjanoski/v10@kaggle` of the pooled table). |
 | `results/` | `results.json`, `RESULTS.md` and the tables behind every figure. |
 | `paper/paper.md`, `paper/figures/` | The paper and seven figures (the paper uses five). |
 
@@ -75,6 +99,19 @@ From the sources (needs the GitHub CLI `gh`, logged in; downloads about 130 MB):
 Comparing two of your own agents (standard library only):
 
     python tools/compare_runs.py --a base_run1.jsonl base_run2.jsonl --b new_run1.jsonl new_run2.jsonl
+
+A result file may be the harness's `summary.jsonl` (`instance_id`, `resolved`), a CSV with a task column and an
+outcome column, or a JSON list of such records.
+
+To try it without your own runs, `tools/example/` holds two configurations of one lab from the pooled table, four
+runs each on the same 61 tasks. With one run each, their 6.6-point difference is inside the noise band (exact
+McNemar p = 0.29):
+
+    python tools/compare_runs.py --a tools/example/a_run1.csv --b tools/example/b_run1.csv
+
+With three runs each it is outside (exact test p = 0.020):
+
+    python tools/compare_runs.py --a tools/example/a_run1.csv tools/example/a_run2.csv tools/example/a_run3.csv --b tools/example/b_run1.csv tools/example/b_run2.csv tools/example/b_run3.csv
 
 Third-party snapshots go to `data/raw/`, which is not committed. Sources are
 read in place from their tarballs; nothing from a source is executed.
