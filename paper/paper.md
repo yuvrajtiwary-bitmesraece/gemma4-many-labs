@@ -1,6 +1,6 @@
 # Many Labs, One Benchmark: A Pooled Analysis of 15,112 Gemma 4 Agent Attempts
 
-*Task difficulty remains consistent across independent labs, around one in ten task outcomes changes between identical runs, and different labs are not always evaluating agents on the same benchmark.*
+*Task difficulty holds across labs, one outcome in ten flips between identical runs, and labs are not all testing the same benchmark.*
 
 ## Abstract
 
