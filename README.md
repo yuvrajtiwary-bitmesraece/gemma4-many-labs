@@ -12,6 +12,7 @@ actually used.
 
 Entry for the [Paper Track](https://www.kaggle.com/competitions/gemma-4-developer-agent-paper).
 
+- **Paper:** [`paper/paper.md`](paper/paper.md), the text submitted as the Kaggle Writeup.
 - **Results:** [`results/RESULTS.md`](results/RESULTS.md) (generated from `results/results.json`).
 - **Dataset:** [`data/derived/attempts.csv`](data/derived/attempts.csv), one row per agent run on one task.
 - **Plan fixed before the data:** [`ANALYSIS_PLAN.md`](ANALYSIS_PLAN.md), with every later change in [`DEVIATIONS.md`](DEVIATIONS.md).
@@ -41,7 +42,7 @@ Entry for the [Paper Track](https://www.kaggle.com/competitions/gemma-4-develope
 | `DATASHEET.md` | What the pooled table is, how it was collected and what a user must know. |
 | `tools/check_numbers.py` | Lists the numbers in a text that do not occur in `results/RESULTS.md`: a check for anyone writing about these results. |
 | `results/` | `results.json`, `RESULTS.md` and the tables behind every figure. |
-| `paper/figures/` | Seven figures. |
+| `paper/paper.md`, `paper/figures/` | The paper and seven figures (the paper uses five). |
 
 ## Reproducing
 
@@ -120,7 +121,8 @@ report were drafted with Claude (Anthropic) under the author's direction. The
 per-source adapters were written by Claude and checked against numbers the
 sources themselves report. The independent review and the audits described
 under Checks were also carried out with Claude, by instances that had not
-written the code they checked. The text of the paper is the author's own.
+written the code they checked. The text of the paper was drafted with Claude
+from the generated results report and reviewed by the author.
 
 ## Licence
 
