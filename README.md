@@ -14,6 +14,9 @@ Entry for the [Paper Track](https://www.kaggle.com/competitions/gemma-4-develope
 
 - **Paper:** [`paper/paper.md`](paper/paper.md), published as the Kaggle Writeup
   [Many Labs, One Benchmark](https://www.kaggle.com/competitions/gemma-4-developer-agent-paper/writeups/many-labs-one-benchmark-a-pooled-analysis-of-15).
+- **Checks and tool demo on Kaggle:** a
+  [public notebook](https://www.kaggle.com/code/yuvrajtiwary/many-labs-one-benchmark-checks-and-tool-demo) that
+  downloads this repository and runs the cross-check, the number check and the tool example.
 - **Results:** [`results/RESULTS.md`](results/RESULTS.md) (generated from `results/results.json`).
 - **Dataset:** [`data/derived/attempts.csv`](data/derived/attempts.csv), one row per agent run on one task.
 - **Plan fixed before the data:** [`ANALYSIS_PLAN.md`](ANALYSIS_PLAN.md), with every later change in [`DEVIATIONS.md`](DEVIATIONS.md).
