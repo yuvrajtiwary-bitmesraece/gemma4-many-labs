@@ -30,7 +30,7 @@ import mlstats as ml  # noqa: E402
 
 ROOT = HERE.parent
 EXT = ROOT / "data" / "derived" / "external_zenodo_attempts.csv"
-GOLD = ROOT / "data" / "raw" / "_external" / "zenodo_23834104" / "gemma4-scaffold-capacity" / "data" / "gold_empty_verification.jsonl"
+GOLD = ROOT / "data" / "derived" / "external_zenodo_controls.csv"    # written by external_zenodo.py
 
 
 def main() -> int:
@@ -101,9 +101,7 @@ def main() -> int:
 
     # The record's own reference-patch / empty-patch check of all 129 tasks (repaired Docker environment).
     if GOLD.exists():
-        rows = [json.loads(line) for line in GOLD.read_text(encoding="utf-8").splitlines() if line.strip()]
-        gv = pd.DataFrame({"task": [r["instance_id"] for r in rows], "ext_gold": [int(bool(r["gold_resolved"])) for r in rows],
-                           "ext_empty": [int(bool(r["empty_resolved"])) for r in rows]})
+        gv = pd.read_csv(GOLD).rename(columns={"reference_patch_resolves": "ext_gold", "empty_patch_resolves": "ext_empty"})
         a = tasks.merge(gv, on="task")
         audit = {"tasks": int(len(gv)), "reference_patch_resolves": int(gv["ext_gold"].sum()),
                  "empty_patch_resolves": int(gv["ext_empty"].sum()),
@@ -184,7 +182,7 @@ def main() -> int:
             return int(x)
         return x
 
-    (ROOT / "results" / "external_validation.json").write_text(json.dumps(clean(out), indent=1) + "\n", encoding="utf-8")
+    (ROOT / "results" / "external_validation.json").write_text(json.dumps(clean(out), indent=1) + "\n", encoding="utf-8", newline="\n")
     print(summary)
     return 0
 

@@ -382,7 +382,7 @@ def build() -> int:
         w = csv.DictWriter(fh, fieldnames=list(runs[0].keys()), lineterminator="\n")
         w.writeheader()
         w.writerows(sorted(runs, key=lambda r: (r["lab"].lower(), r["system"], r["run"])))
-    (DERIVED / "dev_tasks.txt").write_text("\n".join(dev_tasks) + "\n", encoding="utf-8")
+    (DERIVED / "dev_tasks.txt").write_text("\n".join(dev_tasks) + "\n", encoding="utf-8", newline="\n")
     used = Counter(r["source"] for r in final)
     runs_by = Counter(r["source"] for r in runs)
     systems_by = defaultdict(set)
@@ -404,7 +404,7 @@ def build() -> int:
     log["sources"] = {k: dict(v) for k, v in log["sources"].items()}
     if len(all_mods) > len(mods):
         log["extended_pool"] = write_extended(all_mods, dev)
-    (DERIVED / "harmonize_log.json").write_text(json.dumps(log, indent=1) + "\n", encoding="utf-8")
+    (DERIVED / "harmonize_log.json").write_text(json.dumps(log, indent=1) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps(log["totals"]), json.dumps(log["dev_set"]))
     if "extended_pool" in log:
         print("extended pool:", json.dumps({k: v for k, v in log["extended_pool"].items()

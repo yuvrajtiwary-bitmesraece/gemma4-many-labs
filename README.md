@@ -34,7 +34,7 @@ Entry for the [Paper Track](https://www.kaggle.com/competitions/gemma-4-develope
 | `scripts/analyze.py`, `validity.py`, `report.py`, `figures.py` | Analyses, the generated results report and the figures. |
 | `scripts/sensitivity.py` | One decision changed at a time, intervals for the flip rate, what repeated runs buy, and what the noise means for a leaderboard. |
 | `scripts/noise_model.py`, `tools/compare_runs.py`, `tools/noise_band.json`, `scripts/test_compare_runs.py` | A noise band for a new lab's own task subset, checked leave-one-lab-out, and a standard-library tool that applies it to two sets of result files. |
-| `scripts/external_zenodo.py`, `external_validation.py`, `data/derived/external_zenodo_attempts.csv` | An external validation set that is not pooled: run records from Zenodo record 23834104 (T. Toeda, doi:10.5281/zenodo.23834104, Apache-2.0), converted to the same columns. |
+| `scripts/external_zenodo.py`, `external_validation.py`, `data/derived/external_zenodo_attempts.csv`, `external_zenodo_controls.csv` | An external validation set that is not pooled: run records from Zenodo record 23834104 (T. Toeda, doi:10.5281/zenodo.23834104, Apache-2.0), converted to the same columns, with that record's own check of the reference patch and the empty patch on each task. |
 | `scripts/crosscheck.py` | Recomputes the headline numbers without the analysis library. |
 | `scripts/search_extended.py`, `scripts/extended_pool.py`, `data/sources/search_results_extended.json`, `data/derived/attempts_extended.csv`, `screening_extended.csv` | A broader search made after the results and the sources it added. They are kept out of every registered number and reported in their own section as a partial replication. |
 | `results/tables/tasks.csv`, `task_lists.json` | Per task: consensus solve rate, class, status in the sandbox audits, Rasch difficulty; and ready-made lists (valid tasks, tasks whose reference patch fails in every audit, the informative core). |
@@ -68,6 +68,8 @@ From the sources (needs the GitHub CLI `gh`, logged in; downloads about 130 MB):
     python scripts/harmonize.py       # run the adapters, write data/derived/
     python scripts/controls.py        # data/derived/controls.csv
     python scripts/screening.py       # data/derived/screening.csv
+    python scripts/external_zenodo.py # data/derived/external_zenodo_*.csv, from the archive of Zenodo
+                                      # record 23834104 (where to put it: see the top of the script)
 
 Comparing two of your own agents (standard library only):
 

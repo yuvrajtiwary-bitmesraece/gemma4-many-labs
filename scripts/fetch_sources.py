@@ -40,7 +40,7 @@ def save(manifest) -> None:
     """Write the manifest atomically, so that a concurrent reader never sees half a file."""
     tmp = MANIFEST.with_suffix(".json.part")
     tmp.write_text(json.dumps(sorted(manifest.values(), key=lambda m: m["repo"].lower()), indent=1) + "\n",
-                   encoding="utf-8")
+                   encoding="utf-8", newline="\n")
     tmp.replace(MANIFEST)
 
 

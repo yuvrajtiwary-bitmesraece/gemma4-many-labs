@@ -346,7 +346,7 @@ def main() -> int:
         return x
 
     out = clean(out)
-    (ROOT / "results" / "sensitivity.json").write_text(json.dumps(out, indent=1) + "\n", encoding="utf-8")
+    (ROOT / "results" / "sensitivity.json").write_text(json.dumps(out, indent=1) + "\n", encoding="utf-8", newline="\n")
     for k, v in out.items():
         print(k, json.dumps(v)[:1200], flush=True)
     return 0

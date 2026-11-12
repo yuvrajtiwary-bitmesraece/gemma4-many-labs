@@ -104,7 +104,7 @@ def main() -> int:
         return x
 
     out = clean(out)
-    (ROOT / "results" / "extended_pool.json").write_text(json.dumps(out, indent=1) + "\n", encoding="utf-8")
+    (ROOT / "results" / "extended_pool.json").write_text(json.dumps(out, indent=1) + "\n", encoding="utf-8", newline="\n")
     for k, v in out.items():
         print(k, json.dumps(v)[:600])
     return 0

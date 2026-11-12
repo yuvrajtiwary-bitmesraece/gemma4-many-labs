@@ -12,8 +12,12 @@ This script reads the extracted text files only.  Nothing from the archive is im
 executed.  Standard library only.
 
     python -I scripts/external_zenodo.py            writes data/derived/external_zenodo_attempts.csv
+                                                    and data/derived/external_zenodo_controls.csv
 
-Output columns are those of data/derived/attempts.csv:
+The extracted archive is expected in data/raw/_external/zenodo_23834104/gemma4-scaffold-capacity/
+(or pass --src).
+
+Columns of the attempts file, those of data/derived/attempts.csv:
 
     lab      "zenodo-23834104"
     source   "zenodo:23834104"
@@ -30,6 +34,11 @@ Output columns are those of data/derived/attempts.csv:
              tool-call budget, turn budget, context-window overflow), else 0
     status   end_reason, plus the test exit code when not resolved
     file     path of the record file inside the archive
+
+The controls file comes from the member data/gold_empty_verification.jsonl: for each
+development task, whether the reference patch and the empty patch resolve in the record's own
+environment (columns task, reference_patch_resolves, empty_patch_resolves).  These are control
+runs, not agent attempts.
 
 Coding decisions
 
@@ -64,11 +73,13 @@ ROOT = Path(__file__).resolve().parents[1]
 SRC_DEFAULT = ROOT / "data" / "raw" / "_external" / "zenodo_23834104" / "gemma4-scaffold-capacity"
 OUT_DEFAULT = ROOT / "data" / "derived" / "external_zenodo_attempts.csv"
 LOG_DEFAULT = ROOT / "data" / "raw" / "_notes" / "external_zenodo" / "extract_log.json"
+CONTROLS_OUT = ROOT / "data" / "derived" / "external_zenodo_controls.csv"
 DEV_TASKS = ROOT / "data" / "derived" / "dev_tasks.txt"
 
 LAB = "zenodo-23834104"
 SOURCE = "zenodo:23834104"
 RECORD_FILE = "data/runs.jsonl"
+CONTROLS_FILE = "data/gold_empty_verification.jsonl"
 RUNS_SHA256 = "2212377d510825d35cb2fdd4aa748b823040566619385da9be78e93e027f3663"
 
 COLUMNS = ["lab", "source", "system", "run", "task", "y", "model", "harness", "err", "status", "file"]
@@ -205,6 +216,32 @@ def main() -> int:
         w.writeheader()
         w.writerows(rows)
 
+    # The record's own check of every development task: the reference patch and the empty patch
+    # in its environment.  Control runs, written beside the attempts for the external validation.
+    controls = []
+    control_path = args.src / CONTROLS_FILE
+    if control_path.exists():
+        for line in control_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            task = canonical_task(rec["instance_id"])
+            if task is None or task not in dev:
+                stats["control_rows_not_in_dev_set"] += 1
+                continue
+            controls.append({"task": task, "reference_patch_resolves": int(bool(rec["gold_resolved"])),
+                             "empty_patch_resolves": int(bool(rec["empty_resolved"]))})
+        if len({c["task"] for c in controls}) != len(controls):
+            print("a task occurs twice in the control file; nothing written for the controls")
+            return 1
+        controls.sort(key=lambda r: r["task"])
+        with CONTROLS_OUT.open("w", newline="", encoding="utf-8") as fh:
+            w = csv.DictWriter(fh, fieldnames=["task", "reference_patch_resolves", "empty_patch_resolves"],
+                               lineterminator="\n")
+            w.writeheader()
+            w.writerows(controls)
+    stats["control_rows_written"] = len(controls)
+
     runs = OrderedDict()
     for r in rows:
         runs.setdefault(r["run"], []).append(r)
@@ -253,6 +290,9 @@ def main() -> int:
           f"{stats['dropped_run_below_min_tasks']}, level not requested {stats['skipped_level_not_requested']}")
     print(f"written {len(rows)} attempts: {len(systems)} systems, {len(runs)} runs, {len(tasks)} tasks, "
           f"{summary['resolved']} resolved, {summary['err']} with err=1 -> {args.out}")
+    print(f"written {len(controls)} control rows (reference patch resolves on "
+          f"{sum(c['reference_patch_resolves'] for c in controls)}, empty patch on "
+          f"{sum(c['empty_patch_resolves'] for c in controls)}) -> {CONTROLS_OUT}")
     print(f"{'run':36s} {'model':8s} {'n':>4s} {'res':>4s} {'err':>4s}")
     for p in summary["per_run"]:
         print(f"{p['run']:36s} {p['model']:8s} {p['n_tasks']:4d} {p['n_resolved']:4d} {p['n_err']:4d}")

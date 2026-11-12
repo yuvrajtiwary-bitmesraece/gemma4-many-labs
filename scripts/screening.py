@@ -130,7 +130,7 @@ def main() -> int:
             w.writeheader()
             w.writerows(rows)
         summary = summarise(rows)
-        (DERIVED / f"{name}_summary.json").write_text(json.dumps(summary, indent=1) + "\n", encoding="utf-8")
+        (DERIVED / f"{name}_summary.json").write_text(json.dumps(summary, indent=1) + "\n", encoding="utf-8", newline="\n")
         print(frame, json.dumps(summary))
     return 0
 

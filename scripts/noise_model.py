@@ -157,14 +157,14 @@ def main() -> int:
         return x
 
     out = clean(out)
-    (ROOT / "results" / "noise_model.json").write_text(json.dumps(out, indent=1) + "\n", encoding="utf-8")
+    (ROOT / "results" / "noise_model.json").write_text(json.dumps(out, indent=1) + "\n", encoding="utf-8", newline="\n")
     # Everything tools/compare_runs.py needs, in one small file next to it.
     band = {"what": "Rasch task difficulties and noise scale from the pooled table of the many-labs study",
             "n_attempts": int(len(att)), "n_labs": int(att["lab"].nunique()), "scale": round(c_all, 5),
             "leave_one_lab_out_coverage_of_95_band": out["leave_one_lab_out"]["coverage_of_95_band"],
             "difficulty": {t: round(float(v), 4) for t, v in fit["b"].sort_index().items()}}
     (ROOT / "tools").mkdir(exist_ok=True)
-    (ROOT / "tools" / "noise_band.json").write_text(json.dumps(band, indent=1) + "\n", encoding="utf-8")
+    (ROOT / "tools" / "noise_band.json").write_text(json.dumps(band, indent=1) + "\n", encoding="utf-8", newline="\n")
     for k, v in out.items():
         print(k, json.dumps(v)[:700], flush=True)
     return 0

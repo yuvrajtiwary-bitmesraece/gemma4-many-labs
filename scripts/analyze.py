@@ -692,7 +692,7 @@ def main(argv=()) -> int:
             "valid_but_at_the_floor": sorted(t.loc[(st == "valid") & (t["class"] == "floor"), "task"]),
             "valid_in_the_single_audit_used_before_amendment_4": sorted(t.loc[t["single_audit_status"] == "valid", "task"]),
         }
-        (TABLES / "task_lists.json").write_text(json.dumps(lists, indent=1) + "\n", encoding="utf-8")
+        (TABLES / "task_lists.json").write_text(json.dumps(lists, indent=1) + "\n", encoding="utf-8", newline="\n")
         res["task_lists"] = {k: len(v) for k, v in lists.items()}
     mat.rename(index=codes).sort_index().to_csv(TABLES / "lab_task_matrix.csv", lineterminator="\n")
 
@@ -701,7 +701,7 @@ def main(argv=()) -> int:
     print("robustness:", json.dumps(rnd(res["robustness"])), flush=True)
 
     res["lab_codes_note"] = "Lab codes L01.. are assigned by decreasing number of attempts; see results/tables/labs.csv"
-    (RESULTS / "results.json").write_text(json.dumps(rnd(res, 5), indent=1) + "\n", encoding="utf-8")
+    (RESULTS / "results.json").write_text(json.dumps(rnd(res, 5), indent=1) + "\n", encoding="utf-8", newline="\n")
     print("written", RESULTS / "results.json")
     return 0
 

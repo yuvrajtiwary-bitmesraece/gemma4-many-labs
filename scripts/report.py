@@ -808,7 +808,7 @@ def main(argv) -> int:
              "- `results/tables/audits.csv`, `validity_by_lab.csv`, `task_lists.json` and `data/derived/controls.csv`: "
              "the control runs behind X1 and the task lists that follow from them.\n"
              "- `paper/figures/fig1` to `fig7`: drawn by `scripts/figures.py` from the tables above.\n")
-    (results / "RESULTS.md").write_text("\n".join(L) + "\n", encoding="utf-8")
+    (results / "RESULTS.md").write_text("\n".join(L) + "\n", encoding="utf-8", newline="\n")
     print("wrote", results / "RESULTS.md")
     return 0
 

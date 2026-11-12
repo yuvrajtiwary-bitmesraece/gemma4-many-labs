@@ -45,6 +45,9 @@ Beside it:
 - `dev_tasks.txt`: the 129 task identifiers.
 - `external_zenodo_attempts.csv`: a separate dataset in the same columns
   (Zenodo record 23834104), used only to test estimates, never pooled.
+- `external_zenodo_controls.csv`: that record's own check of the reference
+  patch and the empty patch on each of the 129 tasks, in its environment.
+  Used only in the external validation.
 - `attempts_extended.csv`: the same table plus 9,876 attempts from nine sources
   found by a broader search after the results (column `frame` says which rows
   are which). It is used only for the replication section of the report;

@@ -117,8 +117,8 @@ def main() -> int:
     log["new_candidates"] = len(out)
     log["dropped"] = dropped
     log["new_with_code_hit"] = sum(any(v.startswith("code:") for v in r["via"]) for r in out)
-    (SOURCES / "search_results_extended.json").write_text(json.dumps(out, indent=1) + "\n", encoding="utf-8")
-    (SOURCES / "search_extended_log.json").write_text(json.dumps(log, indent=1) + "\n", encoding="utf-8")
+    (SOURCES / "search_results_extended.json").write_text(json.dumps(out, indent=1) + "\n", encoding="utf-8", newline="\n")
+    (SOURCES / "search_extended_log.json").write_text(json.dumps(log, indent=1) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps({k: v for k, v in log.items() if k not in ("repo_queries", "code_queries")}))
     return 0
 
