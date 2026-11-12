@@ -75,7 +75,7 @@ Repeated evaluations make comparisons more reliable, but two questions must be k
 **Table 1. Minimum detectable improvement (percentage points) with 80% power at the 5% significance level.** Column 2 is the worst case of the exact test; columns 3 and 4 use the disagreement observed between configurations.
 
 | Runs per agent | Same 129 tasks | New tasks (129 sampled) | New tasks (58 sampled) |
-|---|---:|---:|---:|
+|---|---|---|---|
 | 1 | 12.5 (8.2–12.5) | 8.6 | 12.9 |
 | 3 | 5.3 | 5.7 | 8.5 |
 | 5 | 4.1 | 4.9 | 7.4 |
