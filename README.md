@@ -12,7 +12,8 @@ actually used.
 
 Entry for the [Paper Track](https://www.kaggle.com/competitions/gemma-4-developer-agent-paper).
 
-- **Paper:** [`paper/paper.md`](paper/paper.md), the text submitted as the Kaggle Writeup.
+- **Paper:** [`paper/paper.md`](paper/paper.md), published as the Kaggle Writeup
+  [Many Labs, One Benchmark](https://www.kaggle.com/competitions/gemma-4-developer-agent-paper/writeups/many-labs-one-benchmark-a-pooled-analysis-of-15).
 - **Results:** [`results/RESULTS.md`](results/RESULTS.md) (generated from `results/results.json`).
 - **Dataset:** [`data/derived/attempts.csv`](data/derived/attempts.csv), one row per agent run on one task.
 - **Plan fixed before the data:** [`ANALYSIS_PLAN.md`](ANALYSIS_PLAN.md), with every later change in [`DEVIATIONS.md`](DEVIATIONS.md).
